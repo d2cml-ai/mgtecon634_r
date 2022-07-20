@@ -1,0 +1,10 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+chapters:
+- file: average_treatment_effect_1
+- file: heterogeneous-treatment-effect-1
+- file: policy-evaluation-1
+- file: 6_Policy_Learning_I

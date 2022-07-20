@@ -1,0 +1,995 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Policy Evaluation I - Binary Treatment &#8212; MGTECON 634 at Stanford (R scripts)</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Policy Learning I - Binary Treatment" href="6_Policy_Learning_I.html" />
+    <link rel="prev" title="HTE I: Binary treatment" href="heterogeneous-treatment-effect-1.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">MGTECON 634 at Stanford (R scripts)</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Welcome to your Jupyter Book
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="average_treatment_effect_1.html">
+   ATE I: Binary treatment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="heterogeneous-treatment-effect-1.html">
+   HTE I: Binary treatment
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Policy Evaluation I - Binary Treatment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="6_Policy_Learning_I.html">
+   Policy Learning I - Binary Treatment
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/policy-evaluation-1.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fpolicy-evaluation-1.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/policy-evaluation-1.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#via-sample-means">
+   Via sample means
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#estimating-difference-in-values">
+     Estimating difference in values
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#via-aipw-scores">
+     Via AIPW scores
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#case-study">
+   Case study
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#further-reading">
+   Further reading
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Policy Evaluation I - Binary Treatment</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#via-sample-means">
+   Via sample means
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#estimating-difference-in-values">
+     Estimating difference in values
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#via-aipw-scores">
+     Via AIPW scores
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#case-study">
+   Case study
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#further-reading">
+   Further reading
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="policy-evaluation-i-binary-treatment">
+<h1>Policy Evaluation I - Binary Treatment<a class="headerlink" href="#policy-evaluation-i-binary-treatment" title="Permalink to this headline">¶</a></h1>
+<p>Source RMD file: <a class="reference external" href="https://docs.google.com/uc?export=download&amp;id=1TGPxR6L12kLeXbJeJBfCpXCnRFNA3hAC">link</a></p>
+<p><font color="#fa8072">Note: this chapter is in ‘beta’ version and may be edited in the near future.</font></p>
+<p>In previous chapters, you learned how to estimate the effect of a binary treatment on an outcome variable. We saw how to estimate the average treatment effect for the entire population <span class="math notranslate nohighlight">\(E[Y_i(1) - Y_i(0)]\)</span>, for specific subgroups <span class="math notranslate nohighlight">\(E[Y_i(1) - Y_i(0) | G_i]\)</span>, and at specific covariate values <span class="math notranslate nohighlight">\(E[Y_i(1) - Y_i(0)|X_i = x]\)</span>. One common feature of these quantities is that they compare the average effect of treating everyone (in the population, subgroup, etc) to the average effect of treating no one. But what if we had a <em>treatment rule</em> that dictated who should be treated, and who should not? Would treating some people according to this rule be better than treating no one? Can we compare two possible treatment rules? Questions like these abound in applied work, so here we’ll learn how to answer them using experimental and observational data (with appropriate assumptions).</p>
+<p>Treatment rules that dictate which groups should be treatment are called <strong>policies</strong>. Formally, we’ll define a policy (for a binary treatment) to be a mapping from a vector of observable covariates to a number in the unit interval, i.e., <span class="math notranslate nohighlight">\(\pi: x \mapsto [0,1]\)</span>. Given some vector of covariates <span class="math notranslate nohighlight">\(x\)</span>, the expression <span class="math notranslate nohighlight">\(\pi(x) = 1\)</span> indicates a unit with this covariate value should be treated, <span class="math notranslate nohighlight">\(\pi(x) = 0\)</span> indicates no treatment, and  <span class="math notranslate nohighlight">\(\pi(x) = p \in (0, 1)\)</span> indicates randomization between treatment and control with probability <span class="math notranslate nohighlight">\(p\)</span>.</p>
+<p>There are two main objects of interest in this chapter. The first is the <strong>value</strong> of a policy <span class="math notranslate nohighlight">\(\pi\)</span>, defined as the average outcome attained if we assign individuals to treatments according to the policy <span class="math notranslate nohighlight">\(\pi\)</span>,
+\begin{equation}
+E[Y_i(\pi(X_i))].
+\end{equation}
+The second object of interest is the <strong>difference in values</strong> between two policies <span class="math notranslate nohighlight">\(\pi\)</span> and <span class="math notranslate nohighlight">\(\pi'\)</span>,
+\begin{equation}
+E[Y_i(\pi(X_i)) - Y_i(\pi’(X_i))].
+\end{equation}
+Note how the average treatment effect (ATE) we saw in previous chapters is a difference in values taking <span class="math notranslate nohighlight">\(\pi(x) \equiv 1\)</span> (a policy that treats everyone) and <span class="math notranslate nohighlight">\(\pi(x) \equiv 0\)</span> (a policy that treats no one).</p>
+<p>Importantly, in this chapter we’ll be working with policies that are <em>pre-specified</em> — that is, that were created or decided <em>before</em> looking at the data. In the next chapter, we’ll see how to estimate a policy with desirable properties from the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># use e.g., install.packages(&quot;grf&quot;) to install any of the following packages.</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">grf</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">glmnet</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">splines</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="via-sample-means">
+<h2>Via sample means<a class="headerlink" href="#via-sample-means" title="Permalink to this headline">¶</a></h2>
+<p>To fix ideas, we will begin assuming that we are in a <em>randomized</em> setting. For concreteness, let’s work with the following toy setting with two uniformly-distributed covariates and a continuous outcome.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">&lt;-</span> <span class="m">1000</span>
+<span class="n">p</span> <span class="o">&lt;-</span> <span class="m">4</span>
+<span class="n">X</span> <span class="o">&lt;-</span> <span class="nf">matrix</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">p</span><span class="p">),</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+<span class="n">W</span> <span class="o">&lt;-</span> <span class="nf">rbinom</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">prob</span> <span class="o">=</span> <span class="n">.</span><span class="m">5</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>  <span class="c1"># independent from X and Y</span>
+<span class="n">Y</span> <span class="o">&lt;-</span> <span class="n">.</span><span class="m">5</span><span class="o">*</span><span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">.</span><span class="m">5</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">.</span><span class="m">5</span><span class="p">)</span><span class="o">*</span><span class="n">W</span> <span class="o">+</span> <span class="n">.</span><span class="m">1</span> <span class="o">*</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">min</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">0.000248489202931523</div></div>
+</div>
+<p>Here is a scatterplot of the data. Each data point is represented by a square if untreated or by a circle if treated in the eperiment. The shade of the point indicates the strength of the outcome, with more negative values being zero and more positive values being darker.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y.norm</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">-</span><span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="nf">min</span><span class="p">(</span><span class="n">Y</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="nf">max</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span><span class="o">-</span><span class="nf">min</span><span class="p">(</span><span class="n">Y</span><span class="p">))</span> <span class="c1"># just for plotting</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="m">1</span><span class="p">],</span> <span class="n">X</span><span class="p">[,</span><span class="m">2</span><span class="p">],</span> <span class="n">pch</span><span class="o">=</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="m">21</span><span class="p">,</span> <span class="m">23</span><span class="p">),</span> <span class="n">cex</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="nf">gray</span><span class="p">(</span><span class="n">y.norm</span><span class="p">),</span> <span class="n">xlab</span><span class="o">=</span><span class="s">&quot;X1&quot;</span><span class="p">,</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;X2&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/policy-evaluation-1_11_0.png" src="_images/policy-evaluation-1_11_0.png" />
+</div>
+</div>
+<p>Here’s a graph of each treated and untreated population separately. Remark two things about this plot. First, the covariate distribution between the two plots is the same — which is what we should expect in a randomized setting. Second, observations with higher values of <span class="math notranslate nohighlight">\(X_2\)</span> react positively to treatment (their blobs are darker than the untreated counterparts, which observations with lower values of <span class="math notranslate nohighlight">\(X_2\)</span> react negatively (their blobs are lighter).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">w</span> <span class="n">in</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span> <span class="p">{</span>
+  <span class="nf">plot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">W</span><span class="o">==</span><span class="n">w</span><span class="p">,</span><span class="m">1</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="n">W</span><span class="o">==</span><span class="n">w</span><span class="p">,</span><span class="m">2</span><span class="p">],</span> <span class="n">pch</span><span class="o">=</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">W</span><span class="p">[</span><span class="n">W</span><span class="o">==</span><span class="n">w</span><span class="p">],</span> <span class="m">21</span><span class="p">,</span> <span class="m">23</span><span class="p">),</span> <span class="n">cex</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span>
+       <span class="n">bg</span><span class="o">=</span><span class="nf">gray</span><span class="p">(</span><span class="n">y.norm</span><span class="p">[</span><span class="n">W</span><span class="o">==</span><span class="n">w</span><span class="p">]),</span> <span class="n">main</span><span class="o">=</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">&quot;Treated&quot;</span><span class="p">,</span> <span class="s">&quot;Untreated&quot;</span><span class="p">),</span>
+       <span class="n">xlab</span><span class="o">=</span><span class="s">&quot;X1&quot;</span><span class="p">,</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;X2&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/policy-evaluation-1_13_0.png" src="_images/policy-evaluation-1_13_0.png" />
+</div>
+</div>
+<p>As a first example, let’s estimate the value of the following policy (assuming that it was given to or decided by us prior to looking at the data):
+\begin{equation}
+(#eq:pol)
+\pi(x) =
+\begin{cases}
+1 \quad \text{if } x_1 &gt; .5 \text{ and } x_2 &gt; .5 \
+0 \quad \text{otherwise}
+\end{cases}
+\end{equation}</p>
+<p>This policy divides the plane into a “treatment” region <span class="math notranslate nohighlight">\(A\)</span> and a complementary “no treatment” region <span class="math notranslate nohighlight">\(A^c\)</span>,
+\begin{equation}
+A := { x : \pi(x) = 1 } = {x: x_{1} &gt; .5, x_{2} &gt; .5}.
+\end{equation}</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">col2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">'#40B0A659'</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">col2</span> <span class="o">&lt;-</span> <span class="nf">rgb</span><span class="p">(</span><span class="m">0.250980</span><span class="p">,</span> <span class="m">0.690196</span><span class="p">,</span> <span class="m">0.650980</span><span class="p">,</span> <span class="n">.</span><span class="m">35</span><span class="p">)</span>
+<span class="n">col1</span> <span class="o">&lt;-</span> <span class="nf">rgb</span><span class="p">(</span><span class="m">0.9960938</span><span class="p">,</span> <span class="m">0.7539062</span><span class="p">,</span> <span class="m">0.0273438</span><span class="p">,</span> <span class="n">.</span><span class="m">35</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="m">1</span><span class="p">],</span> <span class="n">X</span><span class="p">[,</span><span class="m">2</span><span class="p">],</span> <span class="n">pch</span><span class="o">=</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="m">21</span><span class="p">,</span> <span class="m">23</span><span class="p">),</span> <span class="n">cex</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="nf">gray</span><span class="p">(</span><span class="n">y.norm</span><span class="p">),</span> <span class="n">xlab</span><span class="o">=</span><span class="s">&quot;X1&quot;</span><span class="p">,</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;X2&quot;</span><span class="p">)</span>
+<span class="nf">rect</span><span class="p">(</span><span class="m">-.1</span><span class="p">,</span> <span class="m">-.1</span><span class="p">,</span> <span class="n">.</span><span class="m">5</span><span class="p">,</span> <span class="m">1.1</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="m">250</span><span class="p">,</span> <span class="n">angle</span> <span class="o">=</span> <span class="m">45</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">col1</span><span class="p">,</span> <span class="n">border</span> <span class="o">=</span> <span class="kc">NA</span><span class="p">)</span>
+<span class="nf">rect</span><span class="p">(</span><span class="n">.</span><span class="m">5</span><span class="p">,</span> <span class="m">-.1</span><span class="p">,</span> <span class="m">1.1</span><span class="p">,</span> <span class="n">.</span><span class="m">5</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="m">250</span><span class="p">,</span> <span class="n">angle</span> <span class="o">=</span> <span class="m">45</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">col1</span><span class="p">,</span> <span class="n">border</span> <span class="o">=</span> <span class="kc">NA</span><span class="p">)</span>
+<span class="nf">rect</span><span class="p">(</span><span class="n">.</span><span class="m">5</span><span class="p">,</span> <span class="n">.</span><span class="m">5</span><span class="p">,</span> <span class="m">1.1</span><span class="p">,</span> <span class="m">1.1</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="m">250</span><span class="p">,</span> <span class="n">angle</span> <span class="o">=</span> <span class="m">45</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">col2</span><span class="p">,</span> <span class="n">border</span> <span class="o">=</span> <span class="kc">NA</span><span class="p">)</span>
+<span class="nf">text</span><span class="p">(</span><span class="n">.</span><span class="m">75</span><span class="p">,</span> <span class="n">.</span><span class="m">75</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="s">&quot;TREAT (A)&quot;</span><span class="p">,</span> <span class="n">cex</span> <span class="o">=</span> <span class="m">1.8</span><span class="p">)</span>
+<span class="nf">text</span><span class="p">(</span><span class="n">.</span><span class="m">25</span><span class="p">,</span> <span class="n">.</span><span class="m">25</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="nf">expression</span><span class="p">(</span><span class="n">DO</span> <span class="o">~</span> <span class="n">NOT</span> <span class="o">~</span> <span class="n">TREAT</span> <span class="o">~</span> <span class="p">(</span><span class="n">A</span><span class="o">^</span><span class="n">C</span><span class="p">)),</span> <span class="n">cex</span> <span class="o">=</span> <span class="m">1.8</span><span class="p">,</span> <span class="n">adj</span> <span class="o">=</span> <span class="n">.</span><span class="m">25</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/policy-evaluation-1_16_0.png" src="_images/policy-evaluation-1_16_0.png" />
+</div>
+</div>
+<p>We’ll consider the behavior of the policy <span class="math notranslate nohighlight">\(\pi\)</span> separately within each region. In the “treatment” region <span class="math notranslate nohighlight">\(A\)</span>, its average outcome is the same as the average outcome for the treated population.
+\begin{equation}
+(#eq:region-a)
+\begin{aligned}
+E[Y_i(\pi(X_i)) \ | \ A]
+&amp;= E[Y_i(1)|A]  \quad &amp;&amp;\text{because <span class="math notranslate nohighlight">\(\pi(x) = 1\)</span> for all <span class="math notranslate nohighlight">\(x \in A\)</span>,} \
+&amp;= E[Y_i|A, W_{i}=1]  \quad &amp;&amp;\text{randomized setting.} \
+\end{aligned}
+\end{equation}</p>
+<p>In the remaining region <span class="math notranslate nohighlight">\(A^c\)</span>, its average outcome is the same as the average outcome for the untreated population.
+\begin{equation}
+(#eq:region-not-a)
+\begin{aligned}
+E[Y_i(\pi(X_i)) \ | \ A^c]
+&amp;= E[Y_i(0)|A^c]  \quad &amp;&amp;\text{because <span class="math notranslate nohighlight">\(\pi(x) = 0\)</span> for all <span class="math notranslate nohighlight">\(x \in A^c\)</span>,} \
+&amp;= E[Y_i|A, W_{i}=0]  \quad &amp;&amp;\text{randomized setting.} \
+\end{aligned}
+\end{equation}</p>
+<p>The expected value of <span class="math notranslate nohighlight">\(\pi\)</span> is a weighted average of value within each region:
+\begin{align}
+(#eq:pi-pop-value)
+E[Y(\pi(X_i))] &amp;= E[Y_i | A, W_i = 1] \PP(A) +  E[Y_i | A^c, W_i = 0] \PP(A^c), \
+\end{align}
+where we denote the probability of drawn a covariate from <span class="math notranslate nohighlight">\(A\)</span> as <span class="math notranslate nohighlight">\(\PP(A)\)</span>. In a randomized setting, we can estimate &#64;ref(eq:pi-pop-value) by replacing population quantities by simple empirical counterparts based on sample averages; i.e., estimating <span class="math notranslate nohighlight">\(\E[Y_i | A, W_i = 1]\)</span> by the sample average of outcomes among treated individuals in region <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(\E[Y_i | A^c, W_i = 0]\)</span> by the sample average of outcomes among untreated individuals not in region <span class="math notranslate nohighlight">\(A\)</span>, and <span class="math notranslate nohighlight">\(\PP(A)\)</span> and <span class="math notranslate nohighlight">\(\PP(A^c)\)</span> by the proportions of individuals inside and outside of region <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">sum</span><span class="p">(</span><span class="n">A</span> <span class="o">&amp;</span> <span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">117</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Only valid in randomized setting.</span>
+<span class="n">A</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">.</span><span class="m">5</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">.</span><span class="m">5</span><span class="p">)</span>
+<span class="n">value.estimate</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">1</span><span class="p">)])</span> <span class="o">*</span> <span class="nf">mean</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="nf">mean</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="o">!</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">)])</span> <span class="o">*</span> <span class="nf">mean</span><span class="p">(</span><span class="o">!</span><span class="n">A</span><span class="p">)</span>
+<span class="n">value.stderr</span> <span class="o">&lt;-</span> <span class="nf">sqrt</span><span class="p">(</span><span class="nf">var</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">1</span><span class="p">)])</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">1</span><span class="p">))</span> <span class="o">*</span> <span class="nf">mean</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">^</span><span class="m">2</span> <span class="o">+</span> <span class="nf">var</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="o">!</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">)])</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="o">!</span><span class="n">A</span> <span class="o">&amp;</span> <span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">)</span> <span class="o">*</span> <span class="nf">mean</span><span class="p">(</span><span class="o">!</span><span class="n">A</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Value estimate:&quot;</span><span class="p">,</span> <span class="n">value.estimate</span><span class="p">,</span> <span class="s">&quot;Std. Error:&quot;</span><span class="p">,</span> <span class="n">value.stderr</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Value estimate: 0.0568100965049552 Std. Error: 0.00795906823597598&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>For another example, let’s consider the value of a  <em>random</em> policy <span class="math notranslate nohighlight">\(\pi'\)</span> that would assign observations to treatment and control with probability <span class="math notranslate nohighlight">\(p\)</span>:
+\begin{equation}
+\pi(X_i) = Z_i \qquad Z_i \sim^{iid} \text{Binomial}(p).
+\end{equation}</p>
+<p>To identify the value of this policy, follow the same argument as above. However, instead of thinking in terms of “regions”, consider the output of the random variable <span class="math notranslate nohighlight">\(Z_i\)</span>:
+\begin{equation}
+(#eq:region-a)
+\begin{aligned}
+\E[Y_i(\pi’(X_i)) \ | \ Z_i = 1]
+&amp;= \E[Y_i(1)| Z_i = 1] \quad &amp;&amp;\text{because <span class="math notranslate nohighlight">\(\pi'(\cdot) = 1\)</span> when <span class="math notranslate nohighlight">\(Z_i = 1\)</span>,} \
+&amp;= \E[Y_i(1)]          \quad &amp;&amp;\text{<span class="math notranslate nohighlight">\(Z_i\)</span> is drawn independently,} \
+&amp;= \E[Y_i| W_{i}=1]  \quad &amp;&amp;\text{randomized setting.} \
+\end{aligned}
+\end{equation}</p>
+<p>We can proceed similarly for the case of <span class="math notranslate nohighlight">\(Z_i = 0\)</span>. Finally, since <span class="math notranslate nohighlight">\(\PP(Z_i = 1) = p\)</span>,
+\begin{equation}
+(#eq:pip-pop-value)
+\E[Y_i(\pi’(X_i))] = p\E[Y_i | W_i=1] + (1-p)\E[Y_i | W_i = 0],
+\end{equation}</p>
+<p>which in a randomized setting can be estimated in a manner analogous to the previous example.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Only valid in randomized setting.</span>
+<span class="n">p</span> <span class="o">&lt;-</span> <span class="n">.</span><span class="m">75</span> <span class="c1"># for example</span>
+<span class="n">value.estimate</span> <span class="o">&lt;-</span> <span class="n">p</span> <span class="o">*</span> <span class="nf">mean</span><span class="p">(</span><span class="n">Y</span><span class="p">[(</span><span class="n">W</span><span class="o">==</span><span class="m">1</span><span class="p">)])</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="nf">mean</span><span class="p">(</span><span class="n">Y</span><span class="p">[(</span><span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">)])</span>
+<span class="n">value.stderr</span> <span class="o">&lt;-</span> <span class="nf">sqrt</span><span class="p">(</span><span class="nf">var</span><span class="p">(</span><span class="n">Y</span><span class="p">[(</span><span class="n">W</span><span class="o">==</span><span class="m">1</span><span class="p">)])</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">p</span><span class="o">^</span><span class="m">2</span> <span class="o">+</span> <span class="nf">var</span><span class="p">(</span><span class="n">Y</span><span class="p">[(</span><span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">)])</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Value estimate:&quot;</span><span class="p">,</span> <span class="n">value.estimate</span><span class="p">,</span> <span class="s">&quot;Std. Error:&quot;</span><span class="p">,</span> <span class="n">value.stderr</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Value estimate: 0.00356324789313355 Std. Error: 0.0119876658475897&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="estimating-difference-in-values">
+<h3>Estimating difference in values<a class="headerlink" href="#estimating-difference-in-values" title="Permalink to this headline">¶</a></h3>
+<p>Next, let’s estimate the difference in value between two given policies. For a concrete example, let’s consider the gain from switching to <span class="math notranslate nohighlight">\(\pi\)</span> defined in &#64;ref(eq:pol) from a policy <span class="math notranslate nohighlight">\(\pi''\)</span> that never treats, i.e., <span class="math notranslate nohighlight">\(\pi''(X_i) \equiv 0\)</span>. That is,
+\begin{equation}
+(#eq:diff-0)
+\E[Y(\pi(X_i)) - Y(\pi’’(X_i))].
+\end{equation}</p>
+<p>We already derived the value of <span class="math notranslate nohighlight">\(\pi\)</span> in &#64;ref(eq:pip-pop-value). To derive the value of the second policy,
+\begin{align}
+(#eq:ey0-expand)
+&amp;\E[Y(\pi’’(X_i))] \
+&amp;= \E[Y_i(0)] &amp;&amp; \text{<span class="math notranslate nohighlight">\(\pi''(x) = 0\)</span> for all <span class="math notranslate nohighlight">\(x\)</span>,}  \
+&amp;= \E[Y_i(0)|A]\PP(A) + \E[Y_i(0)|A^c]\PP(A^c) &amp;&amp; \text{law of total expectation,} \
+&amp;= \E[Y|A,W=0]\PP(A) + \E[Y|A^c,W=0]\PP(A^c) &amp;&amp;\text{randomized setting.}
+\end{align}</p>
+<p>Substituting &#64;ref(eq:pip-pop-value) and &#64;ref(eq:ey0-expand) into &#64;ref(eq:diff-0) and simplifying,
+\begin{equation}
+(#eq:diff-0-result)
+\E[Y(\pi(X_i)) - Y(\pi’’(X_i))]
+= \left( \E[Y_i|A, W_i=1] - \E[Y_i|A,W_i=0] \right) \cdot \PP(A) + 0 \cdot \PP(A^c)
+\end{equation}</p>
+<p>Expression &#64;ref(eq:diff-0-result) has the following intepretation. In region <span class="math notranslate nohighlight">\(A\)</span>, the policy  <span class="math notranslate nohighlight">\(\pi\)</span> treats, and the “never treat” policy does not; thus the gain in region <span class="math notranslate nohighlight">\(A\)</span> is the average treatment effect in that region, <span class="math notranslate nohighlight">\(\E[Y_i(1) - Y_i(0)|A]\)</span>, which in a randomized setting equals the first term in parentheses. In region <span class="math notranslate nohighlight">\(A^{c}\)</span>, the policy <span class="math notranslate nohighlight">\(\pi\)</span> does not treat, but neither does the “never treat” policy. Therefore, there the different is exactly zero. The expected difference in values equals the weighted average of the difference in values within each region.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Only valid in randomized settings.</span>
+<span class="n">A</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">.</span><span class="m">5</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">.</span><span class="m">5</span><span class="p">)</span>
+<span class="n">diff.estimate</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">1</span><span class="p">)])</span> <span class="o">-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">)]))</span> <span class="o">*</span> <span class="nf">mean</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">diff.stderr</span> <span class="o">&lt;-</span> <span class="nf">sqrt</span><span class="p">(</span><span class="nf">var</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">1</span><span class="p">)])</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">1</span><span class="p">))</span> <span class="o">+</span> <span class="nf">var</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">)])</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">A</span> <span class="o">&amp;</span> <span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">))</span> <span class="o">*</span> <span class="nf">mean</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">^</span><span class="m">2</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Difference estimate:&quot;</span><span class="p">,</span> <span class="n">diff.estimate</span><span class="p">,</span> <span class="s">&quot;Std. Error:&quot;</span><span class="p">,</span> <span class="n">diff.stderr</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Difference estimate: 0.0721178351226253 Std. Error: 0.00112341673358415&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>For another example, let’s consider the difference in value between <span class="math notranslate nohighlight">\(\pi\)</span> and a <em>random</em> policy <span class="math notranslate nohighlight">\(\pi'\)</span> that assigns observations to treatment and control with equal probability <span class="math notranslate nohighlight">\(p = 1/2\)</span>. We have already derived an expression for value of the random policy in &#64;ref(eq:pip-pop-value). Subtracting it from the value of the policy <span class="math notranslate nohighlight">\(\pi\)</span> derived in &#64;ref(eq:pi-pop-value) and simplifying,
+\begin{align}
+(#eq:pi-pip-diff-results)
+\E[Y(\pi) - Y(\pi’(X_i))]
+&amp;= \frac{P(A)}{2} \left( \E[Y_i(1) - Y_i(0) | A] \right) +
+\frac{P(A^c)}{2} \left( \E[Y_i(0) - Y_i(1) | A^c] \right)
+\end{align}</p>
+<p>Here’s how to interpret &#64;ref(eq:pi-pip-diff-results). In region <span class="math notranslate nohighlight">\(A\)</span>, policy <span class="math notranslate nohighlight">\(\pi\)</span> treats everyone, obtaining average value <span class="math notranslate nohighlight">\(\E[Y_i(1)|A]\)</span>; meanwhile, policy <span class="math notranslate nohighlight">\(\pi'\)</span> treats half the observations (i.e., it treats each individual with one-half probability), obtaining average value <span class="math notranslate nohighlight">\((\E[Y_i(1) + Y_i(0)|A])/2\)</span>. Subtracting the two gives the term multiplying <span class="math notranslate nohighlight">\(\PP(A)\)</span> in &#64;ref(eq:pi-pip-diff-results). In region <span class="math notranslate nohighlight">\(A^c\)</span>, policy <span class="math notranslate nohighlight">\(\pi\)</span> treats no one, obtaining average value <span class="math notranslate nohighlight">\(\E[Y_i(0)|A]\)</span>; meanwhile, policy <span class="math notranslate nohighlight">\(\pi'\)</span> still obtains <span class="math notranslate nohighlight">\((\E[Y_i(1) + Y_i(0)|A^c])/2\)</span> for the same reasons as above. Subtracting the two gives the term multiplying <span class="math notranslate nohighlight">\(\PP(A^c)\)</span> &#64;ref(eq:pi-pip-diff-results). Expression &#64;ref(eq:pi-pip-diff-results) is the average of these two terms weighted by the size of each region.</p>
+<p>Finally, in a randomized setting, &#64;ref(eq:pi-pip-diff-results) is equivalent to
+\begin{align}
+\frac{P(A)}{2} \left( \E[Y|A,W=1] - \E[Y|A,W=0] \right) +
+\frac{P(A^c)}{2} \left( \E[Y|A^c,W=0] - \E[Y|A,W=1] \right),
+\end{align}
+which suggests an estimator based on sample averages as above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Only valid in randomized settings.</span>
+<span class="n">A</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">.</span><span class="m">5</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">.</span><span class="m">5</span><span class="p">)</span>
+<span class="n">diff.estimate</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">1</span><span class="p">)])</span> <span class="o">-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">)]))</span> <span class="o">*</span> <span class="nf">mean</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">/</span> <span class="m">2</span> <span class="o">+</span>
+                 <span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="o">!</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">)])</span> <span class="o">-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="o">!</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">1</span><span class="p">)]))</span> <span class="o">*</span> <span class="nf">mean</span><span class="p">(</span><span class="o">!</span><span class="n">A</span><span class="p">)</span> <span class="o">/</span> <span class="m">2</span>
+<span class="n">diff.stderr</span> <span class="o">&lt;-</span> <span class="nf">sqrt</span><span class="p">((</span><span class="nf">mean</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">/</span><span class="m">2</span><span class="p">)</span><span class="o">^</span><span class="m">2</span> <span class="o">*</span> <span class="p">(</span><span class="nf">var</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">1</span><span class="p">)])</span><span class="o">/</span><span class="nf">sum</span><span class="p">(</span><span class="n">A</span> <span class="o">&amp;</span> <span class="n">W</span><span class="o">==</span><span class="m">1</span><span class="p">)</span> <span class="o">+</span> <span class="nf">var</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">)])</span><span class="o">/</span><span class="nf">sum</span><span class="p">(</span><span class="n">A</span> <span class="o">&amp;</span> <span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">))</span> <span class="o">+</span> 
+                    <span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="o">!</span><span class="n">A</span><span class="p">)</span><span class="o">/</span><span class="m">2</span><span class="p">)</span><span class="o">^</span><span class="m">2</span> <span class="o">*</span> <span class="p">(</span><span class="nf">var</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="o">!</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">1</span><span class="p">)])</span><span class="o">/</span><span class="nf">sum</span><span class="p">(</span><span class="o">!</span><span class="n">A</span> <span class="o">&amp;</span> <span class="n">W</span><span class="o">==</span><span class="m">1</span><span class="p">)</span> <span class="o">+</span> <span class="nf">var</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="o">!</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">)])</span><span class="o">/</span><span class="nf">sum</span><span class="p">(</span><span class="o">!</span><span class="n">A</span> <span class="o">&amp;</span> <span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">)))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Difference estimate:&quot;</span><span class="p">,</span> <span class="n">diff.estimate</span><span class="p">,</span> <span class="s">&quot;Std. Error:&quot;</span><span class="p">,</span> <span class="n">diff.stderr</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Difference estimate: 0.0753780562192742 Std. Error: 0.00710198380607199&quot;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="via-aipw-scores">
+<h3>Via AIPW scores<a class="headerlink" href="#via-aipw-scores" title="Permalink to this headline">¶</a></h3>
+<p>In this section, we will use the following simulated <em>observational</em> setting. Note how the probability of receiving treatment varies by individual, but it depends only on observable characteristics (ensuring unconfoundedness) and it is bounded away from zero and one (ensuring overlap). We assume that assignment probabilities are not known to the researcher.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># An &quot;observational&quot; dataset satisfying unconfoundedness and overlap.</span>
+<span class="n">n</span> <span class="o">&lt;-</span> <span class="m">1000</span>
+<span class="n">p</span> <span class="o">&lt;-</span> <span class="m">4</span>
+<span class="n">X</span> <span class="o">&lt;-</span> <span class="nf">matrix</span><span class="p">(</span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">p</span><span class="p">),</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+<span class="n">e</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">/</span><span class="p">(</span><span class="m">1</span><span class="o">+</span><span class="nf">exp</span><span class="p">(</span><span class="m">-2</span><span class="o">*</span><span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="m">1</span><span class="p">]</span><span class="m">-.5</span><span class="p">)</span><span class="m">-2</span><span class="o">*</span><span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="m">2</span><span class="p">]</span><span class="m">-.5</span><span class="p">)))</span>  <span class="c1"># not observed by the analyst.</span>
+<span class="n">W</span> <span class="o">&lt;-</span> <span class="nf">rbinom</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">prob</span> <span class="o">=</span> <span class="n">e</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">&lt;-</span> <span class="n">.</span><span class="m">5</span><span class="o">*</span><span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">.</span><span class="m">5</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">.</span><span class="m">5</span><span class="p">)</span><span class="o">*</span><span class="n">W</span> <span class="o">+</span> <span class="n">.</span><span class="m">1</span> <span class="o">*</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next plot illustrates how treatment assignment isn’t independent from observed covariates. Individuals with high values of <span class="math notranslate nohighlight">\(X_{i,1}\)</span> and <span class="math notranslate nohighlight">\(X_{i,2}\)</span> are more likely to be treated and to have higher outcomes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y.norm</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="nf">min</span><span class="p">(</span><span class="n">Y</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="nf">max</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span><span class="o">-</span><span class="nf">min</span><span class="p">(</span><span class="n">Y</span><span class="p">))</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">w</span> <span class="n">in</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span> <span class="p">{</span>
+  <span class="nf">plot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">W</span><span class="o">==</span><span class="n">w</span><span class="p">,</span><span class="m">1</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="n">W</span><span class="o">==</span><span class="n">w</span><span class="p">,</span><span class="m">2</span><span class="p">],</span> <span class="n">pch</span><span class="o">=</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">W</span><span class="p">[</span><span class="n">W</span><span class="o">==</span><span class="n">w</span><span class="p">],</span> <span class="m">21</span><span class="p">,</span> <span class="m">23</span><span class="p">),</span> <span class="n">cex</span><span class="o">=</span><span class="m">1.5</span><span class="p">,</span>
+       <span class="n">bg</span><span class="o">=</span><span class="nf">gray</span><span class="p">(</span><span class="n">y.norm</span><span class="p">[</span><span class="n">W</span><span class="o">==</span><span class="n">w</span><span class="p">]),</span> <span class="n">main</span><span class="o">=</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">&quot;Treated&quot;</span><span class="p">,</span> <span class="s">&quot;Untreated&quot;</span><span class="p">),</span>
+       <span class="n">xlab</span><span class="o">=</span><span class="s">&quot;X1&quot;</span><span class="p">,</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;X2&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/policy-evaluation-1_31_0.png" src="_images/policy-evaluation-1_31_0.png" />
+</div>
+</div>
+<font size=1>
+If we "naively" used the estimators based on sample averages above, the policy value estimate would be biased. Would the bias be upward or downward?
+</font>
+<p>In randomized setting and observational settings with unconfoundedness and overlap, there exists estimates of policy values and differences that are more efficient (i.e., they have smaller variance in large samples) than their counterparts based on sample averages. These are based on the <em>AIPW scores</em> that we studied in previous chapters. For example, to estimate the <span class="math notranslate nohighlight">\(\E[Y_i(1)]\)</span>
+\begin{align}
+(#eq:gamma-1)
+\hGamma_{i,1}
+&amp;= \hat{\mu}^{-i}(X_i, 1) + \frac{W_i}{\hat{e}^{-i}(X_i)} \left(Y_i -\hat{\mu}^{-i}(X_i, 1)\right)
+\end{align}</p>
+<p>As we discussed in the chapter on ATE, averaging over AIPW scores &#64;ref(eq:gamma-1) across individuals yields an unbiased / consistent estimator of <span class="math notranslate nohighlight">\(\E[Y_i(1)]\)</span> provided that at least one of <span class="math notranslate nohighlight">\(\hat{\mu}^{-i}(x, 1)\)</span> or <span class="math notranslate nohighlight">\(\hat{e}^{-i}(x)\)</span> is an unbiased / consistent estimator of the outcome model <span class="math notranslate nohighlight">\(\mu(x,w) := E[Y_i(w)|X_i=x]\)</span> or propensity model <span class="math notranslate nohighlight">\(e(x) := \PP[W_i=1|X_i=x]\)</span>. Provided that these are estimates using non-parametric methods like forests or neural networks, consistency should be guaranteed, and in addition the resulting estimates should have smaller asymptotic variance. Therefore, barring computational issues, AIPW-based estimates are usually superior to estimates based on sample means, even in randomized settings (though, for completeness, the latter should still be reported when valid).</p>
+<p>For the control, we have the following estimator based on AIPW scores,
+\begin{align}
+(#eq:gamma-0)
+\hGamma_{i,0}
+&amp;= \hat{\mu}^{-i}(X_i, 0) + \frac{1-W_i}{1-\hat{e}^{-i}(X_i)} \left(Y_i -\hat{\mu}^{-i}(X_i, 0)\right).
+\end{align}</p>
+<p>To estimate the value of a binary policy <span class="math notranslate nohighlight">\(\pi\)</span>, we average over AIPW scores, selecting &#64;ref(eq:gamma-1) or &#64;ref(eq:gamma-0) for each individual depending on whether the policy dictates that the individual should be treated or not. That is, we estimate the value of a policy <span class="math notranslate nohighlight">\(\pi\)</span> via the following average,
+\begin{align}
+\frac{1}{n} \sum_{i=1}^n \hGamma_{i,\pi(X_i)}
+\qquad<br />
+\hGamma_{i,\pi(X_i)} := \pi(X_i) \hGamma_{i,1} + (1 - \pi(X_i)) \hGamma_{i,0}.
+\end{align}</p>
+<p>The next snippet construct AIPW scores via causal forests.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Valid in observational and randomized settings</span>
+
+<span class="c1"># Randomized settings: use the true assignment probability:</span>
+<span class="c1"># forest &lt;- causal_forest(X, Y, W, W.hat=.5, num.trees=100)  # replace .5 with true assign prob</span>
+<span class="c1"># Observational settings with unconfoundedness + overlap:</span>
+<span class="n">forest</span> <span class="o">&lt;-</span> <span class="nf">causal_forest</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>
+
+<span class="c1"># Estimate a causal forest</span>
+<span class="n">tau.hat</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">forest</span><span class="p">)</span><span class="o">$</span><span class="n">predictions</span>
+
+<span class="c1"># Estimate outcome model for treated and propen</span>
+<span class="n">mu.hat.1</span> <span class="o">&lt;-</span> <span class="n">forest</span><span class="o">$</span><span class="n">Y.hat</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="n">forest</span><span class="o">$</span><span class="n">W.hat</span><span class="p">)</span> <span class="o">*</span> <span class="n">tau.hat</span> <span class="c1"># E[Y|X,W=1] = E[Y|X] + (1-e(X))tau(X)</span>
+<span class="n">mu.hat.0</span> <span class="o">&lt;-</span> <span class="n">forest</span><span class="o">$</span><span class="n">Y.hat</span> <span class="o">-</span> <span class="n">forest</span><span class="o">$</span><span class="n">W.hat</span> <span class="o">*</span> <span class="n">tau.hat</span>  <span class="c1"># E[Y|X,W=0] = E[Y|X] - e(X)tau(X)</span>
+
+<span class="c1"># Compute AIPW scores</span>
+<span class="n">gamma.hat.1</span> <span class="o">&lt;-</span> <span class="n">mu.hat.1</span> <span class="o">+</span> <span class="n">W</span><span class="o">/</span><span class="n">forest</span><span class="o">$</span><span class="n">W.hat</span> <span class="o">*</span> <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">mu.hat.1</span><span class="p">)</span>
+<span class="n">gamma.hat.0</span> <span class="o">&lt;-</span> <span class="n">mu.hat.0</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">W</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">forest</span><span class="o">$</span><span class="n">W.hat</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">mu.hat.0</span><span class="p">)</span>
+
+<span class="c1"># If you have the package policytree installed, the following is equivalent</span>
+<span class="c1"># gamma.hat.matrix &lt;- policytree::double_robust_scores(forest)</span>
+<span class="c1"># gamma.hat.1 &lt;- gamma.hat.matrix[,2]</span>
+<span class="c1"># gamma.hat.0 &lt;- gamma.hat.matrix[,1]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Of course, we could have constructed the AIPW scores using any other appropriate non-parametric estimator, provided that we take care to use adequate sample-splitting. The next snippet (commented out) shows to do the same with <code class="docutils literal notranslate"><span class="pre">glmnet</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># # Valid randomized data and observational data with unconfoundedness+overlap.</span>
+<span class="c1"># # Note: read the comments below carefully. </span>
+<span class="c1"># # In randomized settings, do not estimate forest.e and e.hat; use known assignment probs.</span>
+<span class="c1">#  data &lt;- data.frame(x=X, w=W, y=Y)</span>
+<span class="c1"># covariates &lt;- paste0(&quot;x.&quot;, seq(ncol(X)))</span>
+<span class="c1"># treatment &lt;- &quot;w&quot;</span>
+<span class="c1"># outcome &lt;- &quot;y&quot;</span>
+<span class="c1"># </span>
+<span class="c1"># fmla.xw &lt;- formula(paste0(&quot;~&quot;, paste0(&quot;bs(&quot;, covariates, &quot;, df=3, degree=3) *&quot;, treatment, collapse=&quot;+&quot;)))</span>
+<span class="c1"># fmla.x &lt;- formula(paste0(&quot;~&quot;, paste0(&quot;bs(&quot;, covariates, &quot;, df=3, degree=3)&quot;, collapse=&quot;+&quot;)))</span>
+<span class="c1"># XW &lt;- model.matrix(fmla.xw, data)</span>
+<span class="c1"># XX &lt;- model.matrix(fmla.x, data)</span>
+<span class="c1"># Y &lt;- data[,outcome]</span>
+<span class="c1"># </span>
+<span class="c1"># n.folds &lt;- 5</span>
+<span class="c1"># indices &lt;- split(seq(n), sort(seq(n) %% n.folds))</span>
+<span class="c1"># </span>
+<span class="c1"># gamma.hat.1 &lt;- rep(NA, n)</span>
+<span class="c1"># gamma.hat.0 &lt;- rep(NA, n)</span>
+<span class="c1"># for (idx in indices) {</span>
+<span class="c1"># </span>
+<span class="c1">#   # Fitting the outcome model on training folds</span>
+<span class="c1">#   model.m &lt;- cv.glmnet(XW[-idx,], Y[-idx])  </span>
+<span class="c1">#   </span>
+<span class="c1">#   # Predict outcome E[Y|X,W=w] for w in {0, 1} on the held-out fold </span>
+<span class="c1">#   data.0 &lt;- data[idx,]</span>
+<span class="c1">#   data.0[,treatment] &lt;- 0</span>
+<span class="c1">#   XW0 &lt;- model.matrix(fmla.xw, data.0)</span>
+<span class="c1">#   mu.hat.0 &lt;- predict(model.m, XW0, s=&quot;lambda.min&quot;)</span>
+<span class="c1">#   </span>
+<span class="c1">#   data.1 &lt;- data[idx,]</span>
+<span class="c1">#   data.1[,treatment] &lt;- 1</span>
+<span class="c1">#   XW1 &lt;- model.matrix(fmla.xw, data.1)</span>
+<span class="c1">#   mu.hat.1 &lt;- predict(model.m, XW1, s=&quot;lambda.min&quot;)</span>
+<span class="c1">#   </span>
+<span class="c1">#   # Fitting the propensity score model</span>
+<span class="c1">#   # Comment / uncomment the lines below as appropriate.</span>
+<span class="c1">#   # OBSERVATIONAL SETTING (with unconfoundedness+overlap):</span>
+<span class="c1">#   # model.e &lt;- cv.glmnet(XX[-idx,], W[-idx], family=&quot;binomial&quot;)  </span>
+<span class="c1">#   # e.hat &lt;- predict(model.e, XX[idx,], s=&quot;lambda.min&quot;, type=&quot;response&quot;)</span>
+<span class="c1">#   # RANDOMIZED SETTING</span>
+<span class="c1">#   e.hat &lt;- rep(0.5, length(idx))    # assuming 0.5 is known assignment prob.</span>
+<span class="c1">#   </span>
+<span class="c1">#   # Compute AIPW scores</span>
+<span class="c1">#   gamma.hat.1[idx] &lt;- mu.hat.1 +  W[idx] / e.hat * (Y[idx] -  mu.hat.1)</span>
+<span class="c1">#   gamma.hat.0[idx] &lt;- mu.hat.0 + (1 - W[idx]) / (1 - e.hat) * (Y[idx] -  mu.hat.0)</span>
+<span class="c1"># }</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once we have computed AIPW scores, we can compute the value of any policy. Here’s how to estimate the value of &#64;ref(eq:pol).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Valid in observational and randomized settings</span>
+<span class="kc">pi</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">.</span><span class="m">5</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">.</span><span class="m">5</span><span class="p">)</span>
+<span class="n">gamma.hat.pi</span> <span class="o">&lt;-</span> <span class="kc">pi</span> <span class="o">*</span> <span class="n">gamma.hat.1</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="kc">pi</span><span class="p">)</span> <span class="o">*</span> <span class="n">gamma.hat.0</span>
+<span class="n">value.estimate</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">gamma.hat.pi</span><span class="p">)</span>
+<span class="n">value.stderr</span> <span class="o">&lt;-</span> <span class="nf">sd</span><span class="p">(</span><span class="n">gamma.hat.pi</span><span class="p">)</span> <span class="o">/</span> <span class="nf">sqrt</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">gamma.hat.pi</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Value estimate:&quot;</span><span class="p">,</span> <span class="n">value.estimate</span><span class="p">,</span> <span class="s">&quot;Std. Error:&quot;</span><span class="p">,</span> <span class="n">value.stderr</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Value estimate: 0.0553929394442827 Std. Error: 0.0087929709775542&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next snippet estimates the value of a random policy that treats with 75% probability.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Valid in observational and randomized settings</span>
+<span class="n">pi.random</span> <span class="o">&lt;-</span> <span class="n">.</span><span class="m">75</span>
+<span class="n">gamma.hat.pi</span><span class="o">&lt;-</span> <span class="n">pi.random</span> <span class="o">*</span> <span class="n">gamma.hat.1</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="n">pi.random</span><span class="p">)</span> <span class="o">*</span> <span class="n">gamma.hat.0</span>
+<span class="n">value.estimate</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">gamma.hat.pi</span><span class="p">)</span>
+<span class="n">value.stderr</span> <span class="o">&lt;-</span> <span class="nf">sd</span><span class="p">(</span><span class="n">gamma.hat.pi</span><span class="p">)</span> <span class="o">/</span> <span class="nf">sqrt</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">gamma.hat.pi</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Value estimate:&quot;</span><span class="p">,</span> <span class="n">value.estimate</span><span class="p">,</span> <span class="s">&quot;Std. Error:&quot;</span><span class="p">,</span> <span class="n">value.stderr</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Value estimate: -0.00895417280514675 Std. Error: 0.00930566033510541&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>To estimate the difference in value between two policies <span class="math notranslate nohighlight">\(\pi\)</span> and <span class="math notranslate nohighlight">\(\tilde{\pi}\)</span>, simply subtract the scores,
+\begin{align}
+\frac{1}{n} \sum_{i=1}^n \hGamma_{i,\pi(X_i)} - \hGamma_{i,\tilde{\pi}(X_i)}.
+\end{align}</p>
+<p>For example, here we estimate the difference between policy and the “never treat” policy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Valid in randomized settings and observational settings with unconfoundedness + overlap</span>
+
+<span class="c1"># AIPW scores associated with first policy</span>
+<span class="kc">pi</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">.</span><span class="m">5</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">.</span><span class="m">5</span><span class="p">)</span>
+<span class="n">gamma.hat.pi</span> <span class="o">&lt;-</span> <span class="kc">pi</span> <span class="o">*</span> <span class="n">gamma.hat.1</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="kc">pi</span><span class="p">)</span> <span class="o">*</span> <span class="n">gamma.hat.0</span>
+
+<span class="c1"># AIPW scores associated with second policy</span>
+<span class="n">pi.never</span> <span class="o">&lt;-</span> <span class="m">0</span>
+<span class="n">gamma.hat.pi.never</span> <span class="o">&lt;-</span> <span class="n">pi.never</span> <span class="o">*</span> <span class="n">gamma.hat.1</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="n">pi.never</span><span class="p">)</span> <span class="o">*</span> <span class="n">gamma.hat.0</span>
+
+<span class="c1"># Difference</span>
+<span class="n">diff.scores</span> <span class="o">&lt;-</span> <span class="n">gamma.hat.pi</span> <span class="o">-</span> <span class="n">gamma.hat.pi.never</span> 
+<span class="n">diff.estimate</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">diff.scores</span><span class="p">)</span>
+<span class="n">diff.stderr</span> <span class="o">&lt;-</span> <span class="nf">sd</span><span class="p">(</span><span class="n">diff.scores</span><span class="p">)</span> <span class="o">/</span> <span class="nf">sqrt</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">diff.scores</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;diff estimate:&quot;</span><span class="p">,</span> <span class="n">diff.estimate</span><span class="p">,</span> <span class="s">&quot;Std. Error:&quot;</span><span class="p">,</span> <span class="n">diff.stderr</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;diff estimate: 0.0586609167456726 Std. Error: 0.00573524203627475&quot;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="case-study">
+<h2>Case study<a class="headerlink" href="#case-study" title="Permalink to this headline">¶</a></h2>
+<p>For completeness we’ll close out this section by estimating policy values using real data. Again, we’ll use an abridged version of the General Social Survey (GSS) <a class="reference external" href="https://gss.norc.org/Documents/reports/project-reports/GSSProject%20report32.pdf">(Smith, 2016)</a> dataset that was introduced in the previous chapter. In this dataset, individuals were sent to treatment or control with equal probability, so we are in a randomized setting.</p>
+<font size=2>
+(Please note that we have inverted the definitions of treatment and control)
+</font><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in data</span>
+<span class="n">data</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;https://docs.google.com/uc?id=1kSxrVci_EUcSr_Lg1JKk1l7Xd5I9zfRC&amp;export=download&quot;</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">&lt;-</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># NOTE: We&#39;ll invert treatment and control, compared to previous chapters</span>
+<span class="n">data</span><span class="o">$</span><span class="n">w</span> <span class="o">&lt;-</span> <span class="m">1</span> <span class="o">-</span> <span class="n">data</span><span class="o">$</span><span class="n">w</span>
+
+<span class="c1"># Treatment is the wording of the question:</span>
+<span class="c1"># &#39;does the the gov&#39;t spend too much on &#39;assistance to the poor&#39; (control: 0)</span>
+<span class="c1"># &#39;does the the gov&#39;t spend too much on &quot;welfare&quot;?&#39; (treatment: 1)</span>
+<span class="n">treatment</span> <span class="o">&lt;-</span> <span class="s">&quot;w&quot;</span>
+
+<span class="c1"># Outcome: 1 for &#39;yes&#39;, 0 for &#39;no&#39;</span>
+<span class="n">outcome</span> <span class="o">&lt;-</span> <span class="s">&quot;y&quot;</span>
+
+<span class="c1"># Additional covariates</span>
+<span class="n">covariates</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;age&quot;</span><span class="p">,</span> <span class="s">&quot;polviews&quot;</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">,</span> <span class="s">&quot;educ&quot;</span><span class="p">,</span> <span class="s">&quot;marital&quot;</span><span class="p">,</span> <span class="s">&quot;sex&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’ll take the following policy as an example. It asks individuals who are older (age &gt; 50) or more conservative (<code class="docutils literal notranslate"><span class="pre">polviews</span></code> <span class="math notranslate nohighlight">\(\leq\)</span> 4) if they think the government spends to much on “welfare”, and it asks yonger and more liberal individuals if they think the government spends too much on “assistance to the poor”.
+\begin{equation}
+(#eq:polage)
+\pi(x) =
+\begin{cases}
+1 \qquad \text{if }\texttt{polviews} \leq 4 \text{ OR } \texttt{age } &gt; 50  \
+0 \qquad \text{otherwise}
+\end{cases}
+\end{equation}</p>
+<p>We should expect that a higher number of individuals will answer ‘yes’ because, presumably, older and more conservative individuals in this sample may be more likely to be against welfare in the United States.</p>
+<p>We selected policy &#64;ref(eq:polage) purely for illustrative purposes, but it’s not hard to come up with examples where understanding how to word certain questions and prompts can be useful. For example, a non-profit that champions assistance to the poor may be able to obtain more donations if they advertise themselves as champions of “welfare” or “assistance to the poor” to different segments of the population.</p>
+<p>Since this is a randomized setting, we can estimate its value via sample averages.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Only valid in randomized setting</span>
+<span class="n">X</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span><span class="n">covariates</span><span class="p">]</span>
+<span class="n">Y</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span><span class="n">outcome</span><span class="p">]</span>
+<span class="n">W</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span><span class="n">treatment</span><span class="p">]</span>
+  
+<span class="kc">pi</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="s">&quot;polviews&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="m">4</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">X</span><span class="p">[,</span><span class="s">&quot;age&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="m">50</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">&lt;-</span> <span class="kc">pi</span> <span class="o">==</span> <span class="m">1</span>
+<span class="n">value.estimate</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">1</span><span class="p">)])</span> <span class="o">*</span> <span class="nf">mean</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="nf">mean</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="o">!</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">)])</span> <span class="o">*</span> <span class="nf">mean</span><span class="p">(</span><span class="o">!</span><span class="n">A</span><span class="p">)</span>
+<span class="n">value.stderr</span> <span class="o">&lt;-</span> <span class="nf">sqrt</span><span class="p">(</span><span class="nf">var</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">1</span><span class="p">)])</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">1</span><span class="p">))</span> <span class="o">*</span> <span class="nf">mean</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">^</span><span class="m">2</span> <span class="o">+</span> <span class="nf">var</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="o">!</span><span class="n">A</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">)])</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="o">!</span><span class="n">A</span> <span class="o">&amp;</span> <span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">)</span> <span class="o">*</span> <span class="nf">mean</span><span class="p">(</span><span class="o">!</span><span class="n">A</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Value estimate:&quot;</span><span class="p">,</span> <span class="n">value.estimate</span><span class="p">,</span> <span class="s">&quot;Std. Error:&quot;</span><span class="p">,</span> <span class="n">value.stderr</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Value estimate: 0.35165112312253 Std. Error: 0.00399751818703805&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result above suggests that if we assign older and more conservative individuals about “welfare”, and other individuals about “assistance to the poor”, then on average about 34.6% of individuals respond ‘yes’.</p>
+<p>The next snippet uses AIPW-based estimates, which would also have been valid had the data been collected in an observational setting with unconfoundedness and overlap.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Valid in randomized settings and observational settings with unconfoundedness + overlap</span>
+<span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;~&quot;</span><span class="p">,</span> <span class="nf">paste</span><span class="p">(</span><span class="n">covariates</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot;+&quot;</span><span class="p">)))</span>
+<span class="n">X</span> <span class="o">&lt;-</span> <span class="nf">model.matrix</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span><span class="n">outcome</span><span class="p">]</span>
+<span class="n">W</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span><span class="n">treatment</span><span class="p">]</span>
+  
+<span class="c1"># Estimate a causal forest</span>
+<span class="c1"># Important: comment/uncomment as appropriate.</span>
+<span class="c1"># Randomized setting (known, fixed assignment probability):</span>
+<span class="n">forest</span> <span class="o">&lt;-</span> <span class="nf">causal_forest</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">W.hat</span><span class="o">=</span><span class="n">.</span><span class="m">5</span><span class="p">)</span>
+<span class="c1"># Observational setting with unknown probability:</span>
+<span class="c1"># forest &lt;- causal_forest(X, Y, W)</span>
+
+<span class="c1"># Estimate a causal forest</span>
+<span class="n">tau.hat</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">forest</span><span class="p">)</span><span class="o">$</span><span class="n">predictions</span>
+
+<span class="c1"># Estimate outcome model for treated and propensity scores</span>
+<span class="n">mu.hat.1</span> <span class="o">&lt;-</span> <span class="n">forest</span><span class="o">$</span><span class="n">Y.hat</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="n">forest</span><span class="o">$</span><span class="n">W.hat</span><span class="p">)</span> <span class="o">*</span> <span class="n">tau.hat</span>  <span class="c1"># E[Y|X,W=1] = E[Y|X] + (1-e(X))tau(X)</span>
+<span class="n">mu.hat.0</span> <span class="o">&lt;-</span> <span class="n">forest</span><span class="o">$</span><span class="n">Y.hat</span> <span class="o">-</span> <span class="n">forest</span><span class="o">$</span><span class="n">W.hat</span> <span class="o">*</span> <span class="n">tau.hat</span>  <span class="c1"># E[Y|X,W=0] = E[Y|X] - e(X)tau(X)</span>
+
+<span class="c1"># Compute AIPW scores</span>
+<span class="n">gamma.hat.1</span> <span class="o">&lt;-</span> <span class="n">mu.hat.1</span> <span class="o">+</span> <span class="n">W</span> <span class="o">/</span> <span class="n">forest</span><span class="o">$</span><span class="n">W.hat</span> <span class="o">*</span> <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">mu.hat.1</span><span class="p">)</span>
+<span class="n">gamma.hat.0</span> <span class="o">&lt;-</span> <span class="n">mu.hat.0</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">W</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">forest</span><span class="o">$</span><span class="n">W.hat</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">mu.hat.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As expected, the results are very similar (as they should be since they are both valid in a randomized seting).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Valid in randomized settings and observational settings with unconfoundedness + overlap</span>
+<span class="n">gamma.hat.pi</span> <span class="o">&lt;-</span> <span class="kc">pi</span> <span class="o">*</span> <span class="n">gamma.hat.1</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="kc">pi</span><span class="p">)</span> <span class="o">*</span> <span class="n">gamma.hat.0</span>
+<span class="n">value.estimate</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">gamma.hat.pi</span><span class="p">)</span>
+<span class="n">value.stderr</span> <span class="o">&lt;-</span> <span class="nf">sd</span><span class="p">(</span><span class="n">gamma.hat.pi</span><span class="p">)</span> <span class="o">/</span> <span class="nf">sqrt</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">gamma.hat.pi</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Value estimate:&quot;</span><span class="p">,</span> <span class="n">value.estimate</span><span class="p">,</span> <span class="s">&quot;Std. Error:&quot;</span><span class="p">,</span> <span class="n">value.stderr</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Value estimate: 0.351687011123363 Std. Error: 0.00379194011440311&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next snippet estimates the value of policy &#64;ref(eq:polage) and a random policy that assigns to treatment and control with equal probability.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Valid in randomized settings and observational settings with unconfoundedness + overlap</span>
+<span class="n">pi.2</span> <span class="o">&lt;-</span> <span class="n">.</span><span class="m">5</span>
+<span class="n">gamma.hat.pi.1</span> <span class="o">&lt;-</span> <span class="kc">pi</span> <span class="o">*</span> <span class="n">gamma.hat.1</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="kc">pi</span><span class="p">)</span> <span class="o">*</span> <span class="n">gamma.hat.0</span>
+<span class="n">gamma.hat.pi.2</span> <span class="o">&lt;-</span> <span class="n">pi.2</span> <span class="o">*</span> <span class="n">gamma.hat.1</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="n">pi.2</span><span class="p">)</span> <span class="o">*</span> <span class="n">gamma.hat.0</span>
+<span class="n">gamma.hat.pi.diff</span> <span class="o">&lt;-</span> <span class="n">gamma.hat.pi.1</span> <span class="o">-</span> <span class="n">gamma.hat.pi.2</span>
+<span class="n">diff.estimate</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">gamma.hat.pi.diff</span><span class="p">)</span>
+<span class="n">diff.stderr</span> <span class="o">&lt;-</span> <span class="nf">sd</span><span class="p">(</span><span class="n">gamma.hat.pi.diff</span><span class="p">)</span> <span class="o">/</span> <span class="nf">sqrt</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">gamma.hat.pi.diff</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Difference estimate:&quot;</span><span class="p">,</span> <span class="n">diff.estimate</span><span class="p">,</span> <span class="s">&quot;Std. Error:&quot;</span><span class="p">,</span> <span class="n">diff.stderr</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Difference estimate: 0.0853492460565416 Std. Error: 0.00249126916660907&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result suggests that assigning observations to treatment as in &#64;ref(eq:polage) produces 8% more positive responses than assigning individuals at uniformly at random.</p>
+</div>
+<div class="section" id="further-reading">
+<h2>Further reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://arxiv.org/abs/1702.02896">Athey and Wager (2020, Econometrica)</a> has a good review of the literature on policy learning and evaluation. For a more accessible introduction to the theory, see
+<a class="reference external" href="https://web.stanford.edu/~swager/stats361.pdf">Stefan Wager’s lecture notes</a>, lecture 7. However, both references focus heavily on policy learning, which will be the topic of the next chapter.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            kernelName: "ir",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="heterogeneous-treatment-effect-1.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">HTE I: Binary treatment</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="6_Policy_Learning_I.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Policy Learning I - Binary Treatment</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By D2cml-ai<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

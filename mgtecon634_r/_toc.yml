@@ -4,7 +4,7 @@
 format: jb-book
 root: md/intro
 chapters:
-- file: r_notebooks/Introduction_to_Machine Learning
+- file: r_notebooks/Introduction_to_Machine_Learning
 - file: r_notebooks/average_treatment_effect_1
 - file: r_notebooks/heterogeneous-treatment-effect-1
 - file: r_notebooks/policy-evaluation-1

@@ -17,15 +17,12 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# Note: bookdown seems to require explicitly calling these packages.
-library(reshape2)
-library(DiagrammeR)
+col2
 ------------------
 
-Error in library(DiagrammeR): there is no package called 'DiagrammeR'
+Error in eval(expr, envir, enclos): objeto 'col2' no encontrado
 Traceback:
 
-1. library(DiagrammeR)
-ERROR: Error in library(DiagrammeR): there is no package called 'DiagrammeR'
+ERROR: Error in eval(expr, envir, enclos): objeto 'col2' no encontrado
 
 

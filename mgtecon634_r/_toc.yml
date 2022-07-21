@@ -2,10 +2,10 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: intro
+root: md/intro
 chapters:
-- file: Introduction to Machine Learning
-- file: average_treatment_effect_1
-- file: heterogeneous-treatment-effect-1
-- file: policy-evaluation-1
-- file: 6_Policy_Learning_I
+- file: r_notebooks/Introduction_to_Machine Learning
+- file: r_notebooks/average_treatment_effect_1
+- file: r_notebooks/heterogeneous-treatment-effect-1
+- file: r_notebooks/policy-evaluation-1
+- file: r_notebooks/6_Policy_Learning_I

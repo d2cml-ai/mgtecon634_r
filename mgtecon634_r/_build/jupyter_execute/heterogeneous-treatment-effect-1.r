@@ -47,10 +47,6 @@ fmla <- formula(paste(outcome, ' ~ ', treatment, '*', group))
 ols <- lm(fmla, data=data)
 coeftest(ols, vcov=vcovHC(ols, type='HC2'))
 
-dim(data)
-
-group
-
 # Only valid in randomized setting.
 
 # Example: these groups must be defined prior to collecting the data.
@@ -64,17 +60,11 @@ ols.res <- coeftest(ols, vcov=vcovHC(ols, type='HC2'))
 # Retrieve the interaction coefficients
 interact <- which(sapply(names(coef(ols)), function(x) grepl("w:", x)))
 
-ols.res 
-
-interact
-
 # Retrieve unadjusted p-values and 
 unadj.p.value <- ols.res[interact, 4]
 adj.p.value <- p.adjust(unadj.p.value, method='bonferroni')
 
 data.frame(estimate=coef(ols)[interact], std.err=ols.res[interact,2], unadj.p.value, adj.p.value)
-
-adj.p.value
 
 # Auxiliary function to computes adjusted p-values 
 # following the Romano-Wolf method.
@@ -280,8 +270,6 @@ tau.hat.est <- predict(ct.pruned, newdata=data[indices$est,])
 num.leaves <- length(unique(tau.hat.est))
 leaf <- factor(tau.hat.est, levels=sort(unique(tau.hat.est)), labels = seq(num.leaves))
 
-cp.optimal
-
 rpart.plot(
   x=ct.pruned,        # Pruned tree
   type=3,             # Draw separate split labels for the left and right directions
@@ -290,9 +278,6 @@ rpart.plot(
   extra=100,          # Display the percentage of observations in the node
   branch=.1,          # Shape of the branch lines
   box.palette="RdBu") # Palette for coloring the node
-
-#library(foreign)
-write.csv(data.frame(tau.hat.est), "tau_hat.csv")
 
 # This is only valid in randomized datasets.
 fmla <- paste0(outcome, ' ~ ', paste0(treatment, '* leaf'))

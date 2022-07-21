@@ -313,7 +313,7 @@ df <- lapply(covariates, function(covariate) {
 })
 df <- do.call(rbind, df)
 
-a small optional trick to ensure heatmap will be in decreasing order of 'variation'
+#a small optional trick to ensure heatmap will be in decreasing order of 'variation'
 df$covariate <- reorder(df$covariate, order(df$variation))
 
 # plot heatmap
@@ -429,8 +429,8 @@ plot(gamma.hat, tau.hat,
      xlab="Estimated cost (normalized)", ylab="Estimated CATE (normalized)")
 
 auc <- data.frame(
-  ignore=sum((treatment.value.ignore.costs - treatment.cost.ignore.costs) * diff((c(0, treatment.cost.ignore.costs)))),
-  ratio=sum((treatment.value.ratio - treatment.cost.ratio) * diff((c(0, treatment.cost.ratio)))),
+  ignore=sum((treatment.value.ignore - treatment.cost.ignore) * diff((c(0, treatment.cost.ignore)))),
+  ratio=sum((treatment.value.direct - treatment.cost.direct) * diff((c(0, treatment.cost.direct)))),
   iv=sum((treatment.value.iv - treatment.cost.iv) * diff((c(0, treatment.cost.iv))))
 )
 auc

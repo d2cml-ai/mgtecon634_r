@@ -4,6 +4,7 @@
 format: jb-book
 root: intro
 chapters:
+- file: Introduction to Machine Learning
 - file: average_treatment_effect_1
 - file: heterogeneous-treatment-effect-1
 - file: policy-evaluation-1

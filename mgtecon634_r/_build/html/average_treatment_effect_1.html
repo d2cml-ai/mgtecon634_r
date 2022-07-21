@@ -56,7 +56,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="HTE I: Binary treatment" href="heterogeneous-treatment-effect-1.html" />
-    <link rel="prev" title="Causal Inference and Machine Learning" href="intro.html" />
+    <link rel="prev" title="Introduction" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -96,7 +96,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
-   Causal Inference and Machine Learning
+   Introduction
   </a>
  </li>
 </ul>
@@ -185,7 +185,9 @@ const thebe_selector_output = ".output, .cell_output"
             href="https://github.com/d2cml-ai/mgtecon634_r/issues/new?title=Issue%20on%20page%20%2Faverage_treatment_effect_1.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
+        <a class="edit-button" href="https://github.com/d2cml-ai/mgtecon634_r/edit/master/mgtecon634_r/_build/jupyter_execute/average_treatment_effect_1.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
 </div>
 
@@ -259,6 +261,15 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finally-we-just-derived-an-estimator-of-the-average-treated-outcome-but-we-could-repeat-the-argument-for-control-units-instead-subtracting-the-two-estimators-leads-to-the-following-inverse-propensity-weighted-estimate-of-the-treatment-effect-begin-equation-eq-ipw-widehat-tau-ipw-frac-1-n-sum-i-1-n-y-i-frac-w-i-he-x-i">
+   Finally, we just derived an estimator of the average treated outcome, but we could repeat the argument for control units instead. Subtracting the two estimators leads to the following inverse propensity-weighted estimate of the treatment effect:
+\begin{equation}
+(#eq:ipw)
+\widehat{\tau}^{IPW} :=
+\frac{1}{n} \sum_{i=1}^{n} Y_i \frac{W_i}{\he(X_i)}
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#augmented-inverse-propensity-weighted-aipw-estimator-aipw">
    1.6 Augmented inverse propensity-weighted (AIPW) estimator {#aipw}
   </a>
@@ -323,6 +334,15 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#inverse-propensity-weighted-estimator-ipw">
    1.5 Inverse propensity-weighted estimator {#ipw}
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finally-we-just-derived-an-estimator-of-the-average-treated-outcome-but-we-could-repeat-the-argument-for-control-units-instead-subtracting-the-two-estimators-leads-to-the-following-inverse-propensity-weighted-estimate-of-the-treatment-effect-begin-equation-eq-ipw-widehat-tau-ipw-frac-1-n-sum-i-1-n-y-i-frac-w-i-he-x-i">
+   Finally, we just derived an estimator of the average treated outcome, but we could repeat the argument for control units instead. Subtracting the two estimators leads to the following inverse propensity-weighted estimate of the treatment effect:
+\begin{equation}
+(#eq:ipw)
+\widehat{\tau}^{IPW} :=
+\frac{1}{n} \sum_{i=1}^{n} Y_i \frac{W_i}{\he(X_i)}
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -393,44 +413,39 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="notation-and-definitions-notation">
 <h2>1.1 Notation and definitions {#notation}<a class="headerlink" href="#notation-and-definitions-notation" title="Permalink to this headline">¶</a></h2>
-<p>Let’s establish some notation. Each data point will be defined by the triple $(X_i, W_i, Y_i)$. The vector $X_i$ represents covariates that are observed for individual $i$. Treatment assignment is indicated by $W_i \in {0, 1}$, with 1 representing treatment, and 0 representing control. The scalar $Y_i$ is the observed outcome, and it can be real or binary. Each observation is drawn independently and from the same distribution. We’ll be interested in assessing the causal effect of treatment on outcome.</p>
-<p>A difficulty in estimating causal quantities is that we observe each individual in only one treatment state: either they were treated, or they weren’t. However, it’s often useful to imagine that each individual is endowed with two random variables $(Y_i(1), Y_i(0))$, where $Y_i(1)$ represents the value of this individual’s outcome if they receive treatment, and $Y_i(0)$ represents their outcome if they are not treated. These random variables are called  <strong>potential outcomes</strong>. The observed outcome $Y_i$ corresponds to whichever potential outcome we got to see:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fd9dfabd-1fb3-4ef6-8ee6-cf66d7b1ab27">
-<span class="eqno">(1)<a class="headerlink" href="#equation-fd9dfabd-1fb3-4ef6-8ee6-cf66d7b1ab27" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  Y_i \equiv Y_i(W_i) =
-  \begin{cases}
-    Y_i(1) \qquad \text{if }W_i = 1 \text{ (treated)} \\ 
-    Y_i(0) \qquad \text{if }W_i = 0 \text{ (control)}\\ 
-  \end{cases}
-\end{equation}\]</div>
-<p>Since we can’t observe both $Y_i(1)$ and $Y_i(0)$, we won’t be able to make statistical claims about the individual treatment effect $Y_i(1) - Y_i(0)$. Instead, our goal will be to estimate the <strong>average treatment effect (ATE)</strong>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ad6fd64b-3c32-4b8f-9f58-205558c68ff4">
-<span class="eqno">(2)<a class="headerlink" href="#equation-ad6fd64b-3c32-4b8f-9f58-205558c68ff4" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  (\#eq:ate)
-  \tau := E[Y_i(1) - Y_i(0)].
-\end{equation}\]</div>
-<p>Here, when we refer to the <strong>randomized</strong> setting we mean that we have data generated by a randomized control trial. The key characteristic of this setting is that the probability that an individual is assigned to the treatment arm is fixed. In particular, it does not depend on the individual’s potential outcomes:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ba9caadf-b8ed-431e-b2e0-e65c2192d2ee">
-<span class="eqno">(3)<a class="headerlink" href="#equation-ba9caadf-b8ed-431e-b2e0-e65c2192d2ee" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  (\#eq:unconf)
-  Y_i(1), Y_i(0) \perp W_i.
-\end{equation}\]</div>
-<p>This precludes situations in which individuals may self-select into or out of treatment. The canonical failure example is a job training program in which workers enroll more often if they are more likely to benefit from treatment because in that case $W_i$ and $Y_i(1) - Y_i(0)$ would be positively correlated.</p>
-<p>When condition &#64;ref(eq:unconf) is violated, we say that we are in an <strong>observational</strong> setting. This is a more complex setting encompassing several different scenarios: sometimes it’s still possible to estimate the ATE under additional assumptions, sometimes the researcher can exploit other sources of variation to obtain other interesting estimands. Here, we will focus on ATE estimation under the following assumption:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6737dc58-888a-42f3-afba-e24be54b33b7">
-<span class="eqno">(4)<a class="headerlink" href="#equation-6737dc58-888a-42f3-afba-e24be54b33b7" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  (\#eq:cond-unconf)
-  Y_i(1), Y_i(0) \perp W_i \ | \ X_i.
-\end{equation}\]</div>
-<p>In this document we will call this assumption <strong>unconfoundeness</strong>, though it is also known as <strong>no unmeasured confounders</strong>, <strong>ignorability</strong> or <strong>selection on observables</strong>. It says that all possible sources of self-selection, etc., can be explained by the observable covariates $X_i$. Continuing the example above, it may be that older or more educated are more likely to self-select into treatment; but when we compare two workers that have the same age and level of education, etc., there’s nothing else that we could infer about their relative potential outcomes if we knew that one went into job training and the other did not.</p>
-<p>As we’ll see below, a key quantity of interest will be the treatment assignment probability, or <strong>propensity score</strong> $e(X_i) := \PP[W_i = 1 | X_i]$. In an experimental setting this quantity is usually known and fixed, and in observational settings it must be estimated from the data. We will often need to assume that the propensity score is bounded away from zero and one. That is, there exists some $\eta &gt; 0$ such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-34b65ff3-dc67-43f6-b070-4315a0440671">
-<span class="eqno">(5)<a class="headerlink" href="#equation-34b65ff3-dc67-43f6-b070-4315a0440671" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  (\#eq:overlap)
-  \eta &lt; e(x) &lt; 1 - \eta  \qquad \text{for all }x.
-\end{equation}\]</div>
-<p>This assumption is known as <strong>overlap</strong>, and it means that for all types of people in our population (i.e., all values of observable characteristics) we can find some portion of individuals in treatment and some in control. Intuitively, this is necessary because we’d like to will be comparing treatment and control at each level of the covariates and then aggregate those results.</p>
-<p>As a running example, in what follows we’ll be using an abridged version of a public dataset from the General Social Survey (GSS) <a class="reference external" href="https://gss.norc.org/Documents/reports/project-reports/GSSProject%20report32.pdf">(Smith, 2016)</a>. The setting is a randomized control trial. Individuals were asked about their thoughts on government spending on the social safety net. The treatment is the wording of the question: about half of the individuals were asked if they thought government spends too much on “welfare” $(W_i = 1)$, while the remaining half was asked about “assistance to the poor” $(W_i = 0)$. The outcome is binary, with $Y_i = 1$ corresponding to a positive answer. In the data set below, we also collect a few other demographic covariates.</p>
+<p>Let’s establish some notation. Each data point will be defined by the triple <span class="math notranslate nohighlight">\((X_i, W_i, Y_i)\)</span>. The vector <span class="math notranslate nohighlight">\(X_i\)</span> represents covariates that are observed for individual <span class="math notranslate nohighlight">\(i\)</span>. Treatment assignment is indicated by <span class="math notranslate nohighlight">\(W_i \in \{0, 1\}\)</span>, with 1 representing treatment, and 0 representing control. The scalar <span class="math notranslate nohighlight">\(Y_i\)</span> is the observed outcome, and it can be real or binary. Each observation is drawn independently and from the same distribution. We’ll be interested in assessing the causal effect of treatment on outcome.</p>
+<p>A difficulty in estimating causal quantities is that we observe each individual in only one treatment state: either they were treated, or they weren’t. However, it’s often useful to imagine that each individual is endowed with two random variables <span class="math notranslate nohighlight">\((Y_i(1), Y_i(0))\)</span>, where <span class="math notranslate nohighlight">\(Y_i(1)\)</span> represents the value of this individual’s outcome if they receive treatment, and <span class="math notranslate nohighlight">\(Y_i(0)\)</span> represents their outcome if they are not treated. These random variables are called  <strong>potential outcomes</strong>. The observed outcome <span class="math notranslate nohighlight">\(Y_i\)</span> corresponds to whichever potential outcome we got to see:</p>
+<p>\begin{equation}
+Y_i \equiv Y_i(W_i) =
+\begin{cases}
+Y_i(1) \qquad \text{if }W_i = 1 \text{ (treated)} \
+Y_i(0) \qquad \text{if }W_i = 0 \text{ (control)}\
+\end{cases}
+\end{equation}</p>
+<p>Since we can’t observe both <span class="math notranslate nohighlight">\(Y_i(1)\)</span> and <span class="math notranslate nohighlight">\(Y_i(0)\)</span>, we won’t be able to make statistical claims about the individual treatment effect <span class="math notranslate nohighlight">\(Y_i(1) - Y_i(0)\)</span>. Instead, our goal will be to estimate the <strong>average treatment effect (ATE)</strong>:</p>
+<p>\begin{equation}
+(#eq:ate)
+\tau := E[Y_i(1) - Y_i(0)].
+\end{equation}</p>
+<p>Here, when we refer to the <strong>randomized</strong> setting we mean that we have data generated by a randomized control trial. The key characteristic of this setting is that the probability that an individual is assigned to the treatment arm is fixed. In particular, it does not depend on the individual’s potential outcomes:
+\begin{equation}
+(#eq:unconf)
+Y_i(1), Y_i(0) \perp W_i.
+\end{equation}
+This precludes situations in which individuals may self-select into or out of treatment. The canonical failure example is a job training program in which workers enroll more often if they are more likely to benefit from treatment because in that case <span class="math notranslate nohighlight">\(W_i\)</span> and <span class="math notranslate nohighlight">\(Y_i(1) - Y_i(0)\)</span> would be positively correlated.</p>
+<p>When condition &#64;ref(eq:unconf) is violated, we say that we are in an <strong>observational</strong> setting. This is a more complex setting encompassing several different scenarios: sometimes it’s still possible to estimate the ATE under additional assumptions, sometimes the researcher can exploit other sources of variation to obtain other interesting estimands. Here, we will focus on ATE estimation under the following assumption:<br />
+\begin{equation}
+(#eq:cond-unconf)
+Y_i(1), Y_i(0) \perp W_i \ | \ X_i.
+\end{equation}</p>
+<p>In this document we will call this assumption <strong>unconfoundeness</strong>, though it is also known as <strong>no unmeasured confounders</strong>, <strong>ignorability</strong> or <strong>selection on observables</strong>. It says that all possible sources of self-selection, etc., can be explained by the observable covariates <span class="math notranslate nohighlight">\(X_i\)</span>. Continuing the example above, it may be that older or more educated are more likely to self-select into treatment; but when we compare two workers that have the same age and level of education, etc., there’s nothing else that we could infer about their relative potential outcomes if we knew that one went into job training and the other did not.</p>
+<p>As we’ll see below, a key quantity of interest will be the treatment assignment probability, or <strong>propensity score</strong> <span class="math notranslate nohighlight">\(e(X_i) := \PP[W_i = 1 | X_i]\)</span>. In an experimental setting this quantity is usually known and fixed, and in observational settings it must be estimated from the data. We will often need to assume that the propensity score is bounded away from zero and one. That is, there exists some <span class="math notranslate nohighlight">\(\eta &gt; 0\)</span> such that
+\begin{equation}
+(#eq:overlap)
+\eta &lt; e(x) &lt; 1 - \eta  \qquad \text{for all }x.
+\end{equation}
+This assumption is known as <strong>overlap</strong>, and it means that for all types of people in our population (i.e., all values of observable characteristics) we can find some portion of individuals in treatment and some in control. Intuitively, this is necessary because we’d like to will be comparing treatment and control at each level of the covariates and then aggregate those results.</p>
+<p>As a running example, in what follows we’ll be using an abridged version of a public dataset from the General Social Survey (GSS) <a class="reference external" href="https://gss.norc.org/Documents/reports/project-reports/GSSProject%20report32.pdf">(Smith, 2016)</a>. The setting is a randomized control trial. Individuals were asked about their thoughts on government spending on the social safety net. The treatment is the wording of the question: about half of the individuals were asked if they thought government spends too much on “welfare” <span class="math notranslate nohighlight">\((W_i = 1)\)</span>, while the remaining half was asked about “assistance to the poor” <span class="math notranslate nohighlight">\((W_i = 0)\)</span>. The outcome is binary, with <span class="math notranslate nohighlight">\(Y_i = 1\)</span> corresponding to a positive answer. In the data set below, we also collect a few other demographic covariates.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in data</span>
@@ -453,16 +468,15 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="difference-in-means-estimator-diff-in-means">
 <h2>1.2 Difference-in-means estimator {#diff-in-means}<a class="headerlink" href="#difference-in-means-estimator-diff-in-means" title="Permalink to this headline">¶</a></h2>
-<p>Let’s begin by considering a simple estimator that is available in experimental settings. The <strong>difference-in-means</strong> estimator is the sample average of outcomes in treatment minus the sample average of outcomes in control.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1229259d-38e0-48fb-8445-24979d451388">
-<span class="eqno">(6)<a class="headerlink" href="#equation-1229259d-38e0-48fb-8445-24979d451388" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  (\#eq:ate-dm)
-  \widehat{\tau}^{DIFF} =
-    \frac{1}{n_1} \sum_{i:W_i = 1} Y_i -
-    \frac{1}{n_0} \sum_{i:W_i = 0} Y_i
-    \qquad \text{where} \qquad
-    n_w := |\{i : W_i = w \}|
-\end{equation}\]</div>
+<p>Let’s begin by considering a simple estimator that is available in experimental settings. The <strong>difference-in-means</strong> estimator is the sample average of outcomes in treatment minus the sample average of outcomes in control.
+\begin{equation}
+(#eq:ate-dm)
+\widehat{\tau}^{DIFF} =
+\frac{1}{n_1} \sum_{i:W_i = 1} Y_i -
+\frac{1}{n_0} \sum_{i:W_i = 0} Y_i
+\qquad \text{where} \qquad
+n_w := |{i : W_i = w }|
+\end{equation}</p>
 <p>Here’s one way to compute the difference-in-means estimator and its associated statistics (t-stats, p-values, etc.) directly:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -508,20 +522,18 @@ mean in group 0 mean in group 1
 </div>
 </div>
 </div>
-<p>We can also compute the same quantity via linear regression, using the fact that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c2adfdda-dcaf-4323-90d8-91d76918e821">
-<span class="eqno">(7)<a class="headerlink" href="#equation-c2adfdda-dcaf-4323-90d8-91d76918e821" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  Y_i = Y_i(0) + W_i \left( Y_i(1) - Y_i(0) \right),
-\end{equation}\]</div>
-<p>so that taking expectations conditional on treatment assignment,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-960ee88f-cc45-4905-bd41-691ebdf59c76">
-<span class="eqno">(8)<a class="headerlink" href="#equation-960ee88f-cc45-4905-bd41-691ebdf59c76" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  \E[Y_i | W_i] = \alpha + W_i \tau \qquad \text{where} \qquad \alpha := \E[Y_i(0)]
-\end{equation}\]</div>
+<p>We can also compute the same quantity via linear regression, using the fact that
+\begin{equation}
+Y_i = Y_i(0) + W_i \left( Y_i(1) - Y_i(0) \right),
+\end{equation}</p>
+<p>so that taking expectations conditional on treatment assignment,
+\begin{equation}
+\E[Y_i | W_i] = \alpha + W_i \tau \qquad \text{where} \qquad \alpha := \E[Y_i(0)]
+\end{equation}</p>
 <font size=1>
 [Exercise: make sure you understand this decomposition. Where is the unconfoundedness assumption \@ref(eq:unconf) used?]
 </font>
-<p>This result implies that we can estimate the ATE of a binary treatment via a linear regression of observed outcomes $Y_i$ on a vector consisting of intercept and treatment assignment $(1, W_i)$.</p>
+<p>This result implies that we can estimate the ATE of a binary treatment via a linear regression of observed outcomes <span class="math notranslate nohighlight">\(Y_i\)</span> on a vector consisting of intercept and treatment assignment <span class="math notranslate nohighlight">\((1, W_i)\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Do not use! standard errors are not robust to heteroskedasticity! (See below)</span>
@@ -594,7 +606,7 @@ mean in group 0 mean in group 1
 </div>
 </div>
 </div>
-<p>Let’s see what happens to our sample before and after the change. This next figure shows the original dataset. Each observation is represented by a point on either the left or right scatterplots. An outcome of $Y_i=1$ is denoted by a blue circle, and $Y_i=0$ is denoted by a red square, but let’s not focus on the outcome at the moment. For now, what’s important to note is that the covariate distributions for treated and untreated populations are very similar. This is what we should expect in an experimental setting under unconfoundedness.</p>
+<p>Let’s see what happens to our sample before and after the change. This next figure shows the original dataset. Each observation is represented by a point on either the left or right scatterplots. An outcome of <span class="math notranslate nohighlight">\(Y_i=1\)</span> is denoted by a blue circle, and <span class="math notranslate nohighlight">\(Y_i=0\)</span> is denoted by a red square, but let’s not focus on the outcome at the moment. For now, what’s important to note is that the covariate distributions for treated and untreated populations are very similar. This is what we should expect in an experimental setting under unconfoundedness.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">&lt;-</span> <span class="nf">model.matrix</span><span class="p">(</span><span class="nf">formula</span><span class="p">(</span><span class="s">&quot;~ 0 + age + polviews&quot;</span><span class="p">),</span> <span class="n">data.exp</span><span class="p">)</span>  <span class="c1"># old &#39;experimental&#39; dataset</span>
@@ -649,7 +661,7 @@ mean in group 0 mean in group 1
 .dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
 .dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
 .dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
-</style><dl class=dl-inline><dt>Estimate</dt><dd>-0.292545104940219</dd><dt>Std. Error</dt><dd>0.00861750649572169</dd><dt>t value</dt><dd>-33.9477672671855</dd><dt>Pr(&gt;|t|)</dt><dd>1.01430093786513e-237</dd></dl>
+</style><dl class=dl-inline><dt>Estimate</dt><dd>-0.298854672636011</dd><dt>Std. Error</dt><dd>0.00867540243977412</dd><dt>t value</dt><dd>-34.4485082635304</dd><dt>Pr(&gt;|t|)</dt><dd>4.09494712570837e-244</dd></dl>
 </div></div>
 </div>
 <p>Note that the dataset created above still satisfies unconfoundedness &#64;ref(eq:cond-unconf), since discrepancies in treatment assignment probability are described by observable covariates (<code class="docutils literal notranslate"><span class="pre">age</span></code> and <code class="docutils literal notranslate"><span class="pre">polviews</span></code>). Moreover, it also satisfies the overlap assumption &#64;ref(eq:overlap), since never completely dropped all treated or all untreated observations in any region of the covariate space. This is important because, in what follows, we’ll consider different estimators of the ATE that are available in observational settings under unconfoundedness and overlap.</p>
@@ -657,24 +669,22 @@ mean in group 0 mean in group 1
 <div class="section" id="direct-estimation">
 <h2>1.4 Direct estimation<a class="headerlink" href="#direct-estimation" title="Permalink to this headline">¶</a></h2>
 <p>Our first estimator is suggested by the following decomposition of the ATE, which is possible due to unconfoundedness &#64;ref(eq:cond-unconf).</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f8cd8dae-8dcf-4a7a-90d9-cd7e50187cf1">
-<span class="eqno">(9)<a class="headerlink" href="#equation-f8cd8dae-8dcf-4a7a-90d9-cd7e50187cf1" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  \E[Y_i(1) - Y_i(0)]
-  = \E[\E[Y_i | X_i, W_i=1]] - \E[\E[Y_i | X_i, W_i=0]]
-\end{equation}\]</div>
+<p>\begin{equation}
+\E[Y_i(1) - Y_i(0)]
+= \E[\E[Y_i | X_i, W_i=1]] - \E[\E[Y_i | X_i, W_i=0]]
+\end{equation}</p>
 <font size=1>
 [Exercise: make sure you understand this. Where is the unconfoundedness assumption used?]
 </font>
 <p>The decomposition above suggests the following procedure, sometimes called the <strong>direct estimate</strong> of the ATE:</p>
 <ol class="simple">
-<li><p>Estimate $\mu(x, w) := E[Y_i|X_i = x,W_i=w]$, preferably using nonparametric methods.</p></li>
-<li><p>Predict $\hat{\mu}(X_i, 1)$ and $\hat{\mu}(X_i, 0)$ for each observation in the data.</p></li>
-<li><p>Average out the predictions and subtract them.</p></li>
+<li><p>Estimate <span class="math notranslate nohighlight">\(\mu(x, w) := E[Y_i|X_i = x,W_i=w]\)</span>, preferably using nonparametric methods.</p></li>
+<li><p>Predict <span class="math notranslate nohighlight">\(\hat{\mu}(X_i, 1)\)</span> and <span class="math notranslate nohighlight">\(\hat{\mu}(X_i, 0)\)</span> for each observation in the data.</p></li>
+<li><p>Average out the predictions and subtract them.
+\begin{equation}
+\htau^{DM} := \frac{1}{n} \sum_{i=1}^{n} \hmu(X_i, 1) - \hmu(X_i, 0)
+\end{equation}</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-1f2c0680-5ac9-4333-b68a-a9f63610c41a">
-<span class="eqno">(10)<a class="headerlink" href="#equation-1f2c0680-5ac9-4333-b68a-a9f63610c41a" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  \htau^{DM} := \frac{1}{n} \sum_{i=1}^{n} \hmu(X_i, 1) - \hmu(X_i, 0)
-\end{equation}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Do not use! We&#39;ll see a better estimator below.</span>
@@ -706,17 +716,17 @@ mean in group 0 mean in group 1
 &quot;prediction from a rank-deficient fit may be misleading&quot;
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] -0.3478353
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] -0.3565873
 </pre></div>
 </div>
 </div>
 </div>
-<p>This estimator allows us to leverage regression techniques to estimate the ATE, so the resulting estimate should have smaller root-mean-squared error. However, it has several disadvantages that make it undesirable. First, its properties will rely heavily on the model  $\hmu(x, w)$ being correctly specified: it will be an unbiased and/or consistent estimate of the ATE provided that $\hmu(x, w)$  is an unbiased and/or consistent estimator of  $\E[Y|X=x, W=w]$. In practice, having a well-specified model is not something we want to rely upon. In general, it will also not be asymptotically normal, which means that we can’t easily compute t-statistics and p-values for it.</p>
-<p>A technical note. Step 1 above can be done by regressing $Y_i$ on $X_i$ using only treated observations to get an estimate $\hat{\mu}(x, 1)$ first, and then repeating the same to obtain $\hat{\mu}(x, 0)$ from the control observations. Or it can be done by regression $Y_i$ on both covariates $(X_i, W_i)$ together and obtaining a function $\hat{\mu}(x, w)$. Both have advantages and disadvantages, and we refer to <a class="reference external" href="https://www.pnas.org/content/116/10/4156.short">Künzel, Sekhon, Bickel, Yu  (2019)</a> for a discussion.</p>
+<p>This estimator allows us to leverage regression techniques to estimate the ATE, so the resulting estimate should have smaller root-mean-squared error. However, it has several disadvantages that make it undesirable. First, its properties will rely heavily on the model  <span class="math notranslate nohighlight">\(\hmu(x, w)\)</span> being correctly specified: it will be an unbiased and/or consistent estimate of the ATE provided that <span class="math notranslate nohighlight">\(\hmu(x, w)\)</span>  is an unbiased and/or consistent estimator of  <span class="math notranslate nohighlight">\(\E[Y|X=x, W=w]\)</span>. In practice, having a well-specified model is not something we want to rely upon. In general, it will also not be asymptotically normal, which means that we can’t easily compute t-statistics and p-values for it.</p>
+<p>A technical note. Step 1 above can be done by regressing <span class="math notranslate nohighlight">\(Y_i\)</span> on <span class="math notranslate nohighlight">\(X_i\)</span> using only treated observations to get an estimate <span class="math notranslate nohighlight">\(\hat{\mu}(x, 1)\)</span> first, and then repeating the same to obtain <span class="math notranslate nohighlight">\(\hat{\mu}(x, 0)\)</span> from the control observations. Or it can be done by regression <span class="math notranslate nohighlight">\(Y_i\)</span> on both covariates <span class="math notranslate nohighlight">\((X_i, W_i)\)</span> together and obtaining a function <span class="math notranslate nohighlight">\(\hat{\mu}(x, w)\)</span>. Both have advantages and disadvantages, and we refer to <a class="reference external" href="https://www.pnas.org/content/116/10/4156.short">Künzel, Sekhon, Bickel, Yu  (2019)</a> for a discussion.</p>
 </div>
 <div class="section" id="inverse-propensity-weighted-estimator-ipw">
 <h2>1.5 Inverse propensity-weighted estimator {#ipw}<a class="headerlink" href="#inverse-propensity-weighted-estimator-ipw" title="Permalink to this headline">¶</a></h2>
-<p>To understand this estimator, let’s first consider a toy problem. Suppose that we’d like to estimate the average effect of a certain learning intervention on students’ grades, measured on a scale of 0-100. We run two separate experiments in schools of type A and B. Suppose that, unknown to us, grades among treated students in schools of type A are approximately distributed as $Y_i(1) | A \sim N(60, 5^2)$, whereas in schools of type B they are distributed as $Y_i(1) | B \sim N(70, 5^2)$. Moreover, for simplicity both schools have the same number of students. If we could treat the same number of students in both types of schools, we’d get an unbiased estimate of the population mean grade among treated individuals: $(1/2)60 + (1/2)70 = 75$.</p>
+<p>To understand this estimator, let’s first consider a toy problem. Suppose that we’d like to estimate the average effect of a certain learning intervention on students’ grades, measured on a scale of 0-100. We run two separate experiments in schools of type A and B. Suppose that, unknown to us, grades among treated students in schools of type A are approximately distributed as <span class="math notranslate nohighlight">\(Y_i(1) | A \sim N(60, 5^2)\)</span>, whereas in schools of type B they are distributed as <span class="math notranslate nohighlight">\(Y_i(1) | B \sim N(70, 5^2)\)</span>. Moreover, for simplicity both schools have the same number of students. If we could treat the same number of students in both types of schools, we’d get an unbiased estimate of the population mean grade among treated individuals: <span class="math notranslate nohighlight">\((1/2)60 + (1/2)70 = 75\)</span>.</p>
 <p>However, suppose that enrollment in the treatment is voluntary. In school A, only 5% enroll in the study, whereas in school B the number is 40%. Therefore, if we take an average of treated students’ grades without taking school membership into account, school B’s students would be over-represented, and therefore our estimate of treated student’s grades would be biased upward.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -742,24 +752,23 @@ mean in group 0 mean in group 1
 <img alt="_images/average_treatment_effect_1_23_0.png" src="_images/average_treatment_effect_1_23_0.png" />
 </div>
 </div>
-<p>To solve this problem, we can consider each school separately, and then aggregate the results. Denote by $n_A$ the number of students from school $A$, and $n_{A,1}$ denote the number of treated students in that school. Likewise, denote by $n_B$ and $n_{B,1}$ the same quantities for school $B$. Then our aggregated means estimator can be written as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f686fa00-a090-4927-9fb3-dd3ceb6c75ef">
-<span class="eqno">(11)<a class="headerlink" href="#equation-f686fa00-a090-4927-9fb3-dd3ceb6c75ef" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  (\#eq:agg)
-  \overbrace{
-  \p{\frac{n_{A}}{n}}
-  }^{\text{Proportion of A}}
-  \underbrace{
-  \frac{1}{n_{A, 1}} \sum_{\substack{i \in A \\ i \text{ treated}}} Y_i
-  }_{\text{avg. among treated in A}}
-  +
- \overbrace{
- \p{\frac{n_{B}}{n}}
- }^{\text{Proportion of B}}
- \underbrace{
-  \frac{1}{n_{B, 1}} \sum_{\substack{i \in B \\ i \text{ treated}}} Y_i
-  }_{\text{avg. among treated in B}}.
-\end{equation}\]</div>
+<p>To solve this problem, we can consider each school separately, and then aggregate the results. Denote by <span class="math notranslate nohighlight">\(n_A\)</span> the number of students from school <span class="math notranslate nohighlight">\(A\)</span>, and <span class="math notranslate nohighlight">\(n_{A,1}\)</span> denote the number of treated students in that school. Likewise, denote by <span class="math notranslate nohighlight">\(n_B\)</span> and <span class="math notranslate nohighlight">\(n_{B,1}\)</span> the same quantities for school <span class="math notranslate nohighlight">\(B\)</span>. Then our aggregated means estimator can be written as:
+\begin{equation}
+(#eq:agg)
+\overbrace{
+\p{\frac{n_{A}}{n}}
+}^{\text{Proportion of A}}
+\underbrace{
+\frac{1}{n_{A, 1}} \sum_{\substack{i \in A \ i \text{ treated}}} Y_i
+}<em>{\text{avg. among treated in A}}
++
+\overbrace{
+\p{\frac{n</em>{B}}{n}}
+}^{\text{Proportion of B}}
+\underbrace{
+\frac{1}{n_{B, 1}} \sum_{\substack{i \in B \ i \text{ treated}}} Y_i
+}_{\text{avg. among treated in B}}.
+\end{equation}</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulating the scenario about a large number of times</span>
@@ -785,49 +794,46 @@ mean in group 0 mean in group 1
 <img alt="_images/average_treatment_effect_1_25_0.png" src="_images/average_treatment_effect_1_25_0.png" />
 </div>
 </div>
-<p>Next, we’ll manipulate the expression &#64;ref(eq:agg). This next derivation can be a bit overwhelming, but please keep in mind that we’re simply doing algebraic manipulations, as well as establishing some common and useful notation. First, note that we can rewrite the average for school A in &#64;ref(eq:agg) as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-44069342-79e4-4372-a328-9d69019ef519">
-<span class="eqno">(12)<a class="headerlink" href="#equation-44069342-79e4-4372-a328-9d69019ef519" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-    (\#eq:avg1)
-    \frac{1}{n_{A, 1}} \sum_{\substack{i \in A \\ i \text{ treated}}} Y_i
-    =
-    \frac{1}{n_A} \sum_{\substack{i \in A \\ i \text{ treated}}} \frac{1}{(n_{A,1} / n_A)} Y_i
-    =
-    \frac{1}{n_A} \sum_{i \in A} \frac{W_i}{(n_{A,1} / n_A)} Y_i,
-\end{equation}\]</div>
-<p>where $W_i$ is the treatment indicator. Plugging &#64;ref(eq:avg1) back into &#64;ref(eq:agg),</p>
-<div class="amsmath math notranslate nohighlight" id="equation-87056238-3e86-476b-b44c-fe55c89c697d">
-<span class="eqno">(13)<a class="headerlink" href="#equation-87056238-3e86-476b-b44c-fe55c89c697d" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  \p{\frac{n_{A}}{n}}
-    \frac{1}{n_A} \sum_{i \in A} \frac{W_i}{(n_{A,1} / n_A)} Y_i
-  +
- \p{\frac{n_{B}}{n}}
+<p>Next, we’ll manipulate the expression &#64;ref(eq:agg). This next derivation can be a bit overwhelming, but please keep in mind that we’re simply doing algebraic manipulations, as well as establishing some common and useful notation. First, note that we can rewrite the average for school A in &#64;ref(eq:agg) as
+\begin{equation}
+(#eq:avg1)
+\frac{1}{n_{A, 1}} \sum_{\substack{i \in A \ i \text{ treated}}} Y_i
+=
+\frac{1}{n_A} \sum_{\substack{i \in A \ i \text{ treated}}} \frac{1}{(n_{A,1} / n_A)} Y_i
+=
+\frac{1}{n_A} \sum_{i \in A} \frac{W_i}{(n_{A,1} / n_A)} Y_i,
+\end{equation}</p>
+<p>where <span class="math notranslate nohighlight">\(W_i\)</span> is the treatment indicator. Plugging &#64;ref(eq:avg1) back into &#64;ref(eq:agg),
+\begin{equation}
+\p{\frac{n_{A}}{n}}
+\frac{1}{n_A} \sum_{i \in A} \frac{W_i}{(n_{A,1} / n_A)} Y_i
++
+\p{\frac{n_{B}}{n}}
 \frac{1}{n_B} \sum_{i \in B} \frac{W_i}{(n_{B,1} / n_B)} Y_i.
-\end{equation}\]</div>
-<p>Note that the $n_A$ and $n_B$ will cancel out. Finally, if we denote the sample proportion of treated students in school $A$ by $\hat{e}(A_i) \approx n_{A,1}/n_A$ and similar for school $B$, &#64;ref(eq:agg) can be written compactly as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1be36ce4-ff7e-4776-b4ce-c3fc5c96eab6">
-<span class="eqno">(14)<a class="headerlink" href="#equation-1be36ce4-ff7e-4776-b4ce-c3fc5c96eab6" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  (\#eq:ipw-treated)
-  \frac{1}{n} \sum_{i=1}^{n}  \frac{W_i}{\hat{e}(X_i)} Y_i,
-\end{equation}\]</div>
-<p>where $X_i \in {A, B}$ denotes the school membership. Quantity $\hat{e}(X_i)$ is an estimate of the probability of treatment given the control variable $e(X_i) = \PP[W_i=1 | X_i ]$, also called the <strong>propensity score</strong>. Because &#64;ref(eq:ipw-treated) is a weighted average with weights $W_i/\hat{e}(X_i)$, when written in this form we say that it is an <strong>inverse propensity-weighted estimator</strong> (IPW).</p>
-<p>The IPW estimator is also defined for the case of continuous covariates. In that case, we must estimate the assignment probability given some model, for example using logistic regression, forests, etc. With respect to modeling, the behavior of the IPW estimator is similar to the direct estimator: if $\hat{e}(X_i)$ is an unbiased estimate of $e(X_i)$, then &#64;ref(eq:ipw-treated) is an unbiased estimate of $E[Y(1)]$; and we can show that if $\hat{e}(X_i)$ is a consistent estimator of $e(X_i)$, then &#64;ref(eq:ipw-treated) is consistent for $E[Y(1)]$.</p>
-<p>Another important point is that when the estimated treatment propensity $\hat{e}(X_i)$ is small, the summands in &#64;ref(eq:ipw-treated) can be very large. In particular, if $\hat{e}(x)$ is exactly zero, then this estimator is undefined. That is why, in addition to requiring conditional unconfoundedness &#64;ref(eq:cond-unconf), it also requires the overlap condition &#64;ref(eq:overlap). In any case, when overlap is small (i.e., $\hat{e}(x)$ is very close to zero for many $x$), IPW becomes an unattractive estimator due to its high variance. We’ll see in the next section an improved estimator that builds upon IPW but is strictly superior and should be used instead.</p>
-<p>Finally, we just derived an estimator of the average treated outcome, but we could repeat the argument for control units instead. Subtracting the two estimators leads to the following inverse propensity-weighted estimate of the treatment effect:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-94ba9cd2-2edb-44ae-b64e-7d1ebc6d4e61">
-<span class="eqno">(15)<a class="headerlink" href="#equation-94ba9cd2-2edb-44ae-b64e-7d1ebc6d4e61" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  (\#eq:ipw)
-  \widehat{\tau}^{IPW} :=
-  \frac{1}{n} \sum_{i=1}^{n} Y_i \frac{W_i}{\he(X_i)}
-  -
-  \frac{1}{n} \sum_{i=1}^{n} Y_i \frac{(1 - W_i) }{1-\he(X_i)}.
-\end{equation}\]</div>
+\end{equation}</p>
+<p>Note that the <span class="math notranslate nohighlight">\(n_A\)</span> and <span class="math notranslate nohighlight">\(n_B\)</span> will cancel out. Finally, if we denote the sample proportion of treated students in school <span class="math notranslate nohighlight">\(A\)</span> by <span class="math notranslate nohighlight">\(\hat{e}(A_i) \approx n_{A,1}/n_A\)</span> and similar for school <span class="math notranslate nohighlight">\(B\)</span>, &#64;ref(eq:agg) can be written compactly as
+\begin{equation}
+(#eq:ipw-treated)
+\frac{1}{n} \sum_{i=1}^{n}  \frac{W_i}{\hat{e}(X_i)} Y_i,
+\end{equation}
+where <span class="math notranslate nohighlight">\(X_i \in \{A, B\}\)</span> denotes the school membership. Quantity <span class="math notranslate nohighlight">\(\hat{e}(X_i)\)</span> is an estimate of the probability of treatment given the control variable <span class="math notranslate nohighlight">\(e(X_i) = \PP[W_i=1 | X_i ]\)</span>, also called the <strong>propensity score</strong>. Because &#64;ref(eq:ipw-treated) is a weighted average with weights <span class="math notranslate nohighlight">\(W_i/\hat{e}(X_i)\)</span>, when written in this form we say that it is an <strong>inverse propensity-weighted estimator</strong> (IPW).</p>
+<p>The IPW estimator is also defined for the case of continuous covariates. In that case, we must estimate the assignment probability given some model, for example using logistic regression, forests, etc. With respect to modeling, the behavior of the IPW estimator is similar to the direct estimator: if <span class="math notranslate nohighlight">\(\hat{e}(X_i)\)</span> is an unbiased estimate of <span class="math notranslate nohighlight">\(e(X_i)\)</span>, then &#64;ref(eq:ipw-treated) is an unbiased estimate of <span class="math notranslate nohighlight">\(E[Y(1)]\)</span>; and we can show that if <span class="math notranslate nohighlight">\(\hat{e}(X_i)\)</span> is a consistent estimator of <span class="math notranslate nohighlight">\(e(X_i)\)</span>, then &#64;ref(eq:ipw-treated) is consistent for <span class="math notranslate nohighlight">\(E[Y(1)]\)</span>.</p>
+<p>Another important point is that when the estimated treatment propensity <span class="math notranslate nohighlight">\(\hat{e}(X_i)\)</span> is small, the summands in &#64;ref(eq:ipw-treated) can be very large. In particular, if <span class="math notranslate nohighlight">\(\hat{e}(x)\)</span> is exactly zero, then this estimator is undefined. That is why, in addition to requiring conditional unconfoundedness &#64;ref(eq:cond-unconf), it also requires the overlap condition &#64;ref(eq:overlap). In any case, when overlap is small (i.e., <span class="math notranslate nohighlight">\(\hat{e}(x)\)</span> is very close to zero for many <span class="math notranslate nohighlight">\(x\)</span>), IPW becomes an unattractive estimator due to its high variance. We’ll see in the next section an improved estimator that builds upon IPW but is strictly superior and should be used instead.</p>
+</div>
+<div class="section" id="finally-we-just-derived-an-estimator-of-the-average-treated-outcome-but-we-could-repeat-the-argument-for-control-units-instead-subtracting-the-two-estimators-leads-to-the-following-inverse-propensity-weighted-estimate-of-the-treatment-effect-begin-equation-eq-ipw-widehat-tau-ipw-frac-1-n-sum-i-1-n-y-i-frac-w-i-he-x-i">
+<h2>Finally, we just derived an estimator of the average treated outcome, but we could repeat the argument for control units instead. Subtracting the two estimators leads to the following inverse propensity-weighted estimate of the treatment effect:
+\begin{equation}
+(#eq:ipw)
+\widehat{\tau}^{IPW} :=
+\frac{1}{n} \sum_{i=1}^{n} Y_i \frac{W_i}{\he(X_i)}<a class="headerlink" href="#finally-we-just-derived-an-estimator-of-the-average-treated-outcome-but-we-could-repeat-the-argument-for-control-units-instead-subtracting-the-two-estimators-leads-to-the-following-inverse-propensity-weighted-estimate-of-the-treatment-effect-begin-equation-eq-ipw-widehat-tau-ipw-frac-1-n-sum-i-1-n-y-i-frac-w-i-he-x-i" title="Permalink to this headline">¶</a></h2>
+<p>\frac{1}{n} \sum_{i=1}^{n} Y_i \frac{(1 - W_i) }{1-\he(X_i)}.
+\end{equation}</p>
 <p>The argument above suggests the following algorithm:</p>
 <ol class="simple">
-<li><p>Estimate the propensity scores $e(X_i)$ by regressing $W_i$ on $X_i$, preferably using a non-parametric method.</p></li>
+<li><p>Estimate the propensity scores <span class="math notranslate nohighlight">\(e(X_i)\)</span> by regressing <span class="math notranslate nohighlight">\(W_i\)</span> on <span class="math notranslate nohighlight">\(X_i\)</span>, preferably using a non-parametric method.</p></li>
 <li><p>Compute the IPW estimator summand:
-$$Z_i = Y_i \times \left(\frac{W_i}{\hat{e}(X_i)} - \frac{(1-W_i)}{(1-\hat{e}(X_i)} \right)$$</p></li>
-<li><p>Compute the mean and standard error of the new variable $Z_i$</p></li>
+$<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{\hat{e}(X_i)} - \frac{(1-W_i)}{(1-\hat{e}(X_i)} \right)\)</span>$</p></li>
+<li><p>Compute the mean and standard error of the new variable <span class="math notranslate nohighlight">\(Z_i\)</span></p></li>
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -854,7 +860,7 @@ $$Z_i = Y_i \times \left(\frac{W_i}{\hat{e}(X_i)} - \frac{(1-W_i)}{(1-\hat{e}(X_
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      estimate      std.error         t.stat         pvalue 
- -3.390913e-01   1.359383e-02  -2.494451e+01  1.054140e-126 
+ -3.526838e-01   1.441323e-02  -2.446946e+01  8.367984e-122 
 </pre></div>
 </div>
 </div>
@@ -862,23 +868,22 @@ $$Z_i = Y_i \times \left(\frac{W_i}{\hat{e}(X_i)} - \frac{(1-W_i)}{(1-\hat{e}(X_
 </div>
 <div class="section" id="augmented-inverse-propensity-weighted-aipw-estimator-aipw">
 <h2>1.6 Augmented inverse propensity-weighted (AIPW) estimator {#aipw}<a class="headerlink" href="#augmented-inverse-propensity-weighted-aipw-estimator-aipw" title="Permalink to this headline">¶</a></h2>
-<p>The next <strong>augmented inverse propensity-weighted estimator</strong> (AIPW) of the treatment effect is available under unconfoundedness &#64;ref(eq:cond-unconf) and overlap &#64;ref(eq:overlap):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e640bbc7-ecd9-47a2-bfd9-c961b5b42f1c">
-<span class="eqno">(16)<a class="headerlink" href="#equation-e640bbc7-ecd9-47a2-bfd9-c961b5b42f1c" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  (\#eq:aipw)
-  \begin{aligned}
-  \hat{\tau}^{AIPW} &amp;:=
-    \frac{1}{n} \sum_{i=1}^{n}
-      \hat{\mu}^{-i}(X_i, 1) - \hat{\mu}^{-i}(X_i, 0) \\
-      &amp;+
-      \frac{W}{\hat{\epsilon}^{-i}(X_i)}  \left({ Y_i - \hat{\mu}^{-i}(X_i, 1)}\right)
-      -
-      \frac{1-W}{1-\hat{\epsilon}^{-i}(X_i)}  \left({ Y_i - \hat{\mu}^{-i}(X_i, 0)}\right)
-    \end{aligned}
-\end{equation}\]</div>
-<p>Let’s parse &#64;ref(eq:aipw). Ignoring the superscripts for now, the first two terms correspond to an estimate of the treatment effect obtained via direct estimation. The next two terms resemble the IPW estimator, except that we replaced the outcome $Y_i$ with the residuals $Y_i - \hat{\mu}(X_i, W_i)$. At a high level, the last two terms estimate and subtract an estimate of the bias of the first.</p>
-<p>The superscripts have to do with a technicality called <strong>cross-fitting</strong> that is required to prevent a specific form of overfitting and allow certain desirable asymptotic properties to hold. That is, we need to fit the outcome and propensity models using one portion of the data, and compute predictions on the remaining portion. An easy way of accomplishing this is to divide the data into K folds, and then estimate $K$ models that are fitted on $K-1$ folds, and then compute predictions on the remaining Kth fold. The example below does that with $K=5$. Note that this is different from cross-validation: the goal of cross-validation is to obtain accurate estimates of the loss function for model selection, whereas the goal of cross-fitting is simply to not use the same observation to fit the model and produce predictions.</p>
-<p>The AIPW estimator &#64;ref(eq:aipw) has several desirable properties. First, it will be unbiased provided that either $\hat{\mu}(X_i, w)$ or $\hat{\epsilon}(X_i, w)$ is unbiased. Second, it will be consistent provided that either  $\hat{\mu} (X_i, w)$ or $\hat{\epsilon}(X_i, w)$ is consistent. This property is called <strong>double robustness (DR)</strong>, because only one of the outcome or propensity score models needs to be correctly specified, so the estimator is “robust” to misspecification in the remaining model. Under mild assumptions, it is also asymptotically normal and it is efficient, that is has the smallest asymptotic variance than any other estimator. In fact, it even has smaller variance than the difference-in-means estimators in the <em>randomized</em> setting and is therefore superior to it.</p>
+<p>The next <strong>augmented inverse propensity-weighted estimator</strong> (AIPW) of the treatment effect is available under unconfoundedness &#64;ref(eq:cond-unconf) and overlap &#64;ref(eq:overlap):
+\begin{equation}
+(#eq:aipw)
+\begin{aligned}
+\hat{\tau}^{AIPW} &amp;:=
+\frac{1}{n} \sum_{i=1}^{n}
+\hat{\mu}^{-i}(X_i, 1) - \hat{\mu}^{-i}(X_i, 0) \
+&amp;+
+\frac{W}{\hat{\epsilon}^{-i}(X_i)}  \left({ Y_i - \hat{\mu}^{-i}(X_i, 1)}\right)
+-
+\frac{1-W}{1-\hat{\epsilon}^{-i}(X_i)}  \left({ Y_i - \hat{\mu}^{-i}(X_i, 0)}\right)
+\end{aligned}
+\end{equation}</p>
+<p>Let’s parse &#64;ref(eq:aipw). Ignoring the superscripts for now, the first two terms correspond to an estimate of the treatment effect obtained via direct estimation. The next two terms resemble the IPW estimator, except that we replaced the outcome <span class="math notranslate nohighlight">\(Y_i\)</span> with the residuals <span class="math notranslate nohighlight">\(Y_i - \hat{\mu}(X_i, W_i)\)</span>. At a high level, the last two terms estimate and subtract an estimate of the bias of the first.</p>
+<p>The superscripts have to do with a technicality called <strong>cross-fitting</strong> that is required to prevent a specific form of overfitting and allow certain desirable asymptotic properties to hold. That is, we need to fit the outcome and propensity models using one portion of the data, and compute predictions on the remaining portion. An easy way of accomplishing this is to divide the data into K folds, and then estimate <span class="math notranslate nohighlight">\(K\)</span> models that are fitted on <span class="math notranslate nohighlight">\(K-1\)</span> folds, and then compute predictions on the remaining Kth fold. The example below does that with <span class="math notranslate nohighlight">\(K=5\)</span>. Note that this is different from cross-validation: the goal of cross-validation is to obtain accurate estimates of the loss function for model selection, whereas the goal of cross-fitting is simply to not use the same observation to fit the model and produce predictions.</p>
+<p>The AIPW estimator &#64;ref(eq:aipw) has several desirable properties. First, it will be unbiased provided that either <span class="math notranslate nohighlight">\(\hat{\mu}(X_i, w)\)</span> or <span class="math notranslate nohighlight">\(\hat{\epsilon}(X_i, w)\)</span> is unbiased. Second, it will be consistent provided that either  <span class="math notranslate nohighlight">\(\hat{\mu} (X_i, w)\)</span> or <span class="math notranslate nohighlight">\(\hat{\epsilon}(X_i, w)\)</span> is consistent. This property is called <strong>double robustness (DR)</strong>, because only one of the outcome or propensity score models needs to be correctly specified, so the estimator is “robust” to misspecification in the remaining model. Under mild assumptions, it is also asymptotically normal and it is efficient, that is has the smallest asymptotic variance than any other estimator. In fact, it even has smaller variance than the difference-in-means estimators in the <em>randomized</em> setting and is therefore superior to it.</p>
 <p>The next snippet provides an implementation of the AIPW estimator where outcome and propensity models are estimated using generalized linear models with splines (via <code class="docutils literal notranslate"><span class="pre">glmnet</span></code> and <code class="docutils literal notranslate"><span class="pre">splines</span></code> packages).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -955,7 +960,7 @@ $$Z_i = Y_i \times \left(\frac{W_i}{\hat{e}(X_i)} - \frac{(1-W_i)}{(1-\hat{e}(X_
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      estimate      std.error         t.stat         pvalue 
- -3.415424e-01   9.370914e-03  -3.644708e+01  3.217721e-275 
+ -3.514958e-01   9.673307e-03  -3.633667e+01  1.606631e-273 
 </pre></div>
 </div>
 </div>
@@ -974,17 +979,17 @@ $$Z_i = Y_i \times \left(\frac{W_i}{\hat{e}(X_i)} - \frac{(1-W_i)}{(1-\hat{e}(X_
 	<tr><th></th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
 </thead>
 <tbody>
-	<tr><th scope=row>2</th><td> 2</td><td>1</td><td>0</td><td>54</td><td>6</td><td>12</td><td>16</td><td>2</td><td>2</td></tr>
 	<tr><th scope=row>3</th><td> 3</td><td>1</td><td>0</td><td>44</td><td>2</td><td>12</td><td>16</td><td>5</td><td>2</td></tr>
 	<tr><th scope=row>4</th><td> 6</td><td>0</td><td>0</td><td>47</td><td>1</td><td> 5</td><td>10</td><td>4</td><td>1</td></tr>
-	<tr><th scope=row>7</th><td> 9</td><td>0</td><td>0</td><td>27</td><td>2</td><td> 8</td><td>17</td><td>5</td><td>2</td></tr>
-	<tr><th scope=row>8</th><td>10</td><td>1</td><td>1</td><td>51</td><td>5</td><td>11</td><td>18</td><td>3</td><td>1</td></tr>
+	<tr><th scope=row>5</th><td> 7</td><td>0</td><td>1</td><td>19</td><td>4</td><td> 9</td><td>10</td><td>5</td><td>2</td></tr>
+	<tr><th scope=row>13</th><td>16</td><td>1</td><td>0</td><td>63</td><td>3</td><td> 4</td><td>10</td><td>1</td><td>1</td></tr>
 	<tr><th scope=row>17</th><td>26</td><td>1</td><td>0</td><td>67</td><td>4</td><td> 9</td><td>12</td><td>1</td><td>1</td></tr>
+	<tr><th scope=row>18</th><td>27</td><td>1</td><td>0</td><td>52</td><td>6</td><td>12</td><td>11</td><td>1</td><td>2</td></tr>
 </tbody>
 </table>
 </div></div>
 </div>
-<p>Here’s another example of AIPW-based estimation using random forests via the package <code class="docutils literal notranslate"><span class="pre">grf</span></code>. The function <code class="docutils literal notranslate"><span class="pre">average_treatment_effect</span></code> computes the AIPW estimate of the treatment effect, and uses forest-based estimates of the outcome model and propensity scores (unless those are passed directly via the arguments <code class="docutils literal notranslate"><span class="pre">Y.hat</span></code> and <code class="docutils literal notranslate"><span class="pre">W.hat</span></code>). Also, because forests are an ensemble method, cross-fitting is accomplished via <em>out-of-bag</em> predictions – that is, predictions for observation $i$ are computed using trees that were not constructed using observation $i$.</p>
+<p>Here’s another example of AIPW-based estimation using random forests via the package <code class="docutils literal notranslate"><span class="pre">grf</span></code>. The function <code class="docutils literal notranslate"><span class="pre">average_treatment_effect</span></code> computes the AIPW estimate of the treatment effect, and uses forest-based estimates of the outcome model and propensity scores (unless those are passed directly via the arguments <code class="docutils literal notranslate"><span class="pre">Y.hat</span></code> and <code class="docutils literal notranslate"><span class="pre">W.hat</span></code>). Also, because forests are an ensemble method, cross-fitting is accomplished via <em>out-of-bag</em> predictions – that is, predictions for observation <span class="math notranslate nohighlight">\(i\)</span> are computed using trees that were not constructed using observation <span class="math notranslate nohighlight">\(i\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Available in randomized settings and observational settings with unconfoundedness+overlap</span>
@@ -1006,11 +1011,11 @@ $$Z_i = Y_i \times \left(\frac{W_i}{\hat{e}(X_i)} - \frac{(1-W_i)}{(1-\hat{e}(X_
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message in average_treatment_effect(forest):
-&quot;Estimated treatment propensities go as high as 0.983 which means that treatment effects for some treated units may not be well identified. In this case, using `target.sample=control` may be helpful.&quot;
+&quot;Estimated treatment propensities go as high as 1 which means that treatment effects for some treated units may not be well identified. In this case, using `target.sample=control` may be helpful.&quot;
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   estimate     std.err 
--0.33271008  0.01355296 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>estimate  std.err 
+     NaN      NaN 
 </pre></div>
 </div>
 </div>
@@ -1022,12 +1027,11 @@ $$Z_i = Y_i \times \left(\frac{W_i}{\hat{e}(X_i)} - \frac{(1-W_i)}{(1-\hat{e}(X_
 <p>Here we show some basic diagnostics and best practices that should always be conducted. Although failing these tests should usually cause concern, passing them does not mean that the analysis is entirely free from issues. For example, even if our estimated propensity scores are bounded away from zero and one (and therefore seem to satisfy the overlap assumption), they may still be incorrect – for example, if we rely on modeling assumptions that are simply not true. Also, although we should expect to pass all the diagnostic tests below in randomized settings, it’s good practice to check them anyway, as one may find problems with the experimental design.</p>
 <div class="section" id="assessing-balance-balance">
 <h3>1.7.1 Assessing balance {#balance}<a class="headerlink" href="#assessing-balance-balance" title="Permalink to this headline">¶</a></h3>
-<p>As we saw in Section &#64;ref(obs), in observational settings the covariate distributions can be very different for treated and untreated individuals. Such discrepancies can lead to biased estimates of the ATE, but as hinted in Section &#64;ref(ipw), one would hope that by up- or down-weighting observations based on inverse propensity weights their averages should be similar. In fact, we should also expect that averages of basis functions of the covariates should be similar after reweighting. This property is called <strong>balance</strong>. One way to check it is as follows. Given some variable $Z_i$ (e.g., a covariate $X_{i1}$, or an interaction between covariates $X_{i1}X_{i2}$, or a polynomial in covariates $X_{i1}^2$, etc), we can check the absolute standardized mean difference (ASMD) of $Z_i$ between treated and untreated individuals in our data,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-248899a7-b73f-4a89-b94e-ccd2f0dc96ed">
-<span class="eqno">(17)<a class="headerlink" href="#equation-248899a7-b73f-4a89-b94e-ccd2f0dc96ed" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  \frac{|\bar{Z}_1 - \bar{Z}_0|}{\sqrt{s_1^2 + s_0^2}},
-\end{equation}\]</div>
-<p>where $\bar{Z}_1$ and $\bar{Z}<em>0$ are sample averages of $Z_i$, and $s_1$ and $s_0$ are standard deviations of $Z_i$ for the two samples of treated and untreated individuals. Next, we can check the same quantity for their weighted counterparts $Z</em>{i}W_i/\hat{e}(X_i)$ and $Z_i(1-W_i)/(1-\hat{e}(X_i))$. If our propensity scores are well-calibrated, the ASMD for the weighted version should be close to zero.</p>
+<p>As we saw in Section &#64;ref(obs), in observational settings the covariate distributions can be very different for treated and untreated individuals. Such discrepancies can lead to biased estimates of the ATE, but as hinted in Section &#64;ref(ipw), one would hope that by up- or down-weighting observations based on inverse propensity weights their averages should be similar. In fact, we should also expect that averages of basis functions of the covariates should be similar after reweighting. This property is called <strong>balance</strong>. One way to check it is as follows. Given some variable <span class="math notranslate nohighlight">\(Z_i\)</span> (e.g., a covariate <span class="math notranslate nohighlight">\(X_{i1}\)</span>, or an interaction between covariates <span class="math notranslate nohighlight">\(X_{i1}X_{i2}\)</span>, or a polynomial in covariates <span class="math notranslate nohighlight">\(X_{i1}^2\)</span>, etc), we can check the absolute standardized mean difference (ASMD) of <span class="math notranslate nohighlight">\(Z_i\)</span> between treated and untreated individuals in our data,
+\begin{equation}
+\frac{|\bar{Z}_1 - \bar{Z}_0|}{\sqrt{s_1^2 + s_0^2}},
+\end{equation}
+where <span class="math notranslate nohighlight">\(\bar{Z}_1\)</span> and <span class="math notranslate nohighlight">\(\bar{Z}_0\)</span> are sample averages of <span class="math notranslate nohighlight">\(Z_i\)</span>, and <span class="math notranslate nohighlight">\(s_1\)</span> and <span class="math notranslate nohighlight">\(s_0\)</span> are standard deviations of <span class="math notranslate nohighlight">\(Z_i\)</span> for the two samples of treated and untreated individuals. Next, we can check the same quantity for their weighted counterparts <span class="math notranslate nohighlight">\(Z_{i}W_i/\hat{e}(X_i)\)</span> and <span class="math notranslate nohighlight">\(Z_i(1-W_i)/(1-\hat{e}(X_i))\)</span>. If our propensity scores are well-calibrated, the ASMD for the weighted version should be close to zero.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here, adding covariates and their interactions, though there are many other possibilities.</span>
@@ -1103,7 +1107,7 @@ $$Z_i = Y_i \times \left(\frac{W_i}{\hat{e}(X_i)} - \frac{(1-W_i)}{(1-\hat{e}(X_
 .dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
 .dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
 .dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
-</style><dl class=dl-inline><dt>age</dt><dd>0.647215532203764</dd><dt>polviews</dt><dd>0.621547174147834</dd><dt>income</dt><dd>0.057267299779717</dd><dt>educ</dt><dd>0.123157434293063</dd><dt>marital</dt><dd>0.115408239963966</dd><dt>sex</dt><dd>0.0440894656472531</dd><dt>age:polviews</dt><dd>0.0829499251584449</dd><dt>age:income</dt><dd>0.495228393287153</dd><dt>age:educ</dt><dd>0.476181836149296</dd><dt>age:marital</dt><dd>0.230632448220389</dd><dt>age:sex</dt><dd>0.470083761421088</dd><dt>polviews:income</dt><dd>0.508919498467102</dd><dt>polviews:educ</dt><dd>0.57350079344667</dd><dt>polviews:marital</dt><dd>0.337589386476557</dd><dt>polviews:sex</dt><dd>0.385577533515982</dd><dt>income:educ</dt><dd>0.102582082730517</dd><dt>income:marital</dt><dd>0.115404093922503</dd><dt>income:sex</dt><dd>0.000184706037492201</dd><dt>educ:marital</dt><dd>0.138058828046897</dd><dt>educ:sex</dt><dd>0.0362711159931431</dd><dt>marital:sex</dt><dd>0.0782115621006887</dd></dl>
+</style><dl class=dl-inline><dt>age</dt><dd>0.66052672277379</dd><dt>polviews</dt><dd>0.624027721299389</dd><dt>income</dt><dd>0.0812329177626256</dd><dt>educ</dt><dd>0.124826640733608</dd><dt>marital</dt><dd>0.110719910552001</dd><dt>sex</dt><dd>0.0570198534496825</dd><dt>age:polviews</dt><dd>0.0830526143584263</dd><dt>age:income</dt><dd>0.48671121564321</dd><dt>age:educ</dt><dd>0.477524351908397</dd><dt>age:marital</dt><dd>0.240948124538381</dd><dt>age:sex</dt><dd>0.490341058575722</dd><dt>polviews:income</dt><dd>0.52817611098294</dd><dt>polviews:educ</dt><dd>0.576568395181466</dd><dt>polviews:marital</dt><dd>0.332736800988547</dd><dt>polviews:sex</dt><dd>0.375051657868341</dd><dt>income:educ</dt><dd>0.120120381200658</dd><dt>income:marital</dt><dd>0.121404438017991</dd><dt>income:sex</dt><dd>0.00545017572419849</dd><dt>educ:marital</dt><dd>0.128007262785008</dd><dt>educ:sex</dt><dd>0.0290807202817362</dd><dt>marital:sex</dt><dd>0.0656661486802765</dd></dl>
 </div></div>
 </div>
 <p>Note above how in particular <code class="docutils literal notranslate"><span class="pre">age</span></code> and <code class="docutils literal notranslate"><span class="pre">polviews</span></code> – the variables we chose to introduce imbalance in Section &#64;ref(obs) – are far from balanced before adjustment, as are other variables that correlate with them.</p>
@@ -1128,12 +1132,12 @@ $$Z_i = Y_i \times \left(\frac{W_i}{\hat{e}(X_i)} - \frac{(1-W_i)}{(1-\hat{e}(X_
 	<tr><th></th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
 </thead>
 <tbody>
-	<tr><th scope=row>2</th><td>54</td><td>6</td><td>324</td><td>16</td><td>0</td><td>2.957416</td></tr>
-	<tr><th scope=row>3</th><td>44</td><td>2</td><td> 88</td><td>16</td><td>0</td><td>2.184353</td></tr>
-	<tr><th scope=row>4</th><td>47</td><td>1</td><td> 47</td><td>10</td><td>0</td><td>1.223790</td></tr>
-	<tr><th scope=row>7</th><td>27</td><td>2</td><td> 54</td><td>17</td><td>0</td><td>2.421507</td></tr>
-	<tr><th scope=row>8</th><td>51</td><td>5</td><td>255</td><td>18</td><td>1</td><td>2.057711</td></tr>
-	<tr><th scope=row>17</th><td>67</td><td>4</td><td>268</td><td>12</td><td>0</td><td>1.200657</td></tr>
+	<tr><th scope=row>3</th><td>44</td><td>2</td><td> 88</td><td>16</td><td>0</td><td>1.628634</td></tr>
+	<tr><th scope=row>4</th><td>47</td><td>1</td><td> 47</td><td>10</td><td>0</td><td>1.098762</td></tr>
+	<tr><th scope=row>5</th><td>19</td><td>4</td><td> 76</td><td>10</td><td>1</td><td>1.958351</td></tr>
+	<tr><th scope=row>13</th><td>63</td><td>3</td><td>189</td><td>10</td><td>0</td><td>1.184078</td></tr>
+	<tr><th scope=row>17</th><td>67</td><td>4</td><td>268</td><td>12</td><td>0</td><td>1.238053</td></tr>
+	<tr><th scope=row>18</th><td>52</td><td>6</td><td>312</td><td>11</td><td>0</td><td>2.351009</td></tr>
 </tbody>
 </table>
 </div></div>
@@ -1169,7 +1173,7 @@ $$Z_i = Y_i \times \left(\frac{W_i}{\hat{e}(X_i)} - \frac{(1-W_i)}{(1-\hat{e}(X_
 </div>
 <div class="section" id="assessing-overlap">
 <h3>1.7.2 Assessing overlap<a class="headerlink" href="#assessing-overlap" title="Permalink to this headline">¶</a></h3>
-<p>It’s also important to check the estimated propensity scores. If they seem to cluster at zero or one, we should expect IPW and AIPW estimators to behave very poorly. Here, the propensity score is trimodal because of our sample modification procedure in Section &#64;ref(obs): some observations are untouched and therefore remain with assignment probability $0.5$, some are dropped (kept) with probability 15% (85%).</p>
+<p>It’s also important to check the estimated propensity scores. If they seem to cluster at zero or one, we should expect IPW and AIPW estimators to behave very poorly. Here, the propensity score is trimodal because of our sample modification procedure in Section &#64;ref(obs): some observations are untouched and therefore remain with assignment probability <span class="math notranslate nohighlight">\(0.5\)</span>, some are dropped (kept) with probability 15% (85%).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">e.hat</span> <span class="o">&lt;-</span> <span class="n">forest</span><span class="o">$</span><span class="n">W.hat</span>
@@ -1214,7 +1218,7 @@ $$Z_i = Y_i \times \left(\frac{W_i}{\hat{e}(X_i)} - \frac{(1-W_i)}{(1-\hat{e}(X_
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Causal Inference and Machine Learning</p>
+            <p class="prev-next-title">Introduction</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="heterogeneous-treatment-effect-1.html" title="next page">

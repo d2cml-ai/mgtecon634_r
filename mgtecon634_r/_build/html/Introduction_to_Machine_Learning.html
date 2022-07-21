@@ -1,0 +1,1395 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Introduction to Machine Learning {#intro-ml} &#8212; MGTECON 634 at Stanford (R scripts)</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">MGTECON 634 at Stanford (R scripts)</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="average_treatment_effect_1.html">
+   ATE I: Binary treatment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="heterogeneous-treatment-effect-1.html">
+   HTE I: Binary treatment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="policy-evaluation-1.html">
+   Policy Evaluation I - Binary Treatment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="6_Policy_Learning_I.html">
+   Policy Learning I - Binary Treatment
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/Introduction_to_Machine_Learning.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/d2cml-ai/mgtecon634_r"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/d2cml-ai/mgtecon634_r/issues/new?title=Issue%20on%20page%20%2FIntroduction_to_Machine_Learning.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/d2cml-ai/mgtecon634_r/edit/master/mgtecon634_r/_build/jupyter_execute/Introduction_to_Machine_Learning.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/d2cml-ai/mgtecon634_r/master?urlpath=tree/mgtecon634_r/_build/jupyter_execute/Introduction_to_Machine_Learning.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/d2cml-ai/mgtecon634_r/blob/master/mgtecon634_r/_build/jupyter_execute/Introduction_to_Machine_Learning.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-concepts">
+   1.1 Key concepts
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#common-machine-learning-algorithms">
+   1.2 Common machine learning algorithms
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generalized-linear-models">
+     1.2.1 Generalized linear models
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#decision-trees">
+     1.2.2 Decision trees
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#forests">
+     1.2.3 Forests
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#further-reading">
+   1.3 Further reading
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Introduction to Machine Learning {#intro-ml}</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-concepts">
+   1.1 Key concepts
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#common-machine-learning-algorithms">
+   1.2 Common machine learning algorithms
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generalized-linear-models">
+     1.2.1 Generalized linear models
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#decision-trees">
+     1.2.2 Decision trees
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#forests">
+     1.2.3 Forests
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#further-reading">
+   1.3 Further reading
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Deleting all current variables</span>
+<span class="nf">rm</span><span class="p">(</span><span class="n">list</span><span class="o">=</span><span class="nf">ls</span><span class="p">())</span>
+
+<span class="c1"># Ensuring consistent random values in the bookdown version (this can be ignored).</span>
+<span class="nf">set.seed</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="n">kind</span> <span class="o">=</span> <span class="s">&quot;Mersenne-Twister&quot;</span><span class="p">,</span> <span class="n">normal.kind</span> <span class="o">=</span> <span class="s">&quot;Inversion&quot;</span><span class="p">,</span> <span class="n">sample.kind</span> <span class="o">=</span> <span class="s">&quot;Rejection&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="introduction-to-machine-learning-intro-ml">
+<h1>Introduction to Machine Learning {#intro-ml}<a class="headerlink" href="#introduction-to-machine-learning-intro-ml" title="Permalink to this headline">¶</a></h1>
+<p>RMD source: <a class="reference external" href="https://docs.google.com/uc?export=download&amp;id=110N1b5MYNXcIFZqWPqLbpqmgIkoMFqaF">link</a></p>
+<p>In this chapter, we’ll briefly review machine learning concepts that will be relevant later. We’ll focus in particular on the problem of <strong>prediction</strong>, that is, to model some output variable as a function of observed input covariates.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># loading relevant packages</span>
+<span class="c1"># if you need to install a new package, </span>
+<span class="c1"># use e.g., install.packages(&quot;grf&quot;)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">grf</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">rpart</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">glmnet</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">splines</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">lmtest</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">MASS</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">sandwich</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">reshape2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: Matrix
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loaded glmnet 4.1-4
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: zoo
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Attaching package: &#39;zoo&#39;
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The following objects are masked from &#39;package:base&#39;:
+
+    as.Date, as.Date.numeric
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this section, we will use simulated data. In the next section we’ll load a real dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simulating data</span>
+
+<span class="c1"># Sample size</span>
+<span class="n">n</span> <span class="o">&lt;-</span> <span class="m">500</span>
+
+<span class="c1"># Generating covariate X ~ Unif[-4, 4]</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="m">-4</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span>
+
+<span class="c1"># Generate outcome</span>
+<span class="c1"># if x &lt; 0:</span>
+<span class="c1">#   y = cos(2*x) + N(0, 1)</span>
+<span class="c1"># else:</span>
+<span class="c1">#   y = 1-sin(x) + N(0, 1)</span>
+<span class="n">mu</span> <span class="o">&lt;-</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="m">0</span><span class="p">,</span> <span class="nf">cos</span><span class="p">(</span><span class="m">2</span><span class="o">*</span><span class="n">x</span><span class="p">),</span> <span class="m">1</span><span class="o">-</span><span class="nf">sin</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> 
+<span class="n">y</span> <span class="o">&lt;-</span> <span class="n">mu</span> <span class="o">+</span> <span class="m">1</span> <span class="o">*</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># collecting observations in a data.frame object</span>
+<span class="n">data</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># outcome variable name</span>
+<span class="n">outcome</span> <span class="o">&lt;-</span> <span class="s">&quot;y&quot;</span>
+
+<span class="c1"># covariate names</span>
+<span class="n">covariates</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following shows how the two variables <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> relate. Note that the relationship is nonlinear.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span> <span class="m">4</span><span class="p">),</span> <span class="n">pch</span><span class="o">=</span><span class="m">21</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">ylab</span> <span class="o">=</span> <span class="s">&quot;Outcome y&quot;</span><span class="p">)</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="nf">order</span><span class="p">(</span><span class="n">x</span><span class="p">)],</span> <span class="n">mu</span><span class="p">[</span><span class="nf">order</span><span class="p">(</span><span class="n">x</span><span class="p">)],</span> <span class="n">col</span><span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span> <span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;l&quot;</span><span class="p">)</span>
+<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;bottomright&quot;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Ground truth E[Y|X=x]&quot;</span><span class="p">,</span> <span class="s">&quot;Data&quot;</span><span class="p">),</span> <span class="n">cex</span><span class="o">=</span><span class="n">.</span><span class="m">8</span><span class="p">,</span> <span class="n">lty</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="kc">NA</span><span class="p">),</span> <span class="n">col</span><span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span>  <span class="n">pch</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span> <span class="m">21</span><span class="p">),</span> <span class="n">pt.bg</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;red&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Introduction_to_Machine_Learning_6_0.png" src="_images/Introduction_to_Machine_Learning_6_0.png" />
+</div>
+</div>
+<p>Note: If you’d like to run the code below on a different dataset, you can replace the dataset above with another <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> of your choice, and redefine the key variable identifiers (<code class="docutils literal notranslate"><span class="pre">outcome</span></code>, <code class="docutils literal notranslate"><span class="pre">covariates</span></code>) accordingly. Although we try to make the code as general as possible, you may also need to make a few minor changes to the code below; read the comments carefully.</p>
+<div class="section" id="key-concepts">
+<h2>1.1 Key concepts<a class="headerlink" href="#key-concepts" title="Permalink to this headline">¶</a></h2>
+<p>The prediction problem is to accurately guess the value of some output variable <span class="math notranslate nohighlight">\(Y_i\)</span> from input variables <span class="math notranslate nohighlight">\(X_i\)</span>. For example, we might want to predict “house prices given house characteristics such as the number of rooms, age of the building, and so on. The relationship between input and output is modeled in very general terms by some function
+$<span class="math notranslate nohighlight">\(
+(\#eq: true-model) 
+  Y_i = f(X_i) + \epsilon_i
+\)</span>$ (true-model)</p>
+<p>where <span class="math notranslate nohighlight">\(\epsilon_i\)</span> represents all that is not captured by information obtained from <span class="math notranslate nohighlight">\(X_i\)</span> via the mapping <span class="math notranslate nohighlight">\(f\)</span>. We say that error <span class="math notranslate nohighlight">\(\epsilon_i\)</span> is irreducible.</p>
+<p>We highlight that  <code class="xref eq docutils literal notranslate"><span class="pre">true-model</span></code> is <strong>not modeling a causal relationship</strong> between inputs and outputs. For an extreme example, consider taking <span class="math notranslate nohighlight">\(Y_i\)</span> to be “distance from the equator” and <span class="math notranslate nohighlight">\(X_i\)</span> to be “average temperature.” We can still think of the problem of guessing (“predicting”) “distance from the equator” given some information about “average temperature,” even though one would expect the former to cause the latter.</p>
+<p>In general, we can’t know the “ground truth”  <span class="math notranslate nohighlight">\(f\)</span>, so we will approximate it from data. Given <span class="math notranslate nohighlight">\(n\)</span> data points <span class="math notranslate nohighlight">\(\{(X_1, Y_1), \cdots, (X_n, Y_n)\}\)</span>, our goal is to obtain an estimated model  <span class="math notranslate nohighlight">\(\hat{f}\)</span> such that our predictions <span class="math notranslate nohighlight">\(\widehat{Y}_i := \hat{f}(X_i)\)</span> are “close” to the true outcome values <span class="math notranslate nohighlight">\(Y_i\)</span> given some criterion. To formalize this, we’ll follow these three steps:</p>
+<ul class="simple">
+<li><p><strong>Modeling:</strong> Decide on some suitable class of functions that our estimated model may belong to. In machine learning applications the class of functions can be very large and complex (e.g., deep decision trees, forests, high-dimensional linear models, etc). Also, we must decide on a loss function that serves as our criterion to evaluate the quality of our predictions (e.g., mean-squared error).</p></li>
+<li><p><strong>Fitting:</strong> Find the estimate <span class="math notranslate nohighlight">\(\hat{f}\)</span> that optimizes the loss function chosen in the previous step (e.g., the tree that minimizes the squared deviation between <span class="math notranslate nohighlight">\(\hat{f}(X_i)\)</span> and <span class="math notranslate nohighlight">\(Y_i\)</span> in our data).</p></li>
+<li><p><strong>Evaluation:</strong> Evaluate our fitted model <span class="math notranslate nohighlight">\(\hat{f}\)</span>. That is, if we were given a new, yet unseen, input and output pair <span class="math notranslate nohighlight">\((X',Y')\)</span>, we’d like to know if <span class="math notranslate nohighlight">\(Y' \approx \hat{f}(X_i)\)</span> by some metric.</p></li>
+</ul>
+<p>For concreteness, let’s work through an example. Let’s say that, given the data simulated above, we’d like to predict <span class="math notranslate nohighlight">\(Y_i\)</span> from the first covariate  <span class="math notranslate nohighlight">\(X_{i1}\)</span> only. Also, let’s say that our model class will be polynomials of degree <span class="math notranslate nohighlight">\(q\)</span> in <span class="math notranslate nohighlight">\(X_{i1}\)</span>, and we’ll evaluate fit based on mean squared error. That is, <span class="math notranslate nohighlight">\(\hat{f}(X_{i1}) = \hat{b}_0 + X_{i1}\hat{b}_1 + \cdots + X_{i1}^q \hat{b}_q\)</span>, where the coefficients are obtained by solving the following problem:
+$<span class="math notranslate nohighlight">\(
+  \hat{b} = \arg\min_b \sum_{i=1}^m
+    \left(Y_i - b_0 - X_{i1}b_1 - \cdots - X_{iq}^q b_q \right)^2
+\)</span><span class="math notranslate nohighlight">\(
+An important question is what is \)</span>q$, the degree of the polynomial. It controls the complexity of the model. One may imagine that more complex models are better, but that is not always true, because a very flexible model may try to simply interpolate over the data at hand, but fail to generalize well for new data points. We call this <strong>overfitting</strong>. The main feature of overfitting is <strong>high variance</strong>, in the sense that, if we were given a different data set of the same size, we’d likely get a very different model.</p>
+<p>To illustrate, in the figure below we let the degree be  <span class="math notranslate nohighlight">\(q=10\)</span> but use only the first few data points. The fitted model is shown in green, and the original data points are in red.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Note: this code assumes that the first covariate is continuous.</span>
+<span class="c1"># Fitting a flexible model on very little data</span>
+
+<span class="c1"># selecting only a few data points</span>
+<span class="n">subset</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span><span class="m">30</span>
+
+<span class="c1"># formula for a high-dimensional polynomial regression</span>
+<span class="c1"># y ~ 1 + x1 + x1^2 + x1^3 + .... + x1^q</span>
+<span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="s">&quot;~ poly(&quot;</span><span class="p">,</span> <span class="n">covariates</span><span class="p">[</span><span class="m">1</span><span class="p">],</span> <span class="s">&quot;, 10)&quot;</span><span class="p">))</span>
+
+<span class="c1"># linear regression using only a few observations</span>
+<span class="n">ols</span> <span class="o">&lt;-</span> <span class="nf">lm</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="n">subset</span><span class="p">)</span>
+
+<span class="c1"># compute a grid of x1 values we&#39;ll use for prediction</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span><span class="n">covariates</span><span class="p">[</span><span class="m">1</span><span class="p">]]</span>
+<span class="n">x.grid</span> <span class="o">&lt;-</span> <span class="nf">seq</span><span class="p">(</span><span class="nf">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nf">max</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">length.out</span><span class="o">=</span><span class="m">1000</span><span class="p">)</span>
+<span class="n">new.data</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span><span class="n">x.grid</span><span class="p">)</span>
+<span class="nf">colnames</span><span class="p">(</span><span class="n">new.data</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">covariates</span><span class="p">[</span><span class="m">1</span><span class="p">]</span>
+
+<span class="c1"># predict</span>
+<span class="n">y.hat</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">ols</span><span class="p">,</span> <span class="n">newdata</span> <span class="o">=</span> <span class="n">new.data</span><span class="p">)</span>
+
+<span class="c1"># plotting observations (in red) and model predictions (in green)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">subset</span><span class="p">,</span> <span class="n">covariates</span><span class="p">[</span><span class="m">1</span><span class="p">]],</span> <span class="n">data</span><span class="p">[</span><span class="n">subset</span><span class="p">,</span> <span class="n">outcome</span><span class="p">],</span> <span class="n">pch</span><span class="o">=</span><span class="m">21</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">xlab</span><span class="o">=</span><span class="n">covariates</span><span class="p">[</span><span class="m">1</span><span class="p">],</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;Outcome y&quot;</span><span class="p">,</span> <span class="n">main</span><span class="o">=</span><span class="s">&quot;Example of overfitting&quot;</span><span class="p">)</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">x.grid</span><span class="p">,</span> <span class="n">y.hat</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&quot;green&quot;</span><span class="p">,</span> <span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-3</span><span class="p">,</span> <span class="m">3</span><span class="p">))</span>
+<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;bottomright&quot;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Estimate&quot;</span><span class="p">,</span> <span class="s">&quot;Data&quot;</span><span class="p">),</span> <span class="n">col</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;green&quot;</span><span class="p">,</span> <span class="s">&quot;black&quot;</span><span class="p">),</span><span class="n">pch</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span> <span class="m">21</span><span class="p">),</span> <span class="n">pt.bg</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;red&quot;</span><span class="p">),</span> <span class="n">lty</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="kc">NA</span><span class="p">),</span> <span class="n">lwd</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="kc">NA</span><span class="p">),</span><span class="n">cex</span> <span class="o">=</span> <span class="n">.</span><span class="m">8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Introduction_to_Machine_Learning_9_0.png" src="_images/Introduction_to_Machine_Learning_9_0.png" />
+</div>
+</div>
+<p>On the other hand, when <span class="math notranslate nohighlight">\(q\)</span> is too small relative to our data, we permit only very simple models and may suffer from misspecification bias. We call this <strong>underfitting</strong>. The main feature of underfitting is <strong>high bias</strong> – the selected model just isn’t complex enough to accurately capture the relationship between input and output variables.</p>
+<p>To illustrate underfitting, in the figure below we set <span class="math notranslate nohighlight">\(q=1\)</span> (a linear fit).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Note: this code assumes that the first covariate is continuous</span>
+<span class="c1"># Fitting a very simply model on very little data</span>
+
+<span class="c1"># only a few data points</span>
+<span class="n">subset</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span><span class="m">25</span>
+
+<span class="c1"># formula for a linear regression (without taking polynomials of x1)</span>
+<span class="c1"># y ~ 1 + x1</span>
+<span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="s">&quot;~&quot;</span><span class="p">,</span> <span class="n">covariates</span><span class="p">[</span><span class="m">1</span><span class="p">]))</span>
+
+<span class="c1"># linear regression</span>
+<span class="n">ols</span> <span class="o">&lt;-</span> <span class="nf">lm</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="n">subset</span><span class="p">,])</span>
+
+<span class="c1"># compute a grid of x1 values we&#39;ll use for prediction</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span><span class="n">covariates</span><span class="p">[</span><span class="m">1</span><span class="p">]]</span>
+<span class="n">x.grid</span> <span class="o">&lt;-</span> <span class="nf">seq</span><span class="p">(</span><span class="nf">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nf">max</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">length.out</span><span class="o">=</span><span class="m">1000</span><span class="p">)</span>
+<span class="n">new.data</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span><span class="n">x.grid</span><span class="p">)</span>
+<span class="nf">colnames</span><span class="p">(</span><span class="n">new.data</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">covariates</span><span class="p">[</span><span class="m">1</span><span class="p">]</span>
+
+<span class="c1"># predict</span>
+<span class="n">y.hat</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">ols</span><span class="p">,</span> <span class="n">newdata</span> <span class="o">=</span> <span class="n">new.data</span><span class="p">)</span>
+
+<span class="c1"># plotting observations (in red) and model predictions (in green)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">subset</span><span class="p">,</span> <span class="n">covariates</span><span class="p">[</span><span class="m">1</span><span class="p">]],</span> <span class="n">data</span><span class="p">[</span><span class="n">subset</span><span class="p">,</span> <span class="n">outcome</span><span class="p">],</span> <span class="n">pch</span><span class="o">=</span><span class="m">21</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">xlab</span><span class="o">=</span><span class="n">covariates</span><span class="p">[</span><span class="m">1</span><span class="p">],</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;Outcome y&quot;</span><span class="p">,</span> <span class="n">main</span><span class="o">=</span><span class="s">&quot;Example of underfitting&quot;</span><span class="p">)</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">x.grid</span><span class="p">,</span> <span class="n">y.hat</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&quot;green&quot;</span><span class="p">,</span> <span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;bottomright&quot;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Estimate&quot;</span><span class="p">,</span> <span class="s">&quot;Data&quot;</span><span class="p">),</span> <span class="n">col</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;green&quot;</span><span class="p">,</span> <span class="s">&quot;black&quot;</span><span class="p">),</span><span class="n">pch</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span> <span class="m">21</span><span class="p">),</span> <span class="n">pt.bg</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;red&quot;</span><span class="p">),</span> <span class="n">lty</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="kc">NA</span><span class="p">),</span> <span class="n">lwd</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="kc">NA</span><span class="p">),</span><span class="n">cex</span> <span class="o">=</span> <span class="n">.</span><span class="m">8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Introduction_to_Machine_Learning_11_0.png" src="_images/Introduction_to_Machine_Learning_11_0.png" />
+</div>
+</div>
+<p>This tension is called the <strong>bias-variance trade-off</strong>: simpler models underfit and have more bias, more complex models overfit and have more variance.</p>
+<p>One data-driven way of deciding an appropriate level of complexity is to divide the available data into a training set (where the model is fit) and the validation set (where the model is evaluated). The next snippet of code uses the first half of the data to fit a polynomial of order <span class="math notranslate nohighlight">\(q\)</span>, and then evaluates that polynomial on the second half. The training MSE estimate decreases monotonically with the polynomial degree, because the model is better able to fit on the training data; the test MSE estimate starts increasing after a while reflecting that the model no longer generalizes well.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># polynomial degrees that we&#39;ll loop over</span>
+<span class="n">poly.degree</span> <span class="o">&lt;-</span> <span class="nf">seq</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="m">20</span><span class="p">)</span>
+
+<span class="c1"># training data observations: 1 to (n/2)</span>
+<span class="n">train</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="m">2</span><span class="p">)</span>
+
+<span class="c1"># looping over each polynomial degree</span>
+<span class="n">mse.estimates</span> <span class="o">&lt;-</span> <span class="nf">lapply</span><span class="p">(</span><span class="n">poly.degree</span><span class="p">,</span> <span class="nf">function</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="c1"># formula y ~ 1 + x1 + x1^2 + ... + x1^q</span>
+  <span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="s">&quot;~ poly(&quot;</span><span class="p">,</span> <span class="n">covariates</span><span class="p">[</span><span class="m">1</span><span class="p">],</span> <span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span><span class="s">&quot;)&quot;</span><span class="p">))</span>
+
+  <span class="c1"># linear regression using the formula above</span>
+  <span class="c1"># note we&#39;re fitting only on the training data observations</span>
+  <span class="n">ols</span> <span class="o">&lt;-</span> <span class="nf">lm</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="n">train</span><span class="p">,])</span>
+
+  <span class="c1"># predicting on the training subset</span>
+  <span class="c1"># (no need to pass a dataframe)</span>
+  <span class="n">y.hat.train</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">ols</span><span class="p">)</span>
+  <span class="n">y.train</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[</span><span class="n">train</span><span class="p">,</span> <span class="n">outcome</span><span class="p">]</span>
+  
+  <span class="c1"># predicting on the validation subset</span>
+  <span class="c1"># (the minus sign in &quot;-train&quot; excludes observations in the training data)</span>
+  <span class="n">y.hat.test</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">ols</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="n">train</span><span class="p">,])</span>
+  <span class="n">y.test</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="n">train</span><span class="p">,</span> <span class="n">outcome</span><span class="p">]</span>
+  
+  <span class="c1"># compute the mse estimate on the validation subset and output it</span>
+  <span class="nf">data.frame</span><span class="p">(</span>
+    <span class="n">mse.train</span><span class="o">=</span><span class="nf">mean</span><span class="p">((</span><span class="n">y.hat.train</span> <span class="o">-</span> <span class="n">y.train</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">),</span>
+    <span class="n">mse.test</span><span class="o">=</span><span class="nf">mean</span><span class="p">((</span><span class="n">y.hat.test</span> <span class="o">-</span> <span class="n">y.test</span><span class="p">)</span><span class="o">^</span><span class="m">2</span><span class="p">))</span>
+  <span class="p">})</span>
+<span class="n">mse.estimates</span> <span class="o">&lt;-</span> <span class="nf">do.call</span><span class="p">(</span><span class="n">rbind</span><span class="p">,</span> <span class="n">mse.estimates</span><span class="p">)</span>
+
+<span class="nf">matplot</span><span class="p">(</span><span class="n">poly.degree</span><span class="p">,</span> <span class="n">mse.estimates</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;l&quot;</span><span class="p">,</span>  <span class="n">main</span><span class="o">=</span><span class="s">&quot;MSE estimates (train-test split)&quot;</span><span class="p">,</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;MSE estimate&quot;</span><span class="p">,</span> <span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Polynomial degree&quot;</span><span class="p">)</span>
+<span class="nf">text</span><span class="p">(</span><span class="n">poly.degree</span><span class="p">[</span><span class="m">2</span><span class="p">],</span> <span class="n">.</span><span class="m">9</span><span class="o">*</span><span class="nf">max</span><span class="p">(</span><span class="n">mse.estimates</span><span class="p">),</span> <span class="n">pos</span><span class="o">=</span><span class="m">4</span><span class="p">,</span> <span class="s">&quot;&lt;-----\nHigh bias\nLow variance&quot;</span><span class="p">)</span> 
+<span class="nf">text</span><span class="p">(</span><span class="nf">max</span><span class="p">(</span><span class="n">poly.degree</span><span class="p">),</span> <span class="n">.</span><span class="m">9</span><span class="o">*</span><span class="nf">max</span><span class="p">(</span><span class="n">mse.estimates</span><span class="p">),</span> <span class="n">pos</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="s">&quot;-----&gt;\nLow bias\nHigh variance&quot;</span><span class="p">)</span> 
+<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;top&quot;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Training&quot;</span><span class="p">,</span> <span class="s">&quot;Validation&quot;</span><span class="p">),</span> <span class="n">bty</span><span class="o">=</span><span class="s">&quot;n&quot;</span><span class="p">,</span> <span class="n">lty</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">,</span> <span class="n">cex</span><span class="o">=</span><span class="n">.</span><span class="m">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Introduction_to_Machine_Learning_13_0.png" src="_images/Introduction_to_Machine_Learning_13_0.png" />
+</div>
+</div>
+<p>To make better use of the data we will often divide the data into <span class="math notranslate nohighlight">\(K\)</span> subsets, or <em>folds</em>. Then one fits <span class="math notranslate nohighlight">\(K\)</span> models, each using  <span class="math notranslate nohighlight">\(K-1\)</span> folds and then evaluation the fitted model on the remaining fold. This is called <strong>k-fold cross-validation</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># number of folds (K)</span>
+<span class="n">n.folds</span> <span class="o">&lt;-</span> <span class="m">5</span>
+
+<span class="c1"># polynomial degrees that we&#39;ll loop over to select</span>
+<span class="n">poly.degree</span> <span class="o">&lt;-</span> <span class="nf">seq</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">20</span><span class="p">)</span>
+
+<span class="c1"># list of indices that will be left out at each step</span>
+<span class="n">indices</span> <span class="o">&lt;-</span> <span class="nf">split</span><span class="p">(</span><span class="nf">seq</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="nf">sort</span><span class="p">(</span><span class="nf">seq</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">%%</span> <span class="n">n.folds</span><span class="p">))</span>
+
+<span class="c1"># looping over polynomial degrees (q)</span>
+<span class="n">mse.estimates</span> <span class="o">&lt;-</span> <span class="nf">sapply</span><span class="p">(</span><span class="n">poly.degree</span><span class="p">,</span> <span class="nf">function</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1"># formula y ~ 1 + x1 + x1^2 + ... + x1^q</span>
+    <span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="s">&quot;~ poly(&quot;</span><span class="p">,</span> <span class="n">covariates</span><span class="p">[</span><span class="m">1</span><span class="p">],</span> <span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span><span class="s">&quot;)&quot;</span><span class="p">))</span>
+
+    <span class="c1"># loop over folds get cross-validated predictions</span>
+    <span class="n">y.hat</span> <span class="o">&lt;-</span> <span class="nf">lapply</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="nf">function</span><span class="p">(</span><span class="n">fold.idx</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="c1"># fit on K-1 folds, leaving out observations in fold.idx</span>
+        <span class="c1"># (the minus sign in -fold.idx excludes those observations)</span>
+        <span class="n">ols</span> <span class="o">&lt;-</span> <span class="nf">lm</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="n">fold.idx</span><span class="p">,])</span>
+
+        <span class="c1"># predict on left-out kth fold</span>
+        <span class="nf">predict</span><span class="p">(</span><span class="n">ols</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="n">fold.idx</span><span class="p">,])</span>
+    <span class="p">})</span>
+    <span class="c1"># concatenate all the cross-validated predictions</span>
+    <span class="n">y.hat</span> <span class="o">&lt;-</span> <span class="nf">unname</span><span class="p">(</span><span class="nf">unlist</span><span class="p">(</span><span class="n">y.hat</span><span class="p">))</span>
+
+    <span class="c1"># cross-validated mse estimate</span>
+    <span class="nf">mean</span><span class="p">((</span><span class="n">y.hat</span> <span class="o">-</span> <span class="n">data</span><span class="p">[,</span> <span class="n">outcome</span><span class="p">])</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="c1"># plot</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">poly.degree</span><span class="p">,</span> <span class="n">mse.estimates</span><span class="p">,</span> <span class="n">main</span><span class="o">=</span><span class="s">&quot;MSE estimates (K-fold cross-validation)&quot;</span><span class="p">,</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;MSE estimate&quot;</span><span class="p">,</span> <span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Polynomial degree&quot;</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;l&quot;</span><span class="p">,</span> <span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;top&quot;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Cross-validated MSE&quot;</span><span class="p">),</span> <span class="n">bty</span><span class="o">=</span><span class="s">&quot;n&quot;</span><span class="p">,</span> <span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">cex</span><span class="o">=</span><span class="n">.</span><span class="m">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Introduction_to_Machine_Learning_15_0.png" src="_images/Introduction_to_Machine_Learning_15_0.png" />
+</div>
+</div>
+<p>A final remark is that, in machine learning applications, the complexity of the model often is allowed to increase with the available data. In the example above, even though we weren’t very successful when fitting a high-dimensional model on very little data, if we had much more data perhaps such a model would be appropriate. The next figure again fits a high order polynomial model, but this time on many data points. Note how, at least in data-rich regions, the model is much better behaved, and tracks the average outcome reasonably well without trying to interpolate wildly of the data points.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Note this code assumes that the first covariate is continuous</span>
+<span class="c1"># Fitting a flexible model on a lot of data</span>
+
+<span class="c1"># now using much more data</span>
+<span class="n">subset</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span><span class="n">n</span>
+
+<span class="c1"># formula for high order polynomial regression</span>
+<span class="c1"># y ~ 1 + x1 + x1^2 + ... + x1^q</span>
+<span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="s">&quot;~ poly(&quot;</span><span class="p">,</span> <span class="n">covariates</span><span class="p">[</span><span class="m">1</span><span class="p">],</span> <span class="s">&quot;, 15)&quot;</span><span class="p">))</span>
+
+<span class="c1"># linear regression</span>
+<span class="n">ols</span> <span class="o">&lt;-</span> <span class="nf">lm</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="n">subset</span><span class="p">)</span>
+
+<span class="c1"># compute a grid of x1 values we&#39;ll use for prediction</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span><span class="n">covariates</span><span class="p">[</span><span class="m">1</span><span class="p">]]</span>
+<span class="n">x.grid</span> <span class="o">&lt;-</span> <span class="nf">seq</span><span class="p">(</span><span class="nf">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nf">max</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">length.out</span><span class="o">=</span><span class="m">1000</span><span class="p">)</span>
+<span class="n">new.data</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span><span class="n">x.grid</span><span class="p">)</span>
+<span class="nf">colnames</span><span class="p">(</span><span class="n">new.data</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">covariates</span><span class="p">[</span><span class="m">1</span><span class="p">]</span>
+
+<span class="c1"># predict</span>
+<span class="n">y.hat</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">ols</span><span class="p">,</span> <span class="n">newdata</span> <span class="o">=</span> <span class="n">new.data</span><span class="p">)</span>
+
+<span class="c1"># plotting observations (in red) and model predictions (in green)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">subset</span><span class="p">,</span> <span class="n">covariates</span><span class="p">[</span><span class="m">1</span><span class="p">]],</span> <span class="n">data</span><span class="p">[</span><span class="n">subset</span><span class="p">,</span> <span class="n">outcome</span><span class="p">],</span> <span class="n">pch</span><span class="o">=</span><span class="m">21</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">xlab</span><span class="o">=</span><span class="n">covariates</span><span class="p">[</span><span class="m">1</span><span class="p">],</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;Outcome&quot;</span><span class="p">)</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="nf">order</span><span class="p">(</span><span class="n">x</span><span class="p">)],</span> <span class="n">mu</span><span class="p">[</span><span class="nf">order</span><span class="p">(</span><span class="n">x</span><span class="p">)],</span> <span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">)</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">x.grid</span><span class="p">,</span> <span class="n">y.hat</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&quot;green&quot;</span><span class="p">,</span> <span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;bottomright&quot;</span><span class="p">,</span> <span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">lty</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span> <span class="n">col</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;black&quot;</span><span class="p">,</span> <span class="s">&quot;green&quot;</span><span class="p">),</span> <span class="n">legend</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Ground truth&quot;</span><span class="p">,</span> <span class="s">&quot;Estimate&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Introduction_to_Machine_Learning_17_0.png" src="_images/Introduction_to_Machine_Learning_17_0.png" />
+</div>
+</div>
+<p>This is one of the benefits of using machine learning-based models: more data implies more flexible modeling, and therefore potentially better predictive power – provided that we carefully avoid overfitting.</p>
+<p>The example above based on polynomial regression was used mostly for illustration. In practice, there are often better-performing algorithms. We’ll see some of them next.</p>
+</div>
+<div class="section" id="common-machine-learning-algorithms">
+<h2>1.2 Common machine learning algorithms<a class="headerlink" href="#common-machine-learning-algorithms" title="Permalink to this headline">¶</a></h2>
+<p>Next, we’ll introduce three machine learning algorithms: (regularized) linear models, trees, and forests. Although this isn’t an exhaustive list, these algorithms are common enough that every machine learning practitioner should know about them. They also have convenient <code class="docutils literal notranslate"><span class="pre">R</span></code> packages that allow for easy coding.</p>
+<p>In this tutorial, we’ll focus heavily on how to <strong>interpret</strong> the output of machine learning models – or, at least, how not to <em>mis</em>-interpret it. However, in this chapter we won’t be making any causal claims about the relationships between variables yet. But please hang tight, as estimating causal effects will be one of the main topics presented in the next chapters.</p>
+<p>For the remainder of the chapter we will use a real dataset. Each row in this data set represents the characteristics of a owner-occupied housing unit. Our goal is to predict the (log) price of the housing unit (<code class="docutils literal notranslate"><span class="pre">LOGVALUE</span></code>, our outcome variable) from features such as the size of the lot (<code class="docutils literal notranslate"><span class="pre">LOT</span></code>) and square feet area (<code class="docutils literal notranslate"><span class="pre">UNITSF</span></code>), number of bedrooms (<code class="docutils literal notranslate"><span class="pre">BEDRMS</span></code>) and bathrooms (<code class="docutils literal notranslate"><span class="pre">BATHS</span></code>), year in which it was built (<code class="docutils literal notranslate"><span class="pre">BUILT</span></code>) etc. This dataset comes from the American Housing Survey and was used in <a class="reference external" href="https://www.aeaweb.org/articles?id=10.1257/jep.31.2.87">Mullainathan and Spiess (2017, JEP)</a>. In addition, we will append to this data columns that are pure noise. Ideally, our fitted model should not take them into acccount.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># load dataset</span>
+<span class="n">data</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;https://docs.google.com/uc?id=1qHr-6nN7pCbU8JUtbRDtMzUKqS9ZlZcR&amp;export=download&quot;</span><span class="p">)</span>
+
+<span class="c1"># outcome variable name</span>
+<span class="n">outcome</span> <span class="o">&lt;-</span> <span class="s">&quot;LOGVALUE&quot;</span>
+
+<span class="c1"># covariates</span>
+<span class="n">true.covariates</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#39;LOT&#39;</span><span class="p">,</span><span class="s">&#39;UNITSF&#39;</span><span class="p">,</span><span class="s">&#39;BUILT&#39;</span><span class="p">,</span><span class="s">&#39;BATHS&#39;</span><span class="p">,</span><span class="s">&#39;BEDRMS&#39;</span><span class="p">,</span><span class="s">&#39;DINING&#39;</span><span class="p">,</span><span class="s">&#39;METRO&#39;</span><span class="p">,</span><span class="s">&#39;CRACKS&#39;</span><span class="p">,</span><span class="s">&#39;REGION&#39;</span><span class="p">,</span><span class="s">&#39;METRO3&#39;</span><span class="p">,</span><span class="s">&#39;PHONE&#39;</span><span class="p">,</span><span class="s">&#39;KITCHEN&#39;</span><span class="p">,</span><span class="s">&#39;MOBILTYP&#39;</span><span class="p">,</span><span class="s">&#39;WINTEROVEN&#39;</span><span class="p">,</span><span class="s">&#39;WINTERKESP&#39;</span><span class="p">,</span><span class="s">&#39;WINTERELSP&#39;</span><span class="p">,</span><span class="s">&#39;WINTERWOOD&#39;</span><span class="p">,</span><span class="s">&#39;WINTERNONE&#39;</span><span class="p">,</span><span class="s">&#39;NEWC&#39;</span><span class="p">,</span><span class="s">&#39;DISH&#39;</span><span class="p">,</span><span class="s">&#39;WASH&#39;</span><span class="p">,</span><span class="s">&#39;DRY&#39;</span><span class="p">,</span><span class="s">&#39;NUNIT2&#39;</span><span class="p">,</span><span class="s">&#39;BURNER&#39;</span><span class="p">,</span><span class="s">&#39;COOK&#39;</span><span class="p">,</span><span class="s">&#39;OVEN&#39;</span><span class="p">,</span><span class="s">&#39;REFR&#39;</span><span class="p">,</span><span class="s">&#39;DENS&#39;</span><span class="p">,</span><span class="s">&#39;FAMRM&#39;</span><span class="p">,</span><span class="s">&#39;HALFB&#39;</span><span class="p">,</span><span class="s">&#39;KITCH&#39;</span><span class="p">,</span><span class="s">&#39;LIVING&#39;</span><span class="p">,</span><span class="s">&#39;OTHFN&#39;</span><span class="p">,</span><span class="s">&#39;RECRM&#39;</span><span class="p">,</span><span class="s">&#39;CLIMB&#39;</span><span class="p">,</span><span class="s">&#39;ELEV&#39;</span><span class="p">,</span><span class="s">&#39;DIRAC&#39;</span><span class="p">,</span><span class="s">&#39;PORCH&#39;</span><span class="p">,</span><span class="s">&#39;AIRSYS&#39;</span><span class="p">,</span><span class="s">&#39;WELL&#39;</span><span class="p">,</span><span class="s">&#39;WELDUS&#39;</span><span class="p">,</span><span class="s">&#39;STEAM&#39;</span><span class="p">,</span><span class="s">&#39;OARSYS&#39;</span><span class="p">)</span>
+<span class="n">p.true</span> <span class="o">&lt;-</span> <span class="nf">length</span><span class="p">(</span><span class="n">true.covariates</span><span class="p">)</span>
+
+<span class="c1"># noise covariates added for didactic reasons</span>
+<span class="n">p.noise</span> <span class="o">&lt;-</span> <span class="m">20</span>
+<span class="n">noise.covariates</span> <span class="o">&lt;-</span> <span class="nf">paste0</span><span class="p">(</span><span class="s">&#39;noise&#39;</span><span class="p">,</span> <span class="nf">seq</span><span class="p">(</span><span class="n">p.noise</span><span class="p">))</span>
+<span class="n">covariates</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="n">true.covariates</span><span class="p">,</span> <span class="n">noise.covariates</span><span class="p">)</span>
+<span class="n">X.noise</span> <span class="o">&lt;-</span> <span class="nf">matrix</span><span class="p">(</span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nf">nrow</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">*</span><span class="n">p.noise</span><span class="p">),</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">p.noise</span><span class="p">)</span>
+<span class="nf">colnames</span><span class="p">(</span><span class="n">X.noise</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">noise.covariates</span>
+<span class="n">data</span> <span class="o">&lt;-</span> <span class="nf">cbind</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">X.noise</span><span class="p">)</span>
+
+<span class="c1"># sample size</span>
+<span class="n">n</span> <span class="o">&lt;-</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># total number of covariates</span>
+<span class="n">p</span> <span class="o">&lt;-</span> <span class="nf">length</span><span class="p">(</span><span class="n">covariates</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the correlation between the first few covariates. Note how, most variables are positively correlated, which is expected since houses with more bedrooms will usually also have more bathrooms, larger area, etc.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">round</span><span class="p">(</span><span class="nf">cor</span><span class="p">(</span><span class="n">data</span><span class="p">[,</span><span class="n">covariates</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">8</span><span class="p">]]),</span> <span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A matrix: 8 × 8 of type dbl</caption>
+<thead>
+	<tr><th></th><th scope=col>LOT</th><th scope=col>UNITSF</th><th scope=col>BUILT</th><th scope=col>BATHS</th><th scope=col>BEDRMS</th><th scope=col>DINING</th><th scope=col>METRO</th><th scope=col>CRACKS</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>LOT</th><td> 1.000</td><td>0.065</td><td>0.045</td><td>0.057</td><td>0.010</td><td>-0.015</td><td>0.136</td><td>0.017</td></tr>
+	<tr><th scope=row>UNITSF</th><td> 0.065</td><td>1.000</td><td>0.143</td><td>0.429</td><td>0.361</td><td> 0.214</td><td>0.057</td><td>0.034</td></tr>
+	<tr><th scope=row>BUILT</th><td> 0.045</td><td>0.143</td><td>1.000</td><td>0.435</td><td>0.215</td><td> 0.037</td><td>0.324</td><td>0.092</td></tr>
+	<tr><th scope=row>BATHS</th><td> 0.057</td><td>0.429</td><td>0.435</td><td>1.000</td><td>0.540</td><td> 0.259</td><td>0.190</td><td>0.063</td></tr>
+	<tr><th scope=row>BEDRMS</th><td> 0.010</td><td>0.361</td><td>0.215</td><td>0.540</td><td>1.000</td><td> 0.282</td><td>0.121</td><td>0.027</td></tr>
+	<tr><th scope=row>DINING</th><td>-0.015</td><td>0.214</td><td>0.037</td><td>0.259</td><td>0.282</td><td> 1.000</td><td>0.022</td><td>0.021</td></tr>
+	<tr><th scope=row>METRO</th><td> 0.136</td><td>0.057</td><td>0.324</td><td>0.190</td><td>0.121</td><td> 0.022</td><td>1.000</td><td>0.058</td></tr>
+	<tr><th scope=row>CRACKS</th><td> 0.017</td><td>0.034</td><td>0.092</td><td>0.063</td><td>0.027</td><td> 0.021</td><td>0.058</td><td>1.000</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="section" id="generalized-linear-models">
+<h3>1.2.1 Generalized linear models<a class="headerlink" href="#generalized-linear-models" title="Permalink to this headline">¶</a></h3>
+<p>This class of models extends common methods such as linear and logistic regression by adding a penalty to the magnitude of the coefficients. <strong>Lasso</strong> penalizes the absolute value of slope coefficients. For regression problems, it becomes
+$<span class="math notranslate nohighlight">\(
+  (\#eq:lasso)
+  \hat{b}_{Lasso} = \arg\min_b \sum_{i=1}^m
+    \left( Y_i - b_0 - X_{i1}b_1 - \cdots - X_{ip}b_p \right)^2
+    - \lambda \sum_{j=1}^p |b_j|
+\)</span>$ (eq:lasso)</p>
+<p>Similarly, in a regression problem <strong>Ridge</strong> penalizes the sum of squares of the slope coefficients,</p>
+<div class="math notranslate nohighlight" id="equation-eq-ridge">
+<span class="eqno">()<a class="headerlink" href="#equation-eq-ridge" title="Permalink to this equation">¶</a></span>\[
+  (\#eq:ridge)
+  \hat{b}_{Ridge} = \arg\min_b \sum_{i=1}^m
+    \left( Y_i - b_0 - X_{i1}b_1 - \cdots - X_{ip}b_p \right)^2
+    - \lambda \sum_{j=1}^p b_j^2
+\]</div>
+<p>Also, there exists the <strong>Elastic Net</strong> penalization which consists of a convex combination between the other two. In all cases, the scalar parameter
+<span class="math notranslate nohighlight">\(\lambda\)</span> controls the complexity of the model. For <span class="math notranslate nohighlight">\(\lambda=0\)</span>, the problem reduces to the “usual” linear regression. As <span class="math notranslate nohighlight">\(\lambda\)</span> increases, we favor simpler models. As we’ll see below, the optimal parameter <span class="math notranslate nohighlight">\(\lambda\)</span> is selected via cross-validation.</p>
+<p>An important feature of Lasso-type penalization is that it promotes <strong>sparsity</strong> – that is, it forces many coefficients to be exactly zero. This is different from Ridge-type penalization, which forces coefficients to be small.</p>
+<p>Another interesting property of these models is that, even though they are called “linear” models, this should actually be understood as <strong>linear in transformations</strong> of the covariates. For example, we could use polynomials or splines (continuous piecewise polynomials) of the covariates and allow for much more flexible models.</p>
+<p>In fact, because of the penalization term, problems <a href="#id1"><span class="problematic" id="id2">:q:`lasso`</span></a> and <a href="#id3"><span class="problematic" id="id4">:q:`ridge`</span></a> remain well-defined and have a unique solution even in <strong>high-dimensional</strong> problems in which the number of coefficients <span class="math notranslate nohighlight">\(p\)</span> is larger than the sample size <span class="math notranslate nohighlight">\(n\)</span> – that is, our data is “fat” with more columns than rows. These situations can arise either naturally (e.g. genomics problems in which we have hundreds of thousands of gene expression information for a few individuals) or because we are including many transformations of a smaller set of covariates.</p>
+<p>Finally, although here we are focusing on regression problems, other generalized linear models such as logistic regression can also be similarly modified by adding a Lasso, Ridge, or Elastic Net-type penalty to similar consequences.</p>
+<p>In our example we will use the <code class="docutils literal notranslate"><span class="pre">glmnet</span></code> package; see this <a class="reference external" href="https://web.stanford.edu/~hastie/glmnet/glmnet_alpha.html">vignette</a> for more information about the package, including how to use glmnet for other types of outcomes (binomial, categorical, multi-valued). The function <code class="docutils literal notranslate"><span class="pre">cv.glmnet</span></code> automatically performs k-fold cross-validation.</p>
+<p>Also, to emphasize the point about linearity in transformations of the covariates, we will use splines of our independent variables (i.e., we will use piecewise continuous polynomials of the original covariates). This is done using the function <code class="docutils literal notranslate"><span class="pre">bs</span></code>; see this <a class="reference external" href="https://cran.r-project.org/web/packages/crs/vignettes/spline_primer.pdf">primer</a> for more information.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># A formula of type &quot;~ x1 + x2 + ...&quot; (right-hand side only) to</span>
+<span class="c1"># indicate how covariates should enter the model. If you&#39;d like to add, e.g.,</span>
+<span class="c1"># third-order polynomials in x1, you could do so here by modifying the formula</span>
+<span class="c1"># to be something like  &quot;~ poly(x1, 3) + x2 + ...&quot;</span>
+<span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot; ~ 0 + &quot;</span><span class="p">,</span> <span class="nf">paste0</span><span class="p">(</span><span class="n">covariates</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot; + &quot;</span><span class="p">)))</span>
+
+<span class="c1"># Use this formula instead if you&#39;d like to fit on piecewise polynomials</span>
+<span class="c1"># fmla &lt;- formula(paste(&quot; ~ 0 + &quot;, paste0(&quot;bs(&quot;, covariates, &quot;, df=5)&quot;, collapse=&quot; + &quot;)))</span>
+
+<span class="c1"># Function model.matrix selects the covariates according to the formula</span>
+<span class="c1"># above and expands the covariates accordingly. In addition, if any column</span>
+<span class="c1"># is a factor, then this creates dummies (one-hot encoding) as well.</span>
+<span class="n">XX</span> <span class="o">&lt;-</span> <span class="nf">model.matrix</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span> <span class="n">outcome</span><span class="p">]</span>
+
+<span class="c1"># Fit a lasso model.</span>
+<span class="c1"># Note this automatically performs cross-validation.</span>
+<span class="n">lasso</span> <span class="o">&lt;-</span> <span class="nf">cv.glmnet</span><span class="p">(</span>
+  <span class="n">x</span><span class="o">=</span><span class="n">XX</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">Y</span><span class="p">,</span>
+  <span class="n">family</span><span class="o">=</span><span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="c1"># use &#39;binomial&#39; for logistic regression</span>
+  <span class="n">alpha</span><span class="o">=</span><span class="m">1</span><span class="n">.</span> <span class="c1"># use alpha=0 for ridge, or alpha in (0, 1) for elastic net</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next figure plots the average estimated MSE for each lambda. The red dots are the averages across all folds, and the error bars are based on the variability of mse estimates across folds. The vertical dashed lines show the (log) lambda with smallest estimated MSE (left) and the one whose mse is at most one standard error from the first (right).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">lasso</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Introduction_to_Machine_Learning_25_0.png" src="_images/Introduction_to_Machine_Learning_25_0.png" />
+</div>
+</div>
+<p>Here are the first few estimated coefficients at the <span class="math notranslate nohighlight">\(\lambda\)</span> value that minimizes cross-validated MSE. Note that many estimated coefficients them are exactly zero</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Estimated coefficients at the lambda value that minimized cross-validated MSE</span>
+<span class="nf">coef</span><span class="p">(</span><span class="n">lasso</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&quot;lambda.min&quot;</span><span class="p">)[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,]</span>  <span class="c1"># showing only first coefficients</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Number of nonzero coefficients at optimal lambda:&quot;</span><span class="p">,</span> <span class="n">lasso</span><span class="o">$</span><span class="n">nzero</span><span class="p">[</span><span class="nf">which.min</span><span class="p">(</span><span class="n">lasso</span><span class="o">$</span><span class="n">cvm</span><span class="p">)],</span> <span class="s">&quot;out of&quot;</span><span class="p">,</span> <span class="nf">length</span><span class="p">(</span><span class="nf">coef</span><span class="p">(</span><span class="n">lasso</span><span class="p">))))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.dl-inline {width: auto; margin:0; padding: 0}
+.dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
+.dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
+.dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
+</style><dl class=dl-inline><dt>(Intercept)</dt><dd>11.8362661215466</dd><dt>LOT</dt><dd>3.3940000997719e-07</dd><dt>UNITSF</dt><dd>2.23040046294449e-05</dd><dt>BUILT</dt><dd>0.000141729831090269</dd><dt>BATHS</dt><dd>0.247754826465621</dd></dl>
+</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Number of nonzero coefficients at optimal lambda: 49 out of 64&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Predictions and estimated MSE for the selected model are retrieved as follows.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Retrieve predictions at best lambda regularization parameter</span>
+<span class="n">y.hat</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">lasso</span><span class="p">,</span> <span class="n">newx</span><span class="o">=</span><span class="n">XX</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="s">&quot;lambda.min&quot;</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;response&quot;</span><span class="p">)</span>
+
+<span class="c1"># Get k-fold cross validation</span>
+<span class="n">mse.glmnet</span> <span class="o">&lt;-</span> <span class="n">lasso</span><span class="o">$</span><span class="n">cvm</span><span class="p">[</span><span class="n">lasso</span><span class="o">$</span><span class="n">lambda</span> <span class="o">==</span> <span class="n">lasso</span><span class="o">$</span><span class="n">lambda.min</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;glmnet MSE estimate (k-fold cross-validation):&quot;</span><span class="p">,</span> <span class="n">mse.glmnet</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;glmnet MSE estimate (k-fold cross-validation): 0.605862665474721&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next command plots estimated coefficients as a function of the regularization parameter <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">lasso</span><span class="o">$</span><span class="n">glmnet.fit</span><span class="p">,</span> <span class="n">xvar</span><span class="o">=</span><span class="s">&quot;lambda&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Introduction_to_Machine_Learning_31_0.png" src="_images/Introduction_to_Machine_Learning_31_0.png" />
+</div>
+</div>
+<p>It’s tempting to try to interpret the coefficients obtained via Lasso. Unfortunately, that can be very difficult, because by dropping covariates Lasso introduces a form of <strong>omitted variable bias</strong> (<a class="reference external" href="https://en.wikipedia.org/wiki/Omitted-variable_bias">wikipedia</a>). To understand this form of bias, consider the following toy example. We have two positively correlated independent variables, <code class="docutils literal notranslate"><span class="pre">x.1</span></code> and <code class="docutils literal notranslate"><span class="pre">x.2</span></code>, that are linearly related to the outcome <code class="docutils literal notranslate"><span class="pre">y</span></code>. Linear regression of <code class="docutils literal notranslate"><span class="pre">y</span></code> on <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code> gives us the correct coefficients. However, if we <em>omit</em> <code class="docutils literal notranslate"><span class="pre">x2</span></code> from the estimation model, the coefficient on <code class="docutils literal notranslate"><span class="pre">x1</span></code> increases. This is because <code class="docutils literal notranslate"><span class="pre">x1</span></code> is now “picking up” the effect of the variable that was left out. In other words, the effect of <code class="docutils literal notranslate"><span class="pre">x1</span></code> seems stronger because we aren’t controlling for some other confounding variable. Note that the second model this still works for prediction, but we cannot interpret the coefficient as a measure of strength of the causal relationship between <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generating some data </span>
+<span class="c1"># y = 1 + 2*x1 + 3*x2 + noise, where corr(x1, x2) = .5</span>
+<span class="c1"># note the sample size is very large -- this isn&#39;t solved by big data!</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">mvrnorm</span><span class="p">(</span><span class="m">100000</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">),</span> <span class="n">Sigma</span><span class="o">=</span><span class="nf">diag</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">.</span><span class="m">5</span><span class="p">,</span><span class="n">.</span><span class="m">5</span><span class="p">))</span> <span class="o">+</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">&lt;-</span> <span class="m">1</span> <span class="o">+</span> <span class="m">2</span><span class="o">*</span><span class="n">x</span><span class="p">[,</span><span class="m">1</span><span class="p">]</span> <span class="o">+</span> <span class="m">3</span><span class="o">*</span><span class="n">x</span><span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="o">+</span> <span class="nf">rnorm</span><span class="p">(</span><span class="m">100000</span><span class="p">)</span>
+<span class="n">data.sim</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="s">&quot;Correct model&quot;</span><span class="p">)</span>
+<span class="nf">lm</span><span class="p">(</span><span class="n">y</span> <span class="o">~</span> <span class="n">x.1</span> <span class="o">+</span> <span class="n">x.2</span><span class="p">,</span> <span class="n">data.sim</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="s">&quot;Model with omitted variable bias&quot;</span><span class="p">)</span>
+<span class="nf">lm</span><span class="p">(</span><span class="n">y</span> <span class="o">~</span> <span class="n">x.1</span><span class="p">,</span> <span class="n">data.sim</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Correct model&quot;
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = y ~ x.1 + x.2, data = data.sim)
+
+Coefficients:
+(Intercept)          x.1          x.2  
+      1.004        2.002        2.995  
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Model with omitted variable bias&quot;
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = y ~ x.1, data = data.sim)
+
+Coefficients:
+(Intercept)          x.1  
+      1.004        4.002  
+</pre></div>
+</div>
+</div>
+</div>
+<p>The phenomenon above occurs in Lasso and in any other sparsity-promoting method when correlated covariates are present since, by forcing coefficients to be zero, Lasso is effectively dropping them from the model. And as we have seen, as a variable gets dropped, a different variable that is correlated with it can “pick up” its effect, which in turn can cause bias. Once <span class="math notranslate nohighlight">\(\lambda\)</span> grows sufficiently large, the penalization term overwhelms any benefit of having that variable in the model, so that variable finally decreases to zero too.</p>
+<p>One may instead consider using Lasso to select a subset of variables, and then regressing the outcome on the subset of selected variables via OLS (without any penalization). This method is often called <strong>post-lasso</strong>. Although it has desirable properties in terms of model fit (see e.g., <a class="reference external" href="https://arxiv.org/pdf/1001.0188.pdf">Belloni and Chernozhukov, 2013</a>), this procedure does not solve the omitted variable issue we mentioned above.</p>
+<p>We illustrate this next. We observe the path of the estimated coefficient on the number of bathroooms (<code class="docutils literal notranslate"><span class="pre">BATHS</span></code>) as we increase <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># prepare data</span>
+<span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="s">&quot;~&quot;</span><span class="p">,</span> <span class="nf">paste0</span><span class="p">(</span><span class="n">covariates</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot;+&quot;</span><span class="p">)))</span>
+<span class="n">XX</span> <span class="o">&lt;-</span> <span class="nf">model.matrix</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="p">)[,</span><span class="m">-1</span><span class="p">]</span>  <span class="c1"># [,-1] drops the intercept</span>
+<span class="n">Y</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span><span class="n">outcome</span><span class="p">]</span>
+
+<span class="c1"># fit ols, lasso and ridge models</span>
+<span class="n">ols</span> <span class="o">&lt;-</span> <span class="nf">lm</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<span class="n">lasso</span> <span class="o">&lt;-</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">XX</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">Y</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="m">1</span><span class="n">.</span><span class="p">)</span>  <span class="c1"># alpha = 1 for lasso</span>
+<span class="n">ridge</span> <span class="o">&lt;-</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">XX</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">Y</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="m">0</span><span class="n">.</span><span class="p">)</span>  <span class="c1"># alpha = 0 for ridge</span>
+
+<span class="c1"># retrieve ols, lasso and ridge coefficients</span>
+<span class="n">lambda.grid</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="nf">sort</span><span class="p">(</span><span class="n">lasso</span><span class="o">$</span><span class="n">lambda</span><span class="p">))</span>
+<span class="n">ols.coefs</span> <span class="o">&lt;-</span> <span class="nf">coef</span><span class="p">(</span><span class="n">ols</span><span class="p">)</span>
+<span class="n">lasso.coefs</span> <span class="o">&lt;-</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="nf">coef</span><span class="p">(</span><span class="n">lasso</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">lambda.grid</span><span class="p">))</span>
+<span class="n">ridge.coefs</span> <span class="o">&lt;-</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="nf">coef</span><span class="p">(</span><span class="n">ridge</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">lambda.grid</span><span class="p">))</span>
+
+<span class="c1"># loop over lasso coefficients and re-fit OLS to get post-lasso coefficients</span>
+<span class="n">plasso.coefs</span> <span class="o">&lt;-</span> <span class="nf">apply</span><span class="p">(</span><span class="n">lasso.coefs</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="nf">function</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1"># which slopes are non-zero</span>
+    <span class="n">non.zero</span> <span class="o">&lt;-</span> <span class="nf">which</span><span class="p">(</span><span class="n">beta</span><span class="p">[</span><span class="m">-1</span><span class="p">]</span> <span class="o">!=</span> <span class="m">0</span><span class="p">)</span>  <span class="c1"># [-1] excludes intercept</span>
+
+    <span class="c1"># if there are any non zero coefficients, estimate OLS</span>
+    <span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="s">&quot;~&quot;</span><span class="p">,</span> <span class="nf">paste0</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;1&quot;</span><span class="p">,</span> <span class="n">covariates</span><span class="p">[</span><span class="n">non.zero</span><span class="p">]),</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot;+&quot;</span><span class="p">)))</span>
+    <span class="n">beta</span> <span class="o">&lt;-</span> <span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="nf">ncol</span><span class="p">(</span><span class="n">XX</span><span class="p">)</span> <span class="o">+</span> <span class="m">1</span><span class="p">)</span>
+
+    <span class="c1"># populate post-lasso coefficients</span>
+    <span class="n">beta</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">non.zero</span> <span class="o">+</span> <span class="m">1</span><span class="p">)]</span> <span class="o">&lt;-</span> <span class="nf">coef</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+
+    <span class="n">beta</span>
+  <span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">selected</span> <span class="o">&lt;-</span> <span class="s">&#39;BATHS&#39;</span>
+<span class="n">k</span> <span class="o">&lt;-</span> <span class="nf">which</span><span class="p">(</span><span class="nf">rownames</span><span class="p">(</span><span class="n">lasso.coefs</span><span class="p">)</span> <span class="o">==</span> <span class="n">selected</span><span class="p">)</span> <span class="c1"># index of coefficient to plot</span>
+<span class="n">coefs</span> <span class="o">&lt;-</span> <span class="nf">cbind</span><span class="p">(</span><span class="n">postlasso</span><span class="o">=</span><span class="n">plasso.coefs</span><span class="p">[</span><span class="n">k</span><span class="p">,],</span>  <span class="n">lasso</span><span class="o">=</span><span class="n">lasso.coefs</span><span class="p">[</span><span class="n">k</span><span class="p">,],</span> <span class="n">ridge</span><span class="o">=</span><span class="n">ridge.coefs</span><span class="p">[</span><span class="n">k</span><span class="p">,],</span> <span class="n">ols</span><span class="o">=</span><span class="n">ols.coefs</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+<span class="nf">matplot</span><span class="p">(</span><span class="n">lambda.grid</span><span class="p">,</span> <span class="n">coefs</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="n">pch</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">,</span> <span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">main</span><span class="o">=</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Coefficient estimate on&quot;</span><span class="p">,</span> <span class="n">selected</span><span class="p">))</span>
+<span class="nf">abline</span><span class="p">(</span><span class="n">h</span> <span class="o">=</span> <span class="m">0</span><span class="p">,</span> <span class="n">lty</span><span class="o">=</span><span class="s">&quot;dashed&quot;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&quot;gray&quot;</span><span class="p">)</span>
+
+<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;bottomleft&quot;</span><span class="p">,</span>
+  <span class="n">legend</span> <span class="o">=</span> <span class="nf">colnames</span><span class="p">(</span><span class="n">coefs</span><span class="p">),</span>
+  <span class="n">bty</span><span class="o">=</span><span class="s">&quot;n&quot;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">,</span>  <span class="n">pch</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">,</span> <span class="n">inset</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">.</span><span class="m">05</span><span class="p">,</span> <span class="n">.</span><span class="m">05</span><span class="p">),</span> <span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Introduction_to_Machine_Learning_36_0.png" src="_images/Introduction_to_Machine_Learning_36_0.png" />
+</div>
+</div>
+<p>The OLS coefficients are not penalized, so they remain constant. Ridge estimates decrease monotonically as <span class="math notranslate nohighlight">\(\lambda\)</span> grows. Also, for this dataset, Lasso estimates first increase and then decrease. Meanwhile, the post-lasso coefficient estimates seem to behave somewhat erratically with <span class="math notranslate nohighlight">\(lambda\)</span>. To understand this behavior, let’s see what happens to the magnitude of other selected variables that are correlated with <code class="docutils literal notranslate"><span class="pre">BATHS</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">covs</span> <span class="o">&lt;-</span> <span class="nf">which</span><span class="p">(</span><span class="n">covariates</span> <span class="o">%in%</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#39;UNITSF&#39;</span><span class="p">,</span> <span class="s">&#39;BEDRMS&#39;</span><span class="p">,</span>  <span class="s">&#39;DINING&#39;</span><span class="p">))</span>
+<span class="nf">matplot</span><span class="p">(</span><span class="n">lambda.grid</span><span class="p">,</span> <span class="nf">t</span><span class="p">(</span><span class="n">lasso.coefs</span><span class="p">[</span><span class="n">covs</span><span class="m">+1</span><span class="p">,]),</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;l&quot;</span><span class="p">,</span> <span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;topright&quot;</span><span class="p">,</span> <span class="n">legend</span> <span class="o">=</span> <span class="n">covariates</span><span class="p">[</span><span class="n">covs</span><span class="p">],</span> <span class="n">bty</span><span class="o">=</span><span class="s">&quot;n&quot;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="n">p</span><span class="p">,</span>  <span class="n">lty</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="n">p</span><span class="p">,</span> <span class="n">inset</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">.</span><span class="m">05</span><span class="p">,</span> <span class="n">.</span><span class="m">05</span><span class="p">),</span> <span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">cex</span><span class="o">=</span><span class="n">.</span><span class="m">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Introduction_to_Machine_Learning_38_0.png" src="_images/Introduction_to_Machine_Learning_38_0.png" />
+</div>
+</div>
+<p>Note how the discrete jumps in magnitude for the <code class="docutils literal notranslate"><span class="pre">BATHS</span></code> coefficient in the first coincide with, for example, variables <code class="docutils literal notranslate"><span class="pre">DINING</span></code> and <code class="docutils literal notranslate"><span class="pre">BEDRMS</span></code> being exactly zero. As these variables got dropped from the model, the coefficient on <code class="docutils literal notranslate"><span class="pre">BATHS</span></code> increased to pick up their effect.</p>
+<p>Another problem with Lasso coefficients is their instability. When multiple variables are highly correlated we may spuriously drop several of them. To get a sense of the amount of variability, in the next snippet we fix <span class="math notranslate nohighlight">\(\lambda\)</span> and then look at the lasso coefficients estimated during cross-validation. We see that by simply removing one fold we can get a very different set of coefficients (nonzero coefficients are in black in the heatmap below). This is because there may be many choices of coefficients with similar predictive power, so the set of nonzero coefficients we end up with can be quite unstable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fixing lambda. This choice is not very important; the same occurs any intermediate lambda value.</span>
+<span class="n">selected.lambda</span> <span class="o">&lt;-</span> <span class="n">lasso</span><span class="o">$</span><span class="n">lambda.min</span>
+<span class="n">n.folds</span> <span class="o">&lt;-</span> <span class="m">10</span>
+<span class="n">foldid</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="nf">seq</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">%%</span> <span class="n">n.folds</span><span class="p">)</span> <span class="o">+</span> <span class="m">1</span>
+<span class="n">coefs</span> <span class="o">&lt;-</span> <span class="nf">sapply</span><span class="p">(</span><span class="nf">seq</span><span class="p">(</span><span class="n">n.folds</span><span class="p">),</span> <span class="nf">function</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">lasso.fold</span> <span class="o">&lt;-</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">XX</span><span class="p">[</span><span class="n">foldid</span> <span class="o">==</span> <span class="n">k</span><span class="p">,],</span> <span class="n">Y</span><span class="p">[</span><span class="n">foldid</span> <span class="o">==</span> <span class="n">k</span><span class="p">])</span>
+  <span class="nf">as.matrix</span><span class="p">(</span><span class="nf">coef</span><span class="p">(</span><span class="n">lasso.fold</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">selected.lambda</span><span class="p">))</span>
+<span class="p">})</span>
+<span class="nf">heatmap</span><span class="p">(</span><span class="m">1</span><span class="o">*</span><span class="p">(</span><span class="n">coefs</span> <span class="o">!=</span> <span class="m">0</span><span class="p">),</span> <span class="n">Rowv</span> <span class="o">=</span> <span class="kc">NA</span><span class="p">,</span> <span class="n">Colv</span> <span class="o">=</span> <span class="kc">NA</span><span class="p">,</span> <span class="n">cexCol</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="nf">gray</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">)),</span> <span class="n">margins</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span> <span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Fold&quot;</span><span class="p">,</span> <span class="n">labRow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Intercept&quot;</span><span class="p">,</span> <span class="n">covariates</span><span class="p">),</span> <span class="n">main</span><span class="o">=</span><span class="s">&quot;Non-zero coefficient estimates&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Introduction_to_Machine_Learning_40_0.png" src="_images/Introduction_to_Machine_Learning_40_0.png" />
+</div>
+</div>
+<p>As we have seen above, any interpretation needs to take into account the joint distribution of covariates. One possible heuristic is to consider <strong>data-driven subgroups</strong>. For example, we can analyze what differentiates observations whose predictions are high from those whose predictions are low. The following code estimates a flexible Lasso model with splines, ranks the observations into a few subgroups according to their predicted outcomes, and then estimates the average covariate value for each subgroup.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Number of data-driven subgroups.</span>
+<span class="n">num.groups</span> <span class="o">&lt;-</span> <span class="m">4</span>
+
+<span class="c1"># Fold indices</span>
+<span class="n">n.folds</span> <span class="o">&lt;-</span> <span class="m">5</span>
+<span class="n">foldid</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="nf">seq</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">%%</span> <span class="n">n.folds</span><span class="p">)</span> <span class="o">+</span> <span class="m">1</span>
+
+<span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot; ~ 0 + &quot;</span><span class="p">,</span> <span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;bs(&quot;</span><span class="p">,</span> <span class="n">covariates</span><span class="p">,</span> <span class="s">&quot;, df=3)&quot;</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot; + &quot;</span><span class="p">)))</span>
+
+<span class="c1"># Function model.matrix selects the covariates according to the formula</span>
+<span class="c1"># above and expands the covariates accordingly. In addition, if any column</span>
+<span class="c1"># is a factor, then this creates dummies (one-hot encoding) as well.</span>
+<span class="n">XX</span> <span class="o">&lt;-</span> <span class="nf">model.matrix</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span> <span class="n">outcome</span><span class="p">]</span>
+
+<span class="c1"># Fit a lasso model.</span>
+<span class="c1"># Passing foldid argument so we know which observations are in each fold.</span>
+<span class="n">lasso</span> <span class="o">&lt;-</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">XX</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">Y</span><span class="p">,</span> <span class="n">foldid</span> <span class="o">=</span> <span class="n">foldid</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+
+<span class="n">y.hat</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">lasso</span><span class="p">,</span> <span class="n">newx</span> <span class="o">=</span> <span class="n">XX</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&quot;lambda.min&quot;</span><span class="p">)</span>
+
+<span class="c1"># Ranking observations.</span>
+<span class="n">ranking</span> <span class="o">&lt;-</span> <span class="nf">lapply</span><span class="p">(</span><span class="nf">seq</span><span class="p">(</span><span class="n">n.folds</span><span class="p">),</span> <span class="nf">function</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1"># Extract cross-validated predictions for remaining fold.</span>
+    <span class="n">y.hat.cross.val</span> <span class="o">&lt;-</span> <span class="n">y.hat</span><span class="p">[</span><span class="n">foldid</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span>
+
+    <span class="c1"># Find the relevant subgroup break points</span>
+    <span class="n">qs</span> <span class="o">&lt;-</span> <span class="nf">quantile</span><span class="p">(</span><span class="n">y.hat.cross.val</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">length.out</span><span class="o">=</span><span class="n">num.groups</span> <span class="o">+</span> <span class="m">1</span><span class="p">))</span>
+
+    <span class="c1"># Rank observations into subgroups depending on their predictions</span>
+    <span class="nf">cut</span><span class="p">(</span><span class="n">y.hat.cross.val</span><span class="p">,</span> <span class="n">breaks</span> <span class="o">=</span> <span class="n">qs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="nf">seq</span><span class="p">(</span><span class="n">num.groups</span><span class="p">))</span>
+  <span class="p">})</span>
+<span class="n">ranking</span> <span class="o">&lt;-</span> <span class="nf">factor</span><span class="p">(</span><span class="nf">do.call</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">ranking</span><span class="p">))</span>
+
+<span class="c1"># Estimate expected covariate per subgroup</span>
+<span class="n">avg.covariate.per.ranking</span> <span class="o">&lt;-</span> <span class="nf">mapply</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">x.col</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="n">x.col</span><span class="p">,</span> <span class="s">&quot;~ 0 + ranking&quot;</span><span class="p">))</span>
+  <span class="n">ols</span> <span class="o">&lt;-</span> <span class="nf">lm</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nf">transform</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ranking</span><span class="o">=</span><span class="n">ranking</span><span class="p">))</span>
+  <span class="nf">t</span><span class="p">(</span><span class="n">lmtest</span><span class="o">::</span><span class="nf">coeftest</span><span class="p">(</span><span class="n">ols</span><span class="p">,</span> <span class="n">vcov</span><span class="o">=</span><span class="nf">vcovHC</span><span class="p">(</span><span class="n">ols</span><span class="p">,</span> <span class="s">&quot;HC2&quot;</span><span class="p">))[,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">])</span>
+<span class="p">},</span> <span class="n">covariates</span><span class="p">,</span> <span class="n">SIMPLIFY</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+
+<span class="n">avg.covariate.per.ranking</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><dl>
+	<dt>$LOT</dt>
+		<dd><table class="dataframe">
+<caption>A matrix: 2 × 4 of type dbl</caption>
+<thead>
+	<tr><th></th><th scope=col>ranking1</th><th scope=col>ranking2</th><th scope=col>ranking3</th><th scope=col>ranking4</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>Estimate</th><td>48263.573</td><td>44814.350</td><td>49271.020</td><td>49267.689</td></tr>
+	<tr><th scope=row>Std. Error</th><td> 1432.223</td><td> 1298.571</td><td> 1486.012</td><td> 1461.595</td></tr>
+</tbody>
+</table>
+</dd>
+	<dt>$UNITSF</dt>
+		<dd><table class="dataframe">
+<caption>A matrix: 2 × 4 of type dbl</caption>
+<thead>
+	<tr><th></th><th scope=col>ranking1</th><th scope=col>ranking2</th><th scope=col>ranking3</th><th scope=col>ranking4</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>Estimate</th><td>2423.62996</td><td>2433.1772</td><td>2428.63689</td><td>2434.72284</td></tr>
+	<tr><th scope=row>Std. Error</th><td>  25.19218</td><td>  24.9452</td><td>  24.55653</td><td>  24.25453</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></div>
+</div>
+<p>The next heatmap visualizes the results. Note how observations ranked higher (i.e., were predicted to have higher prices) have more bedrooms and baths, were built more recently, have fewer cracks, and so on. The next snippet of code displays the average covariate per group along with each standard errors. The rows are ordered according to <span class="math notranslate nohighlight">\(Var(E[X_{ij} | G_i) / Var(X_i)\)</span>, where <span class="math notranslate nohighlight">\(G_i\)</span> denotes the ranking. This is a rough normalized measure of how much variation is “explained” by group membership <span class="math notranslate nohighlight">\(G_i\)</span>. Brighter colors indicate larger values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">mapply</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">covariate</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1"># Looping over covariate names</span>
+      <span class="c1"># Compute average covariate value per ranking (with correct standard errors)</span>
+      <span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="n">covariate</span><span class="p">,</span> <span class="s">&quot;~ 0 + ranking&quot;</span><span class="p">))</span>
+      <span class="n">ols</span> <span class="o">&lt;-</span> <span class="nf">lm</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nf">transform</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ranking</span><span class="o">=</span><span class="n">ranking</span><span class="p">))</span>
+      <span class="n">ols.res</span> <span class="o">&lt;-</span> <span class="nf">coeftest</span><span class="p">(</span><span class="n">ols</span><span class="p">,</span> <span class="n">vcov</span><span class="o">=</span><span class="nf">vcovHC</span><span class="p">(</span><span class="n">ols</span><span class="p">,</span> <span class="s">&quot;HC2&quot;</span><span class="p">))</span>
+    
+      <span class="c1"># Retrieve results</span>
+      <span class="n">avg</span> <span class="o">&lt;-</span> <span class="n">ols.res</span><span class="p">[,</span><span class="m">1</span><span class="p">]</span>
+      <span class="n">stderr</span> <span class="o">&lt;-</span> <span class="n">ols.res</span><span class="p">[,</span><span class="m">2</span><span class="p">]</span>
+      
+      <span class="c1"># Tally up results</span>
+      <span class="nf">data.frame</span><span class="p">(</span><span class="n">covariate</span><span class="p">,</span> <span class="n">avg</span><span class="p">,</span> <span class="n">stderr</span><span class="p">,</span> <span class="n">ranking</span><span class="o">=</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;G&quot;</span><span class="p">,</span> <span class="nf">seq</span><span class="p">(</span><span class="n">num.groups</span><span class="p">)),</span> 
+                 <span class="c1"># Used for coloring</span>
+                 <span class="n">scaling</span><span class="o">=</span><span class="nf">pnorm</span><span class="p">((</span><span class="n">avg</span> <span class="o">-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">avg</span><span class="p">))</span><span class="o">/</span><span class="nf">sd</span><span class="p">(</span><span class="n">avg</span><span class="p">)),</span> 
+                 <span class="c1"># We will order based on how much variation is &#39;explain&#39; by the averages</span>
+                 <span class="c1"># relative to the total variation of the covariate in the data</span>
+                 <span class="n">variation</span><span class="o">=</span><span class="nf">sd</span><span class="p">(</span><span class="n">avg</span><span class="p">)</span> <span class="o">/</span> <span class="nf">sd</span><span class="p">(</span><span class="n">data</span><span class="p">[,</span><span class="n">covariate</span><span class="p">]),</span>
+                 <span class="c1"># String to print in each cell in heatmap below</span>
+                 <span class="c1"># Note: depending on the scaling of your covariates, </span>
+                 <span class="c1"># you may have to tweak these formatting parameters a little.</span>
+                 <span class="n">labels</span><span class="o">=</span><span class="nf">paste0</span><span class="p">(</span><span class="nf">formatC</span><span class="p">(</span><span class="n">avg</span><span class="p">),</span>  <span class="s">&quot; (&quot;</span><span class="p">,</span> <span class="nf">formatC</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="n">digits</span> <span class="o">=</span> <span class="m">2</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="m">2</span><span class="p">),</span> <span class="s">&quot;)&quot;</span><span class="p">))</span>
+<span class="p">},</span> <span class="n">covariates</span><span class="p">,</span> <span class="n">SIMPLIFY</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">do.call</span><span class="p">(</span><span class="n">rbind</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># a small optional trick to ensure heatmap will be in decreasing order of &#39;variation&#39;</span>
+<span class="n">df</span><span class="o">$</span><span class="n">covariate</span> <span class="o">&lt;-</span> <span class="nf">reorder</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">covariate</span><span class="p">,</span> <span class="nf">order</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">variation</span><span class="p">))</span>
+<span class="n">df</span> <span class="o">&lt;-</span> <span class="n">df</span><span class="p">[</span><span class="nf">order</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">variation</span><span class="p">,</span> <span class="n">decreasing</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),]</span>
+
+<span class="c1"># plot heatmap</span>
+<span class="nf">ggplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="p">(</span><span class="m">9</span><span class="o">*</span><span class="n">num.groups</span><span class="p">),])</span> <span class="o">+</span>  <span class="c1"># showing on the first few results (ordered by &#39;variation&#39;)</span>
+    <span class="nf">aes</span><span class="p">(</span><span class="n">ranking</span><span class="p">,</span> <span class="n">covariate</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">geom_tile</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="n">scaling</span><span class="p">))</span> <span class="o">+</span> 
+    <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">labels</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="m">3</span><span class="p">)</span> <span class="o">+</span>  <span class="c1"># &#39;size&#39; controls the fontsize inside cell</span>
+    <span class="nf">scale_fill_gradient</span><span class="p">(</span><span class="n">low</span> <span class="o">=</span> <span class="s">&quot;#E1BE6A&quot;</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="s">&quot;#40B0A6&quot;</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">ggtitle</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;Average covariate values within group (based on prediction ranking)&quot;</span><span class="p">))</span> <span class="o">+</span>
+    <span class="nf">theme_minimal</span><span class="p">()</span> <span class="o">+</span> 
+    <span class="nf">ylab</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="nf">xlab</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">theme</span><span class="p">(</span><span class="n">plot.title</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="m">10</span><span class="p">,</span> <span class="n">face</span> <span class="o">=</span> <span class="s">&quot;bold&quot;</span><span class="p">),</span>
+          <span class="n">legend.position</span><span class="o">=</span><span class="s">&quot;bottom&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Introduction_to_Machine_Learning_44_0.png" src="_images/Introduction_to_Machine_Learning_44_0.png" />
+</div>
+</div>
+<p>As we just saw above, houses that have, e.g., been built more recently (<code class="docutils literal notranslate"><span class="pre">BUILT</span></code>), have more baths (<code class="docutils literal notranslate"><span class="pre">BATHS</span></code>) are associated with larger price predictions.</p>
+<p>This sort of interpretation exercise did not rely on reading any coefficients, and in fact it could also be done using any other flexible method, including decisions trees and forests.</p>
+</div>
+<div class="section" id="decision-trees">
+<h3>1.2.2 Decision trees<a class="headerlink" href="#decision-trees" title="Permalink to this headline">¶</a></h3>
+<p>This next class of algorithms divides the covariate space into “regions” and estimates a constant prediction within each region.</p>
+<p>To estimate a decision tree, we following a recursive partition algorithm. At each stage, we select one variable <span class="math notranslate nohighlight">\(j\)</span> and one split point
+<span class="math notranslate nohighlight">\(s\)</span>, and divide the observations into “left” and “right” subsets, depending on whether <span class="math notranslate nohighlight">\(X_{ij} \leq s\)</span> or <span class="math notranslate nohighlight">\(X_{ij} &gt; s\)</span>. For regression problems, the variable and split points are often selected so that the sum of the variances of the outcome variable in each “child” subset is smallest. For classification problems, we split to separate the classes. Then, for each child, we separately repeat the process of finding variables and split points. This continues until a minimum subset size is reached, or improvement falls below some threshold.</p>
+<p>At prediction time, to find the predictions for some point <span class="math notranslate nohighlight">\(x\)</span>, we just follow the tree we just built, going left or right according to the selected variables and split points, until we reach a terminal node. Then, for regression problems, the predicted value at some point <span class="math notranslate nohighlight">\(x\)</span> is the average outcome of the observations in the same partition as the point <span class="math notranslate nohighlight">\(x\)</span>. For classification problems, we output the majority class in the node.</p>
+<p>Let’s estimate a decision tree using the <code class="docutils literal notranslate"><span class="pre">R</span></code> package rpart; see <a class="reference external" href="https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf">this tutorial</a> for more information about it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fit tree without pruning first</span>
+<span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="s">&quot;~&quot;</span><span class="p">,</span> <span class="nf">paste</span><span class="p">(</span><span class="n">covariates</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot; + &quot;</span><span class="p">)))</span>
+<span class="n">tree</span> <span class="o">&lt;-</span> <span class="nf">rpart</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">cp</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;anova&quot;</span><span class="p">)</span>  <span class="c1"># use method=&quot;class&quot; for classification</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>At this point, we have not constrained the complexity of the tree in any way, so it’s likely too deep and probably overfits. Here’s a plot of what we have so far (without bothering to label the splits to avoid clutter).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">uniform</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Introduction_to_Machine_Learning_48_0.png" src="_images/Introduction_to_Machine_Learning_48_0.png" />
+</div>
+</div>
+<p>To reduce the complexity of the tree, we <strong>prune</strong> the tree: we collapse its leaves, permitting bias to increase but forcing variance to decrease until the desired trade-off is achieved. In <code class="docutils literal notranslate"><span class="pre">rpart</span></code>, this is done by considering a modified loss function that takes into account the number of terminal nodes (i.e., the number of regions in which the original data was partitioned). Somewhat heuristically, if we denote tree predictions by <span class="math notranslate nohighlight">\(T(x)\)</span> and its number of terminal nodes by  <span class="math notranslate nohighlight">\(|T|\)</span>, the modified regression problem can be written as:</p>
+<div class="math notranslate nohighlight" id="equation-tree-cp">
+<span class="eqno">()<a class="headerlink" href="#equation-tree-cp" title="Permalink to this equation">¶</a></span>\[
+  (#eq:tree-cp)
+  \widehat{T} = \arg\min_{T} \sum_{i=1}^m \left( T(X_i) - Y_i \right)^2 + c_p |T|
+\]</div>
+<p>The complexity of the tree is controlled by the scalar parameter <span class="math notranslate nohighlight">\(c_p\)</span>, denoted as <code class="docutils literal notranslate"><span class="pre">cp</span></code> in <code class="docutils literal notranslate"><span class="pre">rpart</span></code>. For each value of <span class="math notranslate nohighlight">\(c_p\)</span>, we find the subtree that solves <a class="reference internal" href="#equation-tree-cp">()</a>. Large values of <span class="math notranslate nohighlight">\(c_p\)</span> lead to aggressively pruned trees, which have more bias and less variance. Small values of <span class="math notranslate nohighlight">\(c_p\)</span> allow for deeper trees whose predictions can vary more wildly. The plot below shows the cross-validated error (relative to a tree with only one node, which corresponds to predicting the sample mean everywhere) for trees obtained at different levels of  <span class="math notranslate nohighlight">\(c_p\)</span>. The bias-variance trade-off is optimized at the point at which the cross-validated error is minimized.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plotcp</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Introduction_to_Machine_Learning_50_0.png" src="_images/Introduction_to_Machine_Learning_50_0.png" />
+</div>
+</div>
+<p>The following code retrieves the optimal parameter and prunes the tree. Here, instead of choosing the parameter that minimizes the mean-squared-error, we’re following another common heuristic: we will choose the most regularized model whose error is within one standard error of the minimum error.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Retrieves the optimal parameter</span>
+<span class="n">cp.min</span> <span class="o">&lt;-</span> <span class="nf">which.min</span><span class="p">(</span><span class="n">tree</span><span class="o">$</span><span class="n">cptable</span><span class="p">[,</span><span class="s">&quot;xerror&quot;</span><span class="p">])</span> <span class="c1"># minimum error</span>
+<span class="n">cp.idx</span> <span class="o">&lt;-</span> <span class="nf">which</span><span class="p">(</span><span class="n">tree</span><span class="o">$</span><span class="n">cptable</span><span class="p">[,</span><span class="s">&quot;xerror&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">tree</span><span class="o">$</span><span class="n">cptable</span><span class="p">[</span><span class="n">cp.min</span><span class="p">,</span><span class="s">&quot;xerror&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">tree</span><span class="o">$</span><span class="n">cptable</span><span class="p">[,</span><span class="s">&quot;xstd&quot;</span><span class="p">])[</span><span class="m">1</span><span class="p">]</span>  <span class="c1"># at most one std. error from minimum error</span>
+<span class="n">cp.best</span> <span class="o">&lt;-</span> <span class="n">tree</span><span class="o">$</span><span class="n">cptable</span><span class="p">[</span><span class="n">cp.idx</span><span class="p">,</span><span class="s">&quot;CP&quot;</span><span class="p">]</span>
+
+<span class="c1"># Prune the tree</span>
+<span class="n">pruned.tree</span> <span class="o">&lt;-</span> <span class="nf">prune</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">cp</span><span class="o">=</span><span class="n">cp.best</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Plotting the pruned tree. See also the package <a class="reference external" href="http://www.milbo.org/rpart-plot/prp.pdf">rpart.plot</a> for more advanced plotting capabilities.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">pruned.tree</span><span class="p">,</span> <span class="n">uniform</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">margin</span> <span class="o">=</span> <span class="n">.</span><span class="m">05</span><span class="p">)</span>
+<span class="nf">text</span><span class="p">(</span><span class="n">pruned.tree</span><span class="p">,</span> <span class="n">cex</span><span class="o">=</span><span class="n">.</span><span class="m">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Introduction_to_Machine_Learning_54_0.png" src="_images/Introduction_to_Machine_Learning_54_0.png" />
+</div>
+</div>
+<p>Finally, here’s how to extract predictions and mse estimates from the pruned tree.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Retrieve predictions from pruned tree</span>
+<span class="n">y.hat</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">pruned.tree</span><span class="p">)</span>
+
+<span class="c1"># Compute mse for pruned tree (using cross-validated predictions)</span>
+<span class="n">mse.tree</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">((</span><span class="nf">xpred.rpart</span><span class="p">(</span><span class="n">tree</span><span class="p">)[,</span><span class="n">cp.idx</span><span class="p">]</span> <span class="o">-</span> <span class="n">data</span><span class="p">[,</span><span class="n">outcome</span><span class="p">])</span><span class="o">^</span><span class="m">2</span><span class="p">,</span> <span class="n">na.rm</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Tree MSE estimate (cross-validated):&quot;</span><span class="p">,</span> <span class="n">mse.tree</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Tree MSE estimate (cross-validated): 0.655394075884523&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>It’s often said that trees are “interpretable.” To some extent, that’s true – we can look at the tree and clearly visualize the mapping from inputs to prediction. This can be important in settings in which conveying how one got to a prediction is important. For example, if a decision tree were to be used for credit scoring, it would be easy to explain to a client how their credit was scored.</p>
+<p>Beyond that, however, there are several reasons for not interpreting the obtained decision tree further. First, even though a tree may have used a particular variable for a split, that does not mean that it’s indeed an important variable: if two covariates are highly correlated, the tree may split on one variable but not the other, and there’s no guarantee which variables are relevant in the underlying data-generating process.</p>
+<p>Similar to what we did for Lasso above, we can estimate the average value of each covariate per leaf. Although results are noisier here because there are many leaves, we see somewhat similar trends in that houses with higher predictions are also correlated with more bedrooms, bathrooms and room sizes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">y.hat</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">pruned.tree</span><span class="p">)</span>
+
+<span class="c1"># Number of leaves should equal the number of distinct prediction values.</span>
+<span class="c1"># This should be okay for most applications, but if an exact answer is needed use</span>
+<span class="c1"># predict.rpart.leaves from package treeCluster</span>
+<span class="n">num.leaves</span> <span class="o">&lt;-</span> <span class="nf">length</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">y.hat</span><span class="p">))</span>
+
+<span class="c1"># Leaf membership, ordered by increasing prediction value</span>
+<span class="n">leaf</span> <span class="o">&lt;-</span> <span class="nf">factor</span><span class="p">(</span><span class="n">y.hat</span><span class="p">,</span> <span class="n">ordered</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="nf">seq</span><span class="p">(</span><span class="n">num.leaves</span><span class="p">))</span>
+
+<span class="c1"># Looping over covariates</span>
+<span class="n">avg.covariate.per.leaf</span> <span class="o">&lt;-</span> <span class="nf">mapply</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">covariate</span><span class="p">)</span> <span class="p">{</span>
+  
+  <span class="c1"># Coefficients on linear regression of covariate on leaf </span>
+  <span class="c1">#  are the average covariate value in each leaf.</span>
+  <span class="c1"># covariate ~ leaf.1 + ... + leaf.L </span>
+  <span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="n">covariate</span><span class="p">,</span> <span class="s">&quot;~ 0 + leaf&quot;</span><span class="p">))</span>
+  <span class="n">ols</span> <span class="o">&lt;-</span> <span class="nf">lm</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nf">transform</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">leaf</span><span class="o">=</span><span class="n">leaf</span><span class="p">))</span>
+  
+  <span class="c1"># Heteroskedasticity-robust standard errors</span>
+  <span class="nf">t</span><span class="p">(</span><span class="nf">coeftest</span><span class="p">(</span><span class="n">ols</span><span class="p">,</span> <span class="n">vcov</span><span class="o">=</span><span class="nf">vcovHC</span><span class="p">(</span><span class="n">ols</span><span class="p">,</span> <span class="s">&quot;HC2&quot;</span><span class="p">))[,</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">])</span>
+<span class="p">},</span> <span class="n">covariates</span><span class="p">,</span> <span class="n">SIMPLIFY</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">avg.covariate.per.leaf</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">])</span>  <span class="c1"># Showing only first few</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>$LOT
+               leaf1      leaf2    leaf3     leaf4     leaf5     leaf6
+Estimate   69442.743 134663.235 37833.61 36568.902 46578.990 55894.077
+Std. Error  6146.155   9742.853  1265.77  1376.299  1335.717  2043.282
+               leaf7
+Estimate   61681.880
+Std. Error  2243.882
+
+$UNITSF
+                leaf1      leaf2       leaf3      leaf4      leaf5      leaf6
+Estimate   1360.79394 1850.45404 1557.508744 1370.26146 2085.77359 3781.07702
+Std. Error   46.56963   66.18601    6.655404    3.21795    2.78384   43.78579
+                leaf7
+Estimate   4912.32614
+Std. Error   57.25873
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, as we did in the linear model case, we can use the same code for an annotated version of the same information. Again, we ordered the rows in decreasing order based on an estimate of the relative variance “explained” by leaf membership: <span class="math notranslate nohighlight">\(Var(E[X_i|L_i]) / Var(X_i)\)</span>, where <span class="math notranslate nohighlight">\(L_i\)</span> represents the leaf.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">mapply</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="n">covariate</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1"># Looping over covariate names</span>
+      <span class="c1"># Compute average covariate value per ranking (with correct standard errors)</span>
+      <span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="n">covariate</span><span class="p">,</span> <span class="s">&quot;~ 0 + leaf&quot;</span><span class="p">))</span>
+      <span class="n">ols</span> <span class="o">&lt;-</span> <span class="nf">lm</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nf">transform</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">leaf</span><span class="o">=</span><span class="n">leaf</span><span class="p">))</span>
+      <span class="n">ols.res</span> <span class="o">&lt;-</span> <span class="nf">coeftest</span><span class="p">(</span><span class="n">ols</span><span class="p">,</span> <span class="n">vcov</span><span class="o">=</span><span class="nf">vcovHC</span><span class="p">(</span><span class="n">ols</span><span class="p">,</span> <span class="s">&quot;HC2&quot;</span><span class="p">))</span>
+    
+      <span class="c1"># Retrieve results</span>
+      <span class="n">avg</span> <span class="o">&lt;-</span> <span class="n">ols.res</span><span class="p">[,</span><span class="m">1</span><span class="p">]</span>
+      <span class="n">stderr</span> <span class="o">&lt;-</span> <span class="n">ols.res</span><span class="p">[,</span><span class="m">2</span><span class="p">]</span>
+      
+      <span class="c1"># Tally up results</span>
+      <span class="nf">data.frame</span><span class="p">(</span><span class="n">covariate</span><span class="p">,</span> <span class="n">avg</span><span class="p">,</span> <span class="n">stderr</span><span class="p">,</span> 
+                 <span class="n">ranking</span><span class="o">=</span><span class="nf">factor</span><span class="p">(</span><span class="nf">seq</span><span class="p">(</span><span class="n">num.leaves</span><span class="p">)),</span> 
+                 <span class="c1"># Used for coloring</span>
+                 <span class="n">scaling</span><span class="o">=</span><span class="nf">pnorm</span><span class="p">((</span><span class="n">avg</span> <span class="o">-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">avg</span><span class="p">))</span><span class="o">/</span><span class="nf">sd</span><span class="p">(</span><span class="n">avg</span><span class="p">)),</span> 
+                 <span class="c1"># We will order based on how much variation is &#39;explain&#39; by the averages</span>
+                 <span class="c1"># relative to the total variation of the covariate in the data</span>
+                 <span class="n">variation</span><span class="o">=</span><span class="nf">sd</span><span class="p">(</span><span class="n">avg</span><span class="p">)</span> <span class="o">/</span> <span class="nf">sd</span><span class="p">(</span><span class="n">data</span><span class="p">[,</span><span class="n">covariate</span><span class="p">]),</span>
+                 <span class="c1"># String to print in each cell in heatmap below</span>
+                 <span class="c1"># Note: depending on the scaling of your covariates, </span>
+                 <span class="c1"># you may have to tweak these  formatting parameters a little.</span>
+                 <span class="n">labels</span><span class="o">=</span><span class="nf">paste0</span><span class="p">(</span><span class="nf">formatC</span><span class="p">(</span><span class="n">avg</span><span class="p">),</span><span class="s">&quot;\n(&quot;</span><span class="p">,</span> <span class="nf">formatC</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="n">digits</span> <span class="o">=</span> <span class="m">2</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="m">2</span><span class="p">),</span> <span class="s">&quot;)&quot;</span><span class="p">))</span>
+<span class="p">},</span> <span class="n">covariates</span><span class="p">,</span> <span class="n">SIMPLIFY</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">do.call</span><span class="p">(</span><span class="n">rbind</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># a small optional trick to ensure heatmap will be in decreasing order of &#39;variation&#39;</span>
+<span class="n">df</span><span class="o">$</span><span class="n">covariate</span> <span class="o">&lt;-</span> <span class="nf">reorder</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">covariate</span><span class="p">,</span> <span class="nf">order</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">variation</span><span class="p">))</span>
+<span class="n">df</span> <span class="o">&lt;-</span> <span class="n">df</span><span class="p">[</span><span class="nf">order</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">variation</span><span class="p">,</span> <span class="n">decreasing</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">),]</span>
+
+<span class="c1"># plot heatmap</span>
+<span class="nf">ggplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="p">(</span><span class="m">8</span><span class="o">*</span><span class="n">num.leaves</span><span class="p">),])</span> <span class="o">+</span>  <span class="c1"># showing on the first few results (ordered by &#39;variation&#39;)</span>
+    <span class="nf">aes</span><span class="p">(</span><span class="n">ranking</span><span class="p">,</span> <span class="n">covariate</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">geom_tile</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="n">scaling</span><span class="p">))</span> <span class="o">+</span> 
+    <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">labels</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="m">2.5</span><span class="p">)</span> <span class="o">+</span>  <span class="c1"># &#39;size&#39; controls the fontsize inside cell</span>
+    <span class="nf">scale_fill_gradient</span><span class="p">(</span><span class="n">low</span> <span class="o">=</span> <span class="s">&quot;#E1BE6A&quot;</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="s">&quot;#40B0A6&quot;</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">ggtitle</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;Average covariate values within leaf&quot;</span><span class="p">))</span> <span class="o">+</span>
+    <span class="nf">theme_minimal</span><span class="p">()</span> <span class="o">+</span> 
+    <span class="nf">ylab</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="nf">xlab</span><span class="p">(</span><span class="s">&quot;Leaf (ordered by prediction, low to high)&quot;</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">labs</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s">&quot;Normalized\nvariation&quot;</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">theme</span><span class="p">(</span><span class="n">plot.title</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="m">12</span><span class="p">,</span> <span class="n">face</span> <span class="o">=</span> <span class="s">&quot;bold&quot;</span><span class="p">,</span> <span class="n">hjust</span> <span class="o">=</span> <span class="n">.</span><span class="m">5</span><span class="p">),</span>
+          <span class="n">axis.title.x</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">9</span><span class="p">),</span>
+          <span class="n">legend.title</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">hjust</span> <span class="o">=</span> <span class="n">.</span><span class="m">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="m">9</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Introduction_to_Machine_Learning_60_0.png" src="_images/Introduction_to_Machine_Learning_60_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="forests">
+<h3>1.2.3 Forests<a class="headerlink" href="#forests" title="Permalink to this headline">¶</a></h3>
+<p>Forests are a type of <strong>ensemble</strong> estimators: they aggregate information about many decision trees to compute a new estimate that typically has much smaller variance.</p>
+<p>At a high level, the process of fitting a (regression) forest consists of fitting many decision trees, each on a different subsample of the data. The forest prediction for a particular point <span class="math notranslate nohighlight">\(x\)</span> is the average of all tree predictions for that point.</p>
+<p>One interesting aspect of forests and many other ensemble methods is that cross-validation can be built into the algorithm itself. Since each tree only uses a subset of the data, the remaining subset is effectively a test set for that tree. We call these observations <strong>out-of-bag</strong> (there were not in the “bag” of training observations). They can be used to evaluate the performance of that tree, and the average of out-of-bag evaluations is evidence of the performance of the forest itself.</p>
+<p>For the example below, we’ll use the regression_forest function of the <code class="docutils literal notranslate"><span class="pre">R</span></code> package <code class="docutils literal notranslate"><span class="pre">grf</span></code>. The particular forest implementation in <code class="docutils literal notranslate"><span class="pre">grf</span></code> has interesting properties that are absent from most other packages. For example, trees are build using a certain sample-splitting scheme that ensures that predictions are approximately unbiased and normally distributed for large samples, which in turn allows us to compute valid confidence intervals around those predictions. We’ll have more to say about the importance of these features when we talk about causal estimates in future chapters. See also the grf website for more information.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span><span class="n">covariates</span><span class="p">]</span>
+<span class="n">Y</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span><span class="n">outcome</span><span class="p">]</span>
+
+<span class="c1"># Fitting the forest</span>
+<span class="c1"># We&#39;ll use few trees for speed here. </span>
+<span class="c1"># In a practical application please use a higher number of trees.</span>
+<span class="n">forest</span> <span class="o">&lt;-</span> <span class="nf">regression_forest</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="n">Y</span><span class="p">,</span> <span class="n">num.trees</span><span class="o">=</span><span class="m">200</span><span class="p">)</span>  
+
+<span class="c1"># There usually isn&#39;t a lot of benefit in tuning forest parameters, but the next code does so automatically (expect longer training times)</span>
+<span class="c1"># forest &lt;- regression_forest(X=X, Y=Y, tune.parameters=&quot;all&quot;)</span>
+
+<span class="c1"># Retrieving forest predictions</span>
+<span class="n">y.hat</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">forest</span><span class="p">)</span><span class="o">$</span><span class="n">predictions</span>
+
+<span class="c1"># Evaluation (out-of-bag mse)</span>
+<span class="n">mse.oob</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">(</span><span class="nf">predict</span><span class="p">(</span><span class="n">forest</span><span class="p">)</span><span class="o">$</span><span class="n">debiased.error</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Forest MSE (out-of-bag):&quot;</span><span class="p">,</span> <span class="n">mse.oob</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Forest MSE (out-of-bag): 0.589442024432908&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>The function <code class="docutils literal notranslate"><span class="pre">variable_importance</span></code> computes a simple weighted sum of how many times each feature was split on at each depth across the trees.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">var.imp</span> <span class="o">&lt;-</span> <span class="nf">variable_importance</span><span class="p">(</span><span class="n">forest</span><span class="p">)</span>
+<span class="nf">names</span><span class="p">(</span><span class="n">var.imp</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">covariates</span>
+<span class="nf">sort</span><span class="p">(</span><span class="n">var.imp</span><span class="p">,</span> <span class="n">decreasing</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)[</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">]</span> <span class="c1"># showing only first few</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.dl-inline {width: auto; margin:0; padding: 0}
+.dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
+.dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
+.dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
+</style><dl class=dl-inline><dt>UNITSF</dt><dd>0.395208438200705</dd><dt>NUNIT2</dt><dd>0.174885553470919</dd><dt>BATHS</dt><dd>0.167101816684208</dd><dt>DISH</dt><dd>0.10471816226605</dd><dt>BEDRMS</dt><dd>0.0369369880565597</dd><dt>MOBILTYP</dt><dd>0.0217545417105203</dd><dt>HALFB</dt><dd>0.0198953004164188</dd><dt>DINING</dt><dd>0.0123540017388917</dd><dt>FAMRM</dt><dd>0.0119941426806388</dd><dt>OARSYS</dt><dd>0.00938214432800989</dd></dl>
+</div></div>
+</div>
+<p>All the caveats about interpretation that we mentioned above apply in a similar to forest output.</p>
+</div>
+</div>
+<div class="section" id="further-reading">
+<h2>1.3 Further reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
+<p>In this tutorial we briefly reviewed some key concepts that we recur later in this tutorial. For readers who are entirely new to this field or interested in learning about it more depth, the first few chapters of the following textbook are an acccessible introduction:</p>
+<p>James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2013). An introduction to statistical learning (Vol. 112, p. 18). New York: springer. Available for free at <a class="reference external" href="https://www.statlearning.com/">the authors’ website</a>.</p>
+<p>Some of the discussion in the Lasso section in particular was drawn from <a class="reference external" href="https://www.aeaweb.org/articles?id=10.1257/jep.31.2.87">Mullainathan and Spiess (JEP, 2017)</a>, which contains a good discussion of the interpretability issues discussed here.</p>
+<p>There has been a good deal of research on inference in high-dimensional models, Although we won’t be covering in depth it in this tutorial, we refer readers to <a class="reference external" href="http://www.mit.edu/~vchern/papers/JEP.pdf">Belloni, Chernozhukov and Hansen (JEP, 2014)</a>. Also check out the related <code class="docutils literal notranslate"><span class="pre">R</span></code> package <a class="reference external" href="https://cran.r-project.org/web/packages/hdm/hdm.pdf"><code class="docutils literal notranslate"><span class="pre">hdm</span></code></a>, developed by the same authors, along with Philipp Bach and Martin Spindler.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "d2cml-ai/mgtecon634_r",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            kernelName: "ir",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Phd Susan Athey<br/>
+    
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

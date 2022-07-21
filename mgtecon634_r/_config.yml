@@ -3,7 +3,7 @@
 
 title: MGTECON 634 at Stanford (R scripts)
 author: Phd Susan Athey
-logo: logo.png
+logo: figs/logo.png
 description: This tutorial will introduce key concepts in machine learning-based causal inference. This tutorial is used in the MGTECON 634 at Stanford.
 
 parse:
@@ -25,6 +25,35 @@ parse:
 execute:
   execute_notebooks: force
 
+# Add GitHub buttons to your book
+# See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
+html:
+  use_edit_page_button: true
+  use_repository_button: true
+  use_issues_button: true
+
+# Information about where the book exists on the web
+repository:
+  url: https://github.com/d2cml-ai/mgtecon634_r  # Online location of your book
+  path_to_book: mgtecon634_r/_build/jupyter_execute/  # Optional path to your book, relative to the repository root
+  branch: master  # Which branch of the repository should be used when creating links (optional)
+
+
+# Launch button settings
+launch_buttons:
+  binder             : false
+  binderhub          : false
+  binderhub_url      : off
+  jupyterhub         : false
+  thebe              : false
+  colab              : false
+  # Launch button settings
+launch_buttons:
+  notebook_interface: classic #jupyterlab
+  binderhub_url: https://mybinder.org
+  colab_url: https://colab.research.google.com
+  thebe: true
+
 # Define the name of the latex output file for PDF builds
 latex:
   latex_engine                : "pdflatex"
@@ -39,27 +68,6 @@ notebook_interface            : "notebook"
 bibtex_bibfiles:
   - references.bib
 
-# Information about where the book exists on the web
-repository:
-  url: https://github.com/d2cml-ai/mgtecon634_r  # Online location of your book
-  path_to_book: mgtecon634_r/_build/jupyter_execute/  # Optional path to your book, relative to the repository root
-  branch: master  # Which branch of the repository should be used when creating links (optional)
-
-# Add GitHub buttons to your book
-# See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
-html:
-  use_edit_page_button: true
-  use_repository_button: true
-  use_issues_button: true
-
-
-# Launch button settings
-launch_buttons:
-  notebook_interface: classic #jupyterlab
-  binderhub_url: https://mybinder.org
-  colab_url: https://colab.research.google.com
-  thebe: true
-  
 sphinx:
   config:
     html_show_copyright: false

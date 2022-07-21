@@ -24,8 +24,6 @@ X <- matrix(runif(n*p), n, p)
 W <- rbinom(n, prob = .5, size = 1)  # independent from X and Y
 Y <- .5*(X[,1] - .5) + (X[,2] - .5)*W + .1 * rnorm(n) 
 
-min(X)
-
 y.norm <- 1-(Y - min(Y))/(max(Y)-min(Y)) # just for plotting
 
 plot(X[,1], X[,2], pch=ifelse(W, 21, 23), cex=1.5, bg=gray(y.norm), xlab="X1", ylab="X2")
@@ -37,8 +35,6 @@ for (w in c(0, 1)) {
        xlab="X1", ylab="X2")
 }
 
-col2
-
 col2 <- rgb(0.250980, 0.690196, 0.650980, .35)
 col1 <- rgb(0.9960938, 0.7539062, 0.0273438, .35)
 plot(X[,1], X[,2], pch=ifelse(W, 21, 23), cex=1.5, bg=gray(y.norm), xlab="X1", ylab="X2")
@@ -47,8 +43,6 @@ rect(.5, -.1, 1.1, .5, density = 250, angle = 45, col = col1, border = NA)
 rect(.5, .5, 1.1, 1.1, density = 250, angle = 45, col = col2, border = NA)
 text(.75, .75, labels = "TREAT (A)", cex = 1.8)
 text(.25, .25, labels = expression(DO ~ NOT ~ TREAT ~ (A^C)), cex = 1.8, adj = .25)
-
-sum(A & W==0)
 
 # Only valid in randomized setting.
 A <- (X[,1] > .5) & (X[,2] > .5)

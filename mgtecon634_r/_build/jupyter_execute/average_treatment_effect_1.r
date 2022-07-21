@@ -68,8 +68,6 @@ keep.idx <- as.logical(rbinom(n=nrow(data), prob=prob.keep, size = 1))
 # Dropping
 data <- data[keep.idx,]
 
-dim(data)
-
 X <- model.matrix(formula("~ 0 + age + polviews"), data.exp)  # old 'experimental' dataset
 W <- data.exp$w
 Y <- data.exp$y
@@ -290,7 +288,7 @@ W <- data[,treatment]
 pp <- ncol(XX)
 
 plot.df <- data.frame(XX, W = as.factor(W), IPW = ifelse(W == 1, 1 / e.hat, 1 / (1 - e.hat)))
-plot.df 
+head(plot.df)
 
 plot.df <- reshape(plot.df, varying = list(1:pp), direction = "long", v.names = "X",
                    times = factor(colnames(XX), levels = colnames(XX)))

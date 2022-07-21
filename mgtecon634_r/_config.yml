@@ -8,7 +8,7 @@ description: This tutorial will introduce key concepts in machine learning-based
 
 parse:
   myst_enable_extensions:
-    #- amsmath
+    - amsmath
     - colon_fence
     - deflist
     - dollarmath

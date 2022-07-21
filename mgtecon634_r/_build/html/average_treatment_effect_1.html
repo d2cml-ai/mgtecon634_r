@@ -608,7 +608,7 @@ Y_i = Y_i(0) + W_i \left( Y_i(1) - Y_i(0) \right),
 .list-inline>li {display: inline-block}
 .list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
 </style>
-<ol class=list-inline><li>8787</li><li>9</li></ol>
+<ol class=list-inline><li>8831</li><li>9</li></ol>
 </div></div>
 </div>
 <p>Let’s see what happens to our sample before and after the change. This next figure shows the original dataset. Each observation is represented by a point on either the left or right scatterplots. An outcome of <span class="math notranslate nohighlight">\(Y_i=1\)</span> is denoted by a blue circle, and <span class="math notranslate nohighlight">\(Y_i=0\)</span> is denoted by a red square, but let’s not focus on the outcome at the moment. For now, what’s important to note is that the covariate distributions for treated and untreated populations are very similar. This is what we should expect in an experimental setting under unconfoundedness.</p>
@@ -666,7 +666,7 @@ Y_i = Y_i(0) + W_i \left( Y_i(1) - Y_i(0) \right),
 .dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
 .dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
 .dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
-</style><dl class=dl-inline><dt>Estimate</dt><dd>-0.299868905067432</dd><dt>Std. Error</dt><dd>0.00871519855716381</dd><dt>t value</dt><dd>-34.4075815485515</dd><dt>Pr(&gt;|t|)</dt><dd>1.67330339510269e-243</dd></dl>
+</style><dl class=dl-inline><dt>Estimate</dt><dd>-0.298236674423842</dd><dt>Std. Error</dt><dd>0.00868453321432654</dd><dt>t value</dt><dd>-34.3411288855286</dd><dt>Pr(&gt;|t|)</dt><dd>1.0622714851715e-242</dd></dl>
 </div></div>
 </div>
 <p>Note that the dataset created above still satisfies unconfoundedness &#64;ref(eq:cond-unconf), since discrepancies in treatment assignment probability are described by observable covariates (<code class="docutils literal notranslate"><span class="pre">age</span></code> and <code class="docutils literal notranslate"><span class="pre">polviews</span></code>). Moreover, it also satisfies the overlap assumption &#64;ref(eq:overlap), since never completely dropped all treated or all untreated observations in any region of the covariate space. This is important because, in what follows, we’ll consider different estimators of the ATE that are available in observational settings under unconfoundedness and overlap.</p>
@@ -721,7 +721,7 @@ Y_i = Y_i(0) + W_i \left( Y_i(1) - Y_i(0) \right),
 &quot;prediction from a rank-deficient fit may be misleading&quot;
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] -0.3634516
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] -0.3638007
 </pre></div>
 </div>
 </div>
@@ -865,7 +865,7 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      estimate      std.error         t.stat         pvalue 
- -3.573019e-01   1.410122e-02  -2.533837e+01  7.698895e-131 
+ -3.615840e-01   1.404515e-02  -2.574439e+01  3.562667e-135 
 </pre></div>
 </div>
 </div>
@@ -965,7 +965,7 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      estimate      std.error         t.stat         pvalue 
- -3.585602e-01   9.517250e-03  -3.767477e+01  1.844009e-294 
+ -3.586100e-01   9.558352e-03  -3.751798e+01  5.749708e-292 
 </pre></div>
 </div>
 </div>
@@ -984,12 +984,12 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 	<tr><th></th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
 </thead>
 <tbody>
-	<tr><th scope=row>4</th><td> 6</td><td>0</td><td>0</td><td>47</td><td>1</td><td> 5</td><td>10</td><td>4</td><td>1</td></tr>
-	<tr><th scope=row>6</th><td> 8</td><td>0</td><td>0</td><td>36</td><td>2</td><td> 8</td><td>18</td><td>1</td><td>1</td></tr>
-	<tr><th scope=row>8</th><td>10</td><td>1</td><td>1</td><td>51</td><td>5</td><td>11</td><td>18</td><td>3</td><td>1</td></tr>
-	<tr><th scope=row>12</th><td>15</td><td>1</td><td>0</td><td>66</td><td>6</td><td> 7</td><td> 8</td><td>2</td><td>2</td></tr>
+	<tr><th scope=row>1</th><td> 1</td><td>0</td><td>0</td><td>28</td><td>4</td><td>11</td><td>14</td><td>5</td><td>1</td></tr>
+	<tr><th scope=row>9</th><td>11</td><td>1</td><td>0</td><td>24</td><td>4</td><td>12</td><td>12</td><td>5</td><td>2</td></tr>
 	<tr><th scope=row>13</th><td>16</td><td>1</td><td>0</td><td>63</td><td>3</td><td> 4</td><td>10</td><td>1</td><td>1</td></tr>
-	<tr><th scope=row>17</th><td>26</td><td>1</td><td>0</td><td>67</td><td>4</td><td> 9</td><td>12</td><td>1</td><td>1</td></tr>
+	<tr><th scope=row>22</th><td>32</td><td>0</td><td>1</td><td>34</td><td>3</td><td>12</td><td>12</td><td>1</td><td>2</td></tr>
+	<tr><th scope=row>28</th><td>39</td><td>0</td><td>1</td><td>40</td><td>5</td><td>12</td><td>18</td><td>1</td><td>2</td></tr>
+	<tr><th scope=row>30</th><td>41</td><td>1</td><td>1</td><td>27</td><td>6</td><td>12</td><td>18</td><td>1</td><td>1</td></tr>
 </tbody>
 </table>
 </div></div>
@@ -1016,11 +1016,11 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message in average_treatment_effect(forest):
-&quot;Estimated treatment propensities take values between 0.049 and 0.989 and in particular get very close to 0 and 1. In this case, using `target.sample=overlap`, or filtering data as in Crump, Hotz, Imbens, and Mitnik (Biometrika, 2009) may be helpful.&quot;
+&quot;Estimated treatment propensities take values between 0.049 and 0.984 and in particular get very close to 0 and 1. In this case, using `target.sample=overlap`, or filtering data as in Crump, Hotz, Imbens, and Mitnik (Biometrika, 2009) may be helpful.&quot;
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   estimate     std.err 
--0.36654971  0.01284464 
+-0.36955197  0.01350942 
 </pre></div>
 </div>
 </div>
@@ -1112,7 +1112,7 @@ where <span class="math notranslate nohighlight">\(\bar{Z}_1\)</span> and <span 
 .dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
 .dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
 .dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
-</style><dl class=dl-inline><dt>age</dt><dd>0.624331929858385</dd><dt>polviews</dt><dd>0.613443602860702</dd><dt>income</dt><dd>0.0592141962738171</dd><dt>educ</dt><dd>0.109466139278616</dd><dt>marital</dt><dd>0.112431338575765</dd><dt>sex</dt><dd>0.0407413971889886</dd><dt>age:polviews</dt><dd>0.0685524086789675</dd><dt>age:income</dt><dd>0.479126489137053</dd><dt>age:educ</dt><dd>0.459914275175733</dd><dt>age:marital</dt><dd>0.220901687690993</dd><dt>age:sex</dt><dd>0.449739231320677</dd><dt>polviews:income</dt><dd>0.505402163352286</dd><dt>polviews:educ</dt><dd>0.552805785343058</dd><dt>polviews:marital</dt><dd>0.330307761403461</dd><dt>polviews:sex</dt><dd>0.376117183174588</dd><dt>income:educ</dt><dd>0.0967770114179179</dd><dt>income:marital</dt><dd>0.113925614677549</dd><dt>income:sex</dt><dd>0.00525177161686697</dd><dt>educ:marital</dt><dd>0.127655070666372</dd><dt>educ:sex</dt><dd>0.0320830269583285</dd><dt>marital:sex</dt><dd>0.0743294964922222</dd></dl>
+</style><dl class=dl-inline><dt>age</dt><dd>0.653508211868082</dd><dt>polviews</dt><dd>0.605548562081719</dd><dt>income</dt><dd>0.057037229122522</dd><dt>educ</dt><dd>0.115309630753596</dd><dt>marital</dt><dd>0.110075115047868</dd><dt>sex</dt><dd>0.0517542681864497</dd><dt>age:polviews</dt><dd>0.0888088704162805</dd><dt>age:income</dt><dd>0.500870289518625</dd><dt>age:educ</dt><dd>0.48390141975119</dd><dt>age:marital</dt><dd>0.240652185566134</dd><dt>age:sex</dt><dd>0.478948657541542</dd><dt>polviews:income</dt><dd>0.497941371336646</dd><dt>polviews:educ</dt><dd>0.562318620883762</dd><dt>polviews:marital</dt><dd>0.324225887839529</dd><dt>polviews:sex</dt><dd>0.3674363796788</dd><dt>income:educ</dt><dd>0.0990616893701305</dd><dt>income:marital</dt><dd>0.110842908015521</dd><dt>income:sex</dt><dd>0.00455879752119961</dd><dt>educ:marital</dt><dd>0.126796267836268</dd><dt>educ:sex</dt><dd>0.0232096710928333</dd><dt>marital:sex</dt><dd>0.0655134709594612</dd></dl>
 </div></div>
 </div>
 <p>Note above how in particular <code class="docutils literal notranslate"><span class="pre">age</span></code> and <code class="docutils literal notranslate"><span class="pre">polviews</span></code> – the variables we chose to introduce imbalance in Section &#64;ref(obs) – are far from balanced before adjustment, as are other variables that correlate with them.</p>
@@ -1131,73 +1131,73 @@ where <span class="math notranslate nohighlight">\(\bar{Z}_1\)</span> and <span 
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><table class="dataframe">
-<caption>A data.frame: 8787 × 6</caption>
+<caption>A data.frame: 8831 × 6</caption>
 <thead>
 	<tr><th></th><th scope=col>age</th><th scope=col>polviews</th><th scope=col>age.polviews</th><th scope=col>educ</th><th scope=col>W</th><th scope=col>IPW</th></tr>
 	<tr><th></th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
 </thead>
 <tbody>
-	<tr><th scope=row>4</th><td>47</td><td>1</td><td> 47</td><td>10</td><td>0</td><td>1.198062</td></tr>
-	<tr><th scope=row>6</th><td>36</td><td>2</td><td> 72</td><td>18</td><td>0</td><td>2.137734</td></tr>
-	<tr><th scope=row>8</th><td>51</td><td>5</td><td>255</td><td>18</td><td>1</td><td>2.160655</td></tr>
-	<tr><th scope=row>12</th><td>66</td><td>6</td><td>396</td><td> 8</td><td>0</td><td>2.145738</td></tr>
-	<tr><th scope=row>13</th><td>63</td><td>3</td><td>189</td><td>10</td><td>0</td><td>1.206476</td></tr>
-	<tr><th scope=row>17</th><td>67</td><td>4</td><td>268</td><td>12</td><td>0</td><td>1.133752</td></tr>
-	<tr><th scope=row>21</th><td>30</td><td>5</td><td>150</td><td>16</td><td>1</td><td>1.270124</td></tr>
-	<tr><th scope=row>22</th><td>34</td><td>3</td><td>102</td><td>12</td><td>1</td><td>1.713847</td></tr>
-	<tr><th scope=row>23</th><td>46</td><td>6</td><td>276</td><td>14</td><td>1</td><td>1.650333</td></tr>
-	<tr><th scope=row>28</th><td>40</td><td>5</td><td>200</td><td>18</td><td>1</td><td>1.272582</td></tr>
-	<tr><th scope=row>31</th><td>34</td><td>2</td><td> 68</td><td>14</td><td>0</td><td>2.239847</td></tr>
-	<tr><th scope=row>32</th><td>30</td><td>3</td><td> 90</td><td>16</td><td>1</td><td>1.709968</td></tr>
-	<tr><th scope=row>37</th><td>22</td><td>4</td><td> 88</td><td>12</td><td>1</td><td>2.041312</td></tr>
-	<tr><th scope=row>41</th><td>67</td><td>5</td><td>335</td><td>11</td><td>1</td><td>1.657891</td></tr>
-	<tr><th scope=row>43</th><td>63</td><td>4</td><td>252</td><td>14</td><td>1</td><td>7.224856</td></tr>
-	<tr><th scope=row>49</th><td>74</td><td>6</td><td>444</td><td>12</td><td>1</td><td>2.018734</td></tr>
-	<tr><th scope=row>51</th><td>27</td><td>3</td><td> 81</td><td>15</td><td>1</td><td>1.781096</td></tr>
-	<tr><th scope=row>52</th><td>30</td><td>6</td><td>180</td><td>16</td><td>1</td><td>1.158135</td></tr>
-	<tr><th scope=row>58</th><td>48</td><td>4</td><td>192</td><td>12</td><td>0</td><td>1.340244</td></tr>
-	<tr><th scope=row>69</th><td>62</td><td>4</td><td>248</td><td> 6</td><td>0</td><td>1.169338</td></tr>
-	<tr><th scope=row>71</th><td>41</td><td>4</td><td>164</td><td>12</td><td>0</td><td>2.024131</td></tr>
-	<tr><th scope=row>76</th><td>29</td><td>3</td><td> 87</td><td>12</td><td>0</td><td>2.065955</td></tr>
-	<tr><th scope=row>78</th><td>51</td><td>4</td><td>204</td><td>12</td><td>0</td><td>1.454920</td></tr>
-	<tr><th scope=row>82</th><td>44</td><td>6</td><td>264</td><td>12</td><td>1</td><td>1.147596</td></tr>
-	<tr><th scope=row>88</th><td>47</td><td>4</td><td>188</td><td>10</td><td>0</td><td>1.202067</td></tr>
-	<tr><th scope=row>93</th><td>73</td><td>4</td><td>292</td><td> 8</td><td>0</td><td>1.218263</td></tr>
-	<tr><th scope=row>96</th><td>52</td><td>5</td><td>260</td><td>16</td><td>0</td><td>1.927116</td></tr>
-	<tr><th scope=row>97</th><td>39</td><td>5</td><td>195</td><td>16</td><td>1</td><td>1.275680</td></tr>
-	<tr><th scope=row>101</th><td>54</td><td>4</td><td>216</td><td>12</td><td>0</td><td>1.116011</td></tr>
-	<tr><th scope=row>104</th><td>30</td><td>5</td><td>150</td><td>16</td><td>1</td><td>1.358520</td></tr>
+	<tr><th scope=row>1</th><td>28</td><td>4</td><td>112</td><td>14</td><td>0</td><td>2.244562</td></tr>
+	<tr><th scope=row>9</th><td>24</td><td>4</td><td> 96</td><td>12</td><td>0</td><td>2.134400</td></tr>
+	<tr><th scope=row>13</th><td>63</td><td>3</td><td>189</td><td>10</td><td>0</td><td>1.221555</td></tr>
+	<tr><th scope=row>22</th><td>34</td><td>3</td><td>102</td><td>12</td><td>1</td><td>1.482462</td></tr>
+	<tr><th scope=row>28</th><td>40</td><td>5</td><td>200</td><td>18</td><td>1</td><td>1.278244</td></tr>
+	<tr><th scope=row>30</th><td>27</td><td>6</td><td>162</td><td>18</td><td>1</td><td>1.184459</td></tr>
+	<tr><th scope=row>35</th><td>69</td><td>2</td><td>138</td><td>10</td><td>0</td><td>1.240453</td></tr>
+	<tr><th scope=row>38</th><td>26</td><td>4</td><td>104</td><td>11</td><td>1</td><td>1.756799</td></tr>
+	<tr><th scope=row>39</th><td>28</td><td>3</td><td> 84</td><td>15</td><td>1</td><td>1.840291</td></tr>
+	<tr><th scope=row>41</th><td>67</td><td>5</td><td>335</td><td>11</td><td>1</td><td>1.749841</td></tr>
+	<tr><th scope=row>46</th><td>31</td><td>3</td><td> 93</td><td>20</td><td>0</td><td>1.926366</td></tr>
+	<tr><th scope=row>52</th><td>30</td><td>6</td><td>180</td><td>16</td><td>1</td><td>1.113531</td></tr>
+	<tr><th scope=row>54</th><td>29</td><td>5</td><td>145</td><td>17</td><td>1</td><td>1.320584</td></tr>
+	<tr><th scope=row>58</th><td>48</td><td>4</td><td>192</td><td>12</td><td>0</td><td>1.202597</td></tr>
+	<tr><th scope=row>62</th><td>60</td><td>4</td><td>240</td><td>16</td><td>0</td><td>1.256722</td></tr>
+	<tr><th scope=row>65</th><td>27</td><td>4</td><td>108</td><td>13</td><td>1</td><td>1.924310</td></tr>
+	<tr><th scope=row>69</th><td>62</td><td>4</td><td>248</td><td> 6</td><td>0</td><td>1.206647</td></tr>
+	<tr><th scope=row>72</th><td>77</td><td>4</td><td>308</td><td>12</td><td>0</td><td>1.154887</td></tr>
+	<tr><th scope=row>73</th><td>61</td><td>4</td><td>244</td><td>11</td><td>0</td><td>1.179843</td></tr>
+	<tr><th scope=row>75</th><td>72</td><td>6</td><td>432</td><td> 9</td><td>1</td><td>2.143639</td></tr>
+	<tr><th scope=row>78</th><td>51</td><td>4</td><td>204</td><td>12</td><td>0</td><td>1.268464</td></tr>
+	<tr><th scope=row>79</th><td>26</td><td>4</td><td>104</td><td>12</td><td>0</td><td>2.505715</td></tr>
+	<tr><th scope=row>82</th><td>44</td><td>6</td><td>264</td><td>12</td><td>1</td><td>1.161767</td></tr>
+	<tr><th scope=row>88</th><td>47</td><td>4</td><td>188</td><td>10</td><td>0</td><td>1.126291</td></tr>
+	<tr><th scope=row>93</th><td>73</td><td>4</td><td>292</td><td> 8</td><td>0</td><td>1.168603</td></tr>
+	<tr><th scope=row>95</th><td>44</td><td>4</td><td>176</td><td>12</td><td>0</td><td>1.865782</td></tr>
+	<tr><th scope=row>97</th><td>39</td><td>5</td><td>195</td><td>16</td><td>1</td><td>1.215819</td></tr>
+	<tr><th scope=row>101</th><td>54</td><td>4</td><td>216</td><td>12</td><td>0</td><td>1.094385</td></tr>
+	<tr><th scope=row>104</th><td>30</td><td>5</td><td>150</td><td>16</td><td>1</td><td>1.129635</td></tr>
+	<tr><th scope=row>105</th><td>29</td><td>4</td><td>116</td><td>15</td><td>1</td><td>1.503939</td></tr>
 	<tr><th scope=row>⋮</th><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td></tr>
-	<tr><th scope=row>28576</th><td>52</td><td>4</td><td>208</td><td>11</td><td>0</td><td> 1.233977</td></tr>
-	<tr><th scope=row>28577</th><td>44</td><td>2</td><td> 88</td><td>14</td><td>0</td><td> 2.281723</td></tr>
-	<tr><th scope=row>28578</th><td>72</td><td>6</td><td>432</td><td> 4</td><td>1</td><td> 1.731272</td></tr>
-	<tr><th scope=row>28583</th><td>18</td><td>4</td><td> 72</td><td>12</td><td>0</td><td> 1.812301</td></tr>
-	<tr><th scope=row>28587</th><td>39</td><td>6</td><td>234</td><td>12</td><td>1</td><td> 1.384789</td></tr>
-	<tr><th scope=row>28588</th><td>67</td><td>4</td><td>268</td><td>14</td><td>0</td><td> 1.185999</td></tr>
-	<tr><th scope=row>28593</th><td>26</td><td>7</td><td>182</td><td>11</td><td>1</td><td> 1.198138</td></tr>
-	<tr><th scope=row>28594</th><td>54</td><td>4</td><td>216</td><td>14</td><td>0</td><td> 1.268498</td></tr>
-	<tr><th scope=row>28595</th><td>29</td><td>6</td><td>174</td><td>16</td><td>1</td><td> 1.099661</td></tr>
-	<tr><th scope=row>28600</th><td>36</td><td>5</td><td>180</td><td>12</td><td>1</td><td> 1.275753</td></tr>
-	<tr><th scope=row>28606</th><td>45</td><td>5</td><td>225</td><td> 8</td><td>1</td><td> 1.096252</td></tr>
-	<tr><th scope=row>28608</th><td>86</td><td>2</td><td>172</td><td>12</td><td>0</td><td> 1.199128</td></tr>
-	<tr><th scope=row>28609</th><td>46</td><td>4</td><td>184</td><td>12</td><td>1</td><td> 5.778523</td></tr>
-	<tr><th scope=row>28611</th><td>70</td><td>3</td><td>210</td><td>12</td><td>0</td><td> 1.158359</td></tr>
-	<tr><th scope=row>28613</th><td>52</td><td>2</td><td>104</td><td>16</td><td>0</td><td> 1.271101</td></tr>
-	<tr><th scope=row>28617</th><td>24</td><td>6</td><td>144</td><td>16</td><td>1</td><td> 1.424211</td></tr>
-	<tr><th scope=row>28619</th><td>21</td><td>6</td><td>126</td><td>15</td><td>1</td><td> 1.118645</td></tr>
-	<tr><th scope=row>28625</th><td>50</td><td>2</td><td>100</td><td>18</td><td>0</td><td> 1.542051</td></tr>
-	<tr><th scope=row>28626</th><td>71</td><td>4</td><td>284</td><td> 6</td><td>0</td><td> 1.149542</td></tr>
-	<tr><th scope=row>28627</th><td>19</td><td>5</td><td> 95</td><td>11</td><td>1</td><td> 1.058280</td></tr>
-	<tr><th scope=row>28628</th><td>19</td><td>2</td><td> 38</td><td>12</td><td>0</td><td> 1.944961</td></tr>
-	<tr><th scope=row>28631</th><td>70</td><td>4</td><td>280</td><td>12</td><td>0</td><td> 1.188186</td></tr>
-	<tr><th scope=row>28635</th><td>62</td><td>4</td><td>248</td><td> 7</td><td>0</td><td> 1.138601</td></tr>
-	<tr><th scope=row>28637</th><td>49</td><td>4</td><td>196</td><td>10</td><td>1</td><td>11.376692</td></tr>
-	<tr><th scope=row>28642</th><td>43</td><td>1</td><td> 43</td><td>16</td><td>0</td><td> 2.176901</td></tr>
-	<tr><th scope=row>28646</th><td>21</td><td>5</td><td>105</td><td>12</td><td>1</td><td> 1.126717</td></tr>
-	<tr><th scope=row>28647</th><td>70</td><td>4</td><td>280</td><td>11</td><td>0</td><td> 1.133810</td></tr>
-	<tr><th scope=row>28649</th><td>62</td><td>5</td><td>310</td><td>16</td><td>0</td><td> 2.093991</td></tr>
-	<tr><th scope=row>28650</th><td>66</td><td>7</td><td>462</td><td>12</td><td>0</td><td> 2.168301</td></tr>
-	<tr><th scope=row>28652</th><td>57</td><td>3</td><td>171</td><td>16</td><td>0</td><td> 1.241169</td></tr>
+	<tr><th scope=row>28574</th><td>50</td><td>3</td><td>150</td><td>11</td><td>0</td><td>1.247488</td></tr>
+	<tr><th scope=row>28575</th><td>68</td><td>3</td><td>204</td><td>11</td><td>0</td><td>1.138575</td></tr>
+	<tr><th scope=row>28576</th><td>52</td><td>4</td><td>208</td><td>11</td><td>0</td><td>1.205815</td></tr>
+	<tr><th scope=row>28587</th><td>39</td><td>6</td><td>234</td><td>12</td><td>1</td><td>1.127563</td></tr>
+	<tr><th scope=row>28588</th><td>67</td><td>4</td><td>268</td><td>14</td><td>0</td><td>1.197793</td></tr>
+	<tr><th scope=row>28593</th><td>26</td><td>7</td><td>182</td><td>11</td><td>1</td><td>1.071452</td></tr>
+	<tr><th scope=row>28594</th><td>54</td><td>4</td><td>216</td><td>14</td><td>0</td><td>1.119182</td></tr>
+	<tr><th scope=row>28595</th><td>29</td><td>6</td><td>174</td><td>16</td><td>1</td><td>1.072812</td></tr>
+	<tr><th scope=row>28599</th><td>66</td><td>4</td><td>264</td><td>12</td><td>0</td><td>1.294461</td></tr>
+	<tr><th scope=row>28600</th><td>36</td><td>5</td><td>180</td><td>12</td><td>1</td><td>1.102255</td></tr>
+	<tr><th scope=row>28601</th><td>25</td><td>3</td><td> 75</td><td>16</td><td>0</td><td>2.165670</td></tr>
+	<tr><th scope=row>28605</th><td>81</td><td>4</td><td>324</td><td>12</td><td>0</td><td>1.233229</td></tr>
+	<tr><th scope=row>28606</th><td>45</td><td>5</td><td>225</td><td> 8</td><td>1</td><td>1.603672</td></tr>
+	<tr><th scope=row>28608</th><td>86</td><td>2</td><td>172</td><td>12</td><td>0</td><td>1.270039</td></tr>
+	<tr><th scope=row>28609</th><td>46</td><td>4</td><td>184</td><td>12</td><td>1</td><td>8.625354</td></tr>
+	<tr><th scope=row>28611</th><td>70</td><td>3</td><td>210</td><td>12</td><td>0</td><td>1.193402</td></tr>
+	<tr><th scope=row>28613</th><td>52</td><td>2</td><td>104</td><td>16</td><td>0</td><td>1.359142</td></tr>
+	<tr><th scope=row>28617</th><td>24</td><td>6</td><td>144</td><td>16</td><td>1</td><td>1.249133</td></tr>
+	<tr><th scope=row>28623</th><td>63</td><td>4</td><td>252</td><td>19</td><td>0</td><td>1.201044</td></tr>
+	<tr><th scope=row>28625</th><td>50</td><td>2</td><td>100</td><td>18</td><td>0</td><td>1.251319</td></tr>
+	<tr><th scope=row>28627</th><td>19</td><td>5</td><td> 95</td><td>11</td><td>1</td><td>1.194562</td></tr>
+	<tr><th scope=row>28628</th><td>19</td><td>2</td><td> 38</td><td>12</td><td>0</td><td>2.722789</td></tr>
+	<tr><th scope=row>28631</th><td>70</td><td>4</td><td>280</td><td>12</td><td>0</td><td>1.304682</td></tr>
+	<tr><th scope=row>28635</th><td>62</td><td>4</td><td>248</td><td> 7</td><td>0</td><td>1.180035</td></tr>
+	<tr><th scope=row>28636</th><td>65</td><td>5</td><td>325</td><td>16</td><td>1</td><td>1.934818</td></tr>
+	<tr><th scope=row>28643</th><td>48</td><td>4</td><td>192</td><td>12</td><td>1</td><td>6.480745</td></tr>
+	<tr><th scope=row>28646</th><td>21</td><td>5</td><td>105</td><td>12</td><td>1</td><td>1.141304</td></tr>
+	<tr><th scope=row>28647</th><td>70</td><td>4</td><td>280</td><td>11</td><td>0</td><td>1.146976</td></tr>
+	<tr><th scope=row>28650</th><td>66</td><td>7</td><td>462</td><td>12</td><td>0</td><td>2.217982</td></tr>
+	<tr><th scope=row>28652</th><td>57</td><td>3</td><td>171</td><td>16</td><td>0</td><td>1.147389</td></tr>
 </tbody>
 </table>
 </div></div>

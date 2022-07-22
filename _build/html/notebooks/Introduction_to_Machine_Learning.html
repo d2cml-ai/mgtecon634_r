@@ -55,6 +55,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ATE I: Binary treatment" href="average_treatment_effect_1.html" />
+    <link rel="prev" title="Introduction" href="../md/intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -76,11 +78,6 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
-        
-      
-      
-      <img src="../_static/logo.png" class="logo" alt="logo">
       
       
       <h1 class="site-logo" id="site-title">MGTECON 634 at Stanford (R scripts)</h1>
@@ -98,10 +95,30 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Introduction to Machine Learning {#intro-ml}
+  </a>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="average_treatment_effect_1.html">
    ATE I: Binary treatment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="heterogeneous-treatment-effect-1.html">
+   HTE I: Binary treatment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="policy-evaluation-1.html">
+   Policy Evaluation I - Binary Treatment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="6_Policy_Learning_I.html">
+   Policy Learning I - Binary Treatment
   </a>
  </li>
 </ul>
@@ -411,13 +428,12 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="section" id="key-concepts">
 <h2>1.1 Key concepts<a class="headerlink" href="#key-concepts" title="Permalink to this headline">¶</a></h2>
 <p>The prediction problem is to accurately guess the value of some output variable <span class="math notranslate nohighlight">\(Y_i\)</span> from input variables <span class="math notranslate nohighlight">\(X_i\)</span>. For example, we might want to predict “house prices given house characteristics such as the number of rooms, age of the building, and so on. The relationship between input and output is modeled in very general terms by some function</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2c655aaa-9440-4a52-8946-62279269bb54">
-<span class="eqno">()<a class="headerlink" href="#equation-2c655aaa-9440-4a52-8946-62279269bb54" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-(\#eq: true-model) 
+<div class="math notranslate nohighlight" id="equation-true-model">
+<span class="eqno">(1)<a class="headerlink" href="#equation-true-model" title="Permalink to this equation">¶</a></span>\[
   Y_i = f(X_i) + \epsilon_i
-\end{equation}\]</div>
+\]</div>
 <p>where <span class="math notranslate nohighlight">\(\epsilon_i\)</span> represents all that is not captured by information obtained from <span class="math notranslate nohighlight">\(X_i\)</span> via the mapping <span class="math notranslate nohighlight">\(f\)</span>. We say that error <span class="math notranslate nohighlight">\(\epsilon_i\)</span> is irreducible.</p>
-<p>We highlight that is (true-model) <strong>not modeling a causal relationship</strong> between inputs and outputs. For an extreme example, consider taking <span class="math notranslate nohighlight">\(Y_i\)</span> to be “distance from the equator” and <span class="math notranslate nohighlight">\(X_i\)</span> to be “average temperature.” We can still think of the problem of guessing (“predicting”) “distance from the equator” given some information about “average temperature,” even though one would expect the former to cause the latter.</p>
+<p>We highlight that <a class="reference internal" href="#equation-true-model">(1)</a> is <strong>not modeling a causal relationship</strong> between inputs and outputs. For an extreme example, consider taking <span class="math notranslate nohighlight">\(Y_i\)</span> to be “distance from the equator” and <span class="math notranslate nohighlight">\(X_i\)</span> to be “average temperature.” We can still think of the problem of guessing (“predicting”) “distance from the equator” given some information about “average temperature,” even though one would expect the former to cause the latter.</p>
 <p>In general, we can’t know the “ground truth”  <span class="math notranslate nohighlight">\(f\)</span>, so we will approximate it from data. Given <span class="math notranslate nohighlight">\(n\)</span> data points <span class="math notranslate nohighlight">\(\{(X_1, Y_1), \cdots, (X_n, Y_n)\}\)</span>, our goal is to obtain an estimated model  <span class="math notranslate nohighlight">\(\hat{f}\)</span> such that our predictions <span class="math notranslate nohighlight">\(\widehat{Y}_i := \hat{f}(X_i)\)</span> are “close” to the true outcome values <span class="math notranslate nohighlight">\(Y_i\)</span> given some criterion. To formalize this, we’ll follow these three steps:</p>
 <ul class="simple">
 <li><p><strong>Modeling:</strong> Decide on some suitable class of functions that our estimated model may belong to. In machine learning applications the class of functions can be very large and complex (e.g., deep decision trees, forests, high-dimensional linear models, etc). Also, we must decide on a loss function that serves as our criterion to evaluate the quality of our predictions (e.g., mean-squared error).</p></li>
@@ -700,17 +716,15 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="section" id="generalized-linear-models">
 <h3>1.2.1 Generalized linear models<a class="headerlink" href="#generalized-linear-models" title="Permalink to this headline">¶</a></h3>
 <p>This class of models extends common methods such as linear and logistic regression by adding a penalty to the magnitude of the coefficients. <strong>Lasso</strong> penalizes the absolute value of slope coefficients. For regression problems, it becomes</p>
-<div class="math notranslate nohighlight">
-\[
-  (\#eq:lasso)
+<div class="math notranslate nohighlight" id="equation-lasso">
+<span class="eqno">(2)<a class="headerlink" href="#equation-lasso" title="Permalink to this equation">¶</a></span>\[
   \hat{b}_{Lasso} = \arg\min_b \sum_{i=1}^m
     \left( Y_i - b_0 - X_{i1}b_1 - \cdots - X_{ip}b_p \right)^2
     - \lambda \sum_{j=1}^p |b_j|
 \]</div>
 <p>Similarly, in a regression problem <strong>Ridge</strong> penalizes the sum of squares of the slope coefficients,</p>
-<div class="math notranslate nohighlight">
-\[
-  (\#eq:ridge)
+<div class="math notranslate nohighlight" id="equation-ridge">
+<span class="eqno">(3)<a class="headerlink" href="#equation-ridge" title="Permalink to this equation">¶</a></span>\[
   \hat{b}_{Ridge} = \arg\min_b \sum_{i=1}^m
     \left( Y_i - b_0 - X_{i1}b_1 - \cdots - X_{ip}b_p \right)^2
     - \lambda \sum_{j=1}^p b_j^2
@@ -719,10 +733,8 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="math notranslate nohighlight">\(\lambda\)</span> controls the complexity of the model. For <span class="math notranslate nohighlight">\(\lambda=0\)</span>, the problem reduces to the “usual” linear regression. As <span class="math notranslate nohighlight">\(\lambda\)</span> increases, we favor simpler models. As we’ll see below, the optimal parameter <span class="math notranslate nohighlight">\(\lambda\)</span> is selected via cross-validation.</p>
 <p>An important feature of Lasso-type penalization is that it promotes <strong>sparsity</strong> – that is, it forces many coefficients to be exactly zero. This is different from Ridge-type penalization, which forces coefficients to be small.</p>
 <p>Another interesting property of these models is that, even though they are called “linear” models, this should actually be understood as <strong>linear in transformations</strong> of the covariates. For example, we could use polynomials or splines (continuous piecewise polynomials) of the covariates and allow for much more flexible models.</p>
-<p>In fact, because of the penalization term, problems <code class="docutils literal notranslate"><span class="pre">lasso</span></code> and <code class="docutils literal notranslate"><span class="pre">ridge</span></code> remain well-defined and have a unique solution even in <strong>high-dimensional</strong> problems in which the number of coefficients <span class="math notranslate nohighlight">\(p\)</span> is larger than the sample size <span class="math notranslate nohighlight">\(n\)</span> – that is, our data is “fat” with more columns than rows. These situations can arise either naturally (e.g. genomics problems in which we have hundreds of thousands of gene expression information for a few individuals) or because we are including many transformations of a smaller set of covariates.</p>
+<p>In fact, because of the penalization term, problems <a class="reference internal" href="#equation-lasso">(2)</a> and <a class="reference internal" href="#equation-ridge">(3)</a> remain well-defined and have a unique solution even in <strong>high-dimensional</strong> problems in which the number of coefficients <span class="math notranslate nohighlight">\(p\)</span> is larger than the sample size <span class="math notranslate nohighlight">\(n\)</span> – that is, our data is “fat” with more columns than rows. These situations can arise either naturally (e.g. genomics problems in which we have hundreds of thousands of gene expression information for a few individuals) or because we are including many transformations of a smaller set of covariates.</p>
 <p>Finally, although here we are focusing on regression problems, other generalized linear models such as logistic regression can also be similarly modified by adding a Lasso, Ridge, or Elastic Net-type penalty to similar consequences.</p>
-<p>In our example we will use the <code class="docutils literal notranslate"><span class="pre">glmnet</span></code> package; see this <a class="reference external" href="https://web.stanford.edu/~hastie/glmnet/glmnet_alpha.html">vignette</a> for more information about the package, including how to use glmnet for other types of outcomes (binomial, categorical, multi-valued). The function <code class="docutils literal notranslate"><span class="pre">cv.glmnet</span></code> automatically performs k-fold cross-validation.</p>
-<p>Also, to emphasize the point about linearity in transformations of the covariates, we will use splines of our independent variables (i.e., we will use piecewise continuous polynomials of the original covariates). This is done using the function <code class="docutils literal notranslate"><span class="pre">bs</span></code>; see this <a class="reference external" href="https://cran.r-project.org/web/packages/crs/vignettes/spline_primer.pdf">primer</a> for more information.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># A formula of type &quot;~ x1 + x2 + ...&quot; (right-hand side only) to</span>
@@ -1105,12 +1117,11 @@ Coefficients:
 </div>
 </div>
 <p>To reduce the complexity of the tree, we <strong>prune</strong> the tree: we collapse its leaves, permitting bias to increase but forcing variance to decrease until the desired trade-off is achieved. In <code class="docutils literal notranslate"><span class="pre">rpart</span></code>, this is done by considering a modified loss function that takes into account the number of terminal nodes (i.e., the number of regions in which the original data was partitioned). Somewhat heuristically, if we denote tree predictions by <span class="math notranslate nohighlight">\(T(x)\)</span> and its number of terminal nodes by  <span class="math notranslate nohighlight">\(|T|\)</span>, the modified regression problem can be written as:</p>
-<div class="math notranslate nohighlight" id="equation-tree-cp">
-<span class="eqno">()<a class="headerlink" href="#equation-tree-cp" title="Permalink to this equation">¶</a></span>\[
-  (#eq:tree-cp)
+<div class="math notranslate nohighlight" id="equation-pruned-tree">
+<span class="eqno">(4)<a class="headerlink" href="#equation-pruned-tree" title="Permalink to this equation">¶</a></span>\[
   \widehat{T} = \arg\min_{T} \sum_{i=1}^m \left( T(X_i) - Y_i \right)^2 + c_p |T|
 \]</div>
-<p>The complexity of the tree is controlled by the scalar parameter <span class="math notranslate nohighlight">\(c_p\)</span>, denoted as <code class="docutils literal notranslate"><span class="pre">cp</span></code> in <code class="docutils literal notranslate"><span class="pre">rpart</span></code>. For each value of <span class="math notranslate nohighlight">\(c_p\)</span>, we find the subtree that solves <a class="reference internal" href="#equation-tree-cp">()</a>. Large values of <span class="math notranslate nohighlight">\(c_p\)</span> lead to aggressively pruned trees, which have more bias and less variance. Small values of <span class="math notranslate nohighlight">\(c_p\)</span> allow for deeper trees whose predictions can vary more wildly. The plot below shows the cross-validated error (relative to a tree with only one node, which corresponds to predicting the sample mean everywhere) for trees obtained at different levels of  <span class="math notranslate nohighlight">\(c_p\)</span>. The bias-variance trade-off is optimized at the point at which the cross-validated error is minimized.</p>
+<p>The complexity of the tree is controlled by the scalar parameter <span class="math notranslate nohighlight">\(c_p\)</span>, denoted as <code class="docutils literal notranslate"><span class="pre">ccp_alpha</span></code> in <code class="docutils literal notranslate"><span class="pre">sklearn.tree.DecisionTreeRegressor</span></code>. For each value of <span class="math notranslate nohighlight">\(c_p\)</span>, we find the subtree that solves <a class="reference internal" href="#equation-pruned-tree">(4)</a>. Large values of <span class="math notranslate nohighlight">\(c_p\)</span> lead to aggressively pruned trees, which have more bias and less variance. Small values of <span class="math notranslate nohighlight">\(c_p\)</span> allow for deeper trees whose predictions can vary more wildly.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plotcp</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
@@ -1359,7 +1370,21 @@ Std. Error   57.25873
               
             
                 <!-- Previous / next buttons -->
-<div class='prev-next-area'>
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../md/intro.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Introduction</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="average_treatment_effect_1.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">ATE I: Binary treatment</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
             
         </div>

@@ -55,6 +55,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Policy Evaluation I - Binary Treatment" href="policy-evaluation-1.html" />
+    <link rel="prev" title="ATE I: Binary treatment" href="average_treatment_effect_1.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -76,11 +78,6 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
-        
-      
-      
-      <img src="../_static/logo.png" class="logo" alt="logo">
       
       
       <h1 class="site-logo" id="site-title">MGTECON 634 at Stanford (R scripts)</h1>
@@ -98,10 +95,30 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Introduction_to_Machine_Learning.html">
+   Introduction to Machine Learning {#intro-ml}
+  </a>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="average_treatment_effect_1.html">
    ATE I: Binary treatment
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   HTE I: Binary treatment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="policy-evaluation-1.html">
+   Policy Evaluation I - Binary Treatment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="6_Policy_Learning_I.html">
+   Policy Learning I - Binary Treatment
   </a>
  </li>
 </ul>
@@ -351,19 +368,17 @@ const thebe_selector_output = ".output, .cell_output"
 <h1>HTE I: Binary treatment<a class="headerlink" href="#hte-i-binary-treatment" title="Permalink to this headline">¶</a></h1>
 <p>Source RMD file: <a class="reference external" href="https://docs.google.com/uc?export=download&amp;id=1FSUi4WLfYYKnvWsNWypiQORhkqf5IlFP">link</a></p>
 <p>In the previous chapter, we learned how to estimate the effect of a binary treatment averaged over the entire population. However, the average may obscure important details about how different individuals react to the treatment. In this chapter, we will learn how to estimate the <strong>conditional average treatment effect (CATE)</strong>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4d70df71-c5bd-4af6-95b0-d3931229c8f8">
-<span class="eqno">()<a class="headerlink" href="#equation-4d70df71-c5bd-4af6-95b0-d3931229c8f8" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  (\#eq:cate)
-  \tau(x) := E[Y_i(1) - Y_i(0) | X_i = x],
-\end{equation}\]</div>
+<div class="math notranslate nohighlight" id="equation-cate">
+<span class="eqno">(14)<a class="headerlink" href="#equation-cate" title="Permalink to this equation">¶</a></span>\[
+  \tau(x) := \mathbf{E}[Y_i(1) - Y_i(0) | X_i = x],
+\]</div>
 <p>which is a “localized” version of the average treatment effect conditional on a vector of observable characteristics.</p>
-<p>It’s often the case that &#64;ref(eq:cate) is too general to be immediately useful, especially when the observable covariates are high-dimensional. It can be hard to estimate reliably without making strong modeling assumptions, and hard to summarize in a useful manner after estimation. In such situations, we will instead try to estimate treatment effect averages for simpler groups</p>
-<div class="amsmath math notranslate nohighlight" id="equation-17ae56ea-e3b4-4fa8-a1f8-26fe0a155ccf">
-<span class="eqno">()<a class="headerlink" href="#equation-17ae56ea-e3b4-4fa8-a1f8-26fe0a155ccf" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  (\#eq:cate-g)
-  E[Y_i(1) - Y_i(0) | G_i = g],
-\end{equation}\]</div>
-<p>where <span class="math notranslate nohighlight">\(G_i\)</span> indexes subgroups of interest. Below you’ll learn how to estimate and test hypotheses about pre-defined subgroups, and also how to discover subgroups of interest from the data. In this tutorial, you will learn how to use estimates of &#64;ref(eq:cate) to suggest relevant subgroups <span class="math notranslate nohighlight">\(G_i\)</span> (and in the next chapters you will find out other uses of &#64;ref(eq:cate) in policy learning and evaluation).</p>
+<p>It’s often the case that <a class="reference internal" href="#equation-cate">(14)</a> is too general to be immediately useful, especially when the observable covariates are high-dimensional. It can be hard to estimate reliably without making strong modeling assumptions, and hard to summarize in a useful manner after estimation. In such situations, we will instead try to estimate treatment effect averages for simpler groups</p>
+<div class="math notranslate nohighlight" id="equation-cate-g">
+<span class="eqno">(15)<a class="headerlink" href="#equation-cate-g" title="Permalink to this equation">¶</a></span>\[
+  \mathbf{E}[Y_i(1) - Y_i(0) | G_i = g],
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(G_i\)</span> indexes subgroups of interest. Below you’ll learn how to estimate and test hypotheses about pre-defined subgroups, and also how to discover subgroups of interest from the data. In this tutorial, you will learn how to use estimates of <a class="reference internal" href="#equation-cate">(14)</a> to suggest relevant subgroups <span class="math notranslate nohighlight">\(G_i\)</span> (and in the next chapters you will find out other uses of <a class="reference internal" href="#equation-cate">(14)</a> in policy learning and evaluation).</p>
 <p>We’ll continue using the abridged version of the General Social Survey (GSS) <a class="reference external" href="https://gss.norc.org/Documents/reports/project-reports/GSSProject%20report32.pdf">(Smith, 2016)</a> dataset that was introduced in the previous chapter. In this dataset, individuals were sent to treatment or control with equal probability, so we are in a randomized setting. However, many of the techniques and code shown below should also work in an observational setting provided that unconfoundedness and overlap are satisfied (these assumptions were defined in the previous chapter).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -451,34 +466,31 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="section" id="pre-specified-hypotheses">
 <h2>4.1 Pre-specified hypotheses<a class="headerlink" href="#pre-specified-hypotheses" title="Permalink to this headline">¶</a></h2>
 <p>We will begin by learning how to test pre-specified null hypotheses of the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dd202c82-d82c-46f4-9e16-572a4c5e91c5">
-<span class="eqno">()<a class="headerlink" href="#equation-dd202c82-d82c-46f4-9e16-572a4c5e91c5" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  (\#eq:hte-hyp)
-  H_{0}: E[Y(1) - Y(0) | G_i = 1] = E[Y(1) - Y(0) | G_i = 0].
-\end{equation}\]</div>
+<div class="math notranslate nohighlight" id="equation-hte-hyp">
+<span class="eqno">(16)<a class="headerlink" href="#equation-hte-hyp" title="Permalink to this equation">¶</a></span>\[
+  H_{0}: \mathbf{E}[Y(1) - Y(0) | G_i = 1] = \mathbf{E}[Y(1) - Y(0) | G_i = 0].
+\]</div>
 <p>That is, that the treatment effect is the same regardless of membership to some group
 <span class="math notranslate nohighlight">\(G_i\)</span>. Importantly, for now we’ll assume that the group <span class="math notranslate nohighlight">\(G_i\)</span> was <strong>pre-specified</strong> – it was decided <em>before</em> looking at the data.</p>
 <p>In a randomized setting, if the both the treatment  <span class="math notranslate nohighlight">\(W_i\)</span> and group membership <span class="math notranslate nohighlight">\(G_i\)</span> are binary, we can write</p>
-<div class="amsmath math notranslate nohighlight" id="equation-05dc601b-a0a6-4bb0-bf99-baa998ae6139">
-<span class="eqno">()<a class="headerlink" href="#equation-05dc601b-a0a6-4bb0-bf99-baa998ae6139" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  (\#eq:linear)
-  E[Y_i(W_i)|G_i] = E[Y_i|W_i, G_i] = \beta_0 + \beta_w W_i + \beta_g G_i + \beta_{wg} W_i G_i
-\end{equation}\]</div>
+<div class="math notranslate nohighlight" id="equation-linear">
+<span class="eqno">(17)<a class="headerlink" href="#equation-linear" title="Permalink to this equation">¶</a></span>\[
+  \mathbf{E}[Y_i(W_i)|G_i] = \mathbf{E}[Y_i|W_i, G_i] = \beta_0 + \beta_w W_i + \beta_g G_i + \beta_{wg} W_i G_i
+\]</div>
 <font size=1>
 When $W_i$ and $G_i$ are binary, this decomposition is true without loss of generality. Why?
 </font>
 <p>This allows us to write the average effects of <span class="math notranslate nohighlight">\(W_i\)</span> and <span class="math notranslate nohighlight">\(G_i\)</span> on <span class="math notranslate nohighlight">\(Y_i\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c3641cb1-f955-4121-909f-7bd81edfe402">
-<span class="eqno">()<a class="headerlink" href="#equation-c3641cb1-f955-4121-909f-7bd81edfe402" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-  (\#eq:decomp)
+<div class="math notranslate nohighlight" id="equation-decomp">
+<span class="eqno">(18)<a class="headerlink" href="#equation-decomp" title="Permalink to this equation">¶</a></span>\[\begin{split}
   \begin{aligned}
-    E[Y(1) | G_i=1] &amp;= \beta_0 + \beta_w W_i + \beta_g G_i + \beta_{wg} W_i G_i, \\
-    E[Y(1) | G_i=0] &amp;= \beta_0 + \beta_w W_i,  \\
-    E[Y(0) | G_i=1] &amp;= \beta_0 + \beta_g G_i,  \\
-    E[Y(0) | G_i=0] &amp;= \beta_0.
+    \mathbf{E}[Y(1) | G_i=1] &amp;= \beta_0 + \beta_w W_i + \beta_g G_i + \beta_{wg} W_i G_i, \\
+    \mathbf{E}[Y(1) | G_i=0] &amp;= \beta_0 + \beta_w W_i,  \\
+    \mathbf{E}[Y(0) | G_i=1] &amp;= \beta_0 + \beta_g G_i,  \\
+    \mathbf{E}[Y(0) | G_i=0] &amp;= \beta_0.
   \end{aligned}
-\end{equation}\]</div>
-<p>Rewriting the null hypothesis &#64;ref(eq:hte-hyp) in terms of the decomposition &#64;ref(eq:decomp), we see that it boils down to a test about the coefficient in the interaction: <span class="math notranslate nohighlight">\(\beta_{xw} = 0\)</span>. Here’s an example that tests whether the treatment effect is the same for “conservative” (<code class="docutils literal notranslate"><span class="pre">polviews</span></code> &lt; 4) and “liberal” (<code class="docutils literal notranslate"><span class="pre">polviews</span></code> <span class="math notranslate nohighlight">\(\geq\)</span> 4) individuals.</p>
+\end{split}\]</div>
+<p>Rewriting the null hypothesis <a class="reference internal" href="#equation-hte-hyp">(16)</a> in terms of the decomposition <a class="reference internal" href="#equation-decomp">(18)</a>, we see that it boils down to a test about the coefficient in the interaction: <span class="math notranslate nohighlight">\(\beta_{xw} = 0\)</span>. Here’s an example that tests whether the treatment effect is the same for “conservative” (<code class="docutils literal notranslate"><span class="pre">polviews</span></code> &lt; 4) and “liberal” (<code class="docutils literal notranslate"><span class="pre">polviews</span></code> <span class="math notranslate nohighlight">\(\geq\)</span> 4) individuals.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Only valid in randomized settings</span>
@@ -512,13 +524,12 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 Interpret the results above. The coefficient $\beta_{xw}$ is denoted by `w:conservativeTRUE`. Can we detect a difference in treatment effect for conservative vs liberal individuals? For whom is the effect larger?
 </font>
 <p>Sometimes there are many subgroups, leading to multiple hypotheses such as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f7fb8c6a-7e82-4a2b-95ce-01b0fc4b0d57">
-<span class="eqno">()<a class="headerlink" href="#equation-f7fb8c6a-7e82-4a2b-95ce-01b0fc4b0d57" title="Permalink to this equation">¶</a></span>\[\begin{equation}
-(\#eq:mult-hyp)
-H_0: E[Y(1) - Y(0) \ | \  G_i = 1] = E[Y(1) - Y(0) \ | \  G_i = g]
+<div class="math notranslate nohighlight" id="equation-mult-hyp">
+<span class="eqno">(19)<a class="headerlink" href="#equation-mult-hyp" title="Permalink to this equation">¶</a></span>\[
+H_0: \mathbf{E}[Y(1) - Y(0) \ | \  G_i = 1] = \mathbf{E}[Y(1) - Y(0) \ | \  G_i = g]
 \qquad
 \text{for many values of }g.
-\end{equation}\]</div>
+\]</div>
 <p>In that case, we need to correct for the fact that we are testing for multiple hypotheses, or we will end up with many false positives. The <strong>Bonferroni correction</strong> <a class="reference external" href="https://en.wikipedia.org/wiki/Bonferroni_correction">(wiki)</a> is a common method for dealing with multiple hypothesis testing, though it is often too conservative to be useful. It is available via the function <code class="docutils literal notranslate"><span class="pre">p.adjust</span></code> from base <code class="docutils literal notranslate"><span class="pre">R</span></code>. The next snippet of code tests whether the treatment effect at each level of <code class="docutils literal notranslate"><span class="pre">polviews</span></code> is different from the treatment effect from <code class="docutils literal notranslate"><span class="pre">polviews</span></code> equals one.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -973,7 +984,7 @@ Interpret the heatmap above. What describes the subgroups with strongest and wea
 </font></div>
 <div class="section" id="via-grf">
 <h3>4.2.2 Via grf<a class="headerlink" href="#via-grf" title="Permalink to this headline">¶</a></h3>
-<p>The function <code class="docutils literal notranslate"><span class="pre">causal_forest</span></code> from the package <code class="docutils literal notranslate"><span class="pre">grf</span></code> allows us to get estimates of the CATE &#64;ref(eq:cate).</p>
+<p>The function <code class="docutils literal notranslate"><span class="pre">causal_forest</span></code> from the package <code class="docutils literal notranslate"><span class="pre">grf</span></code> allows us to get estimates of the CATE <a class="reference internal" href="#equation-cate">(14)</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get predictions from forest fitted above.</span>
@@ -1306,8 +1317,8 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <div class="section" id="assessing-heterogeneity">
 <h4>4.2.2.3 Assessing heterogeneity<a class="headerlink" href="#assessing-heterogeneity" title="Permalink to this headline">¶</a></h4>
 <p>The function <code class="docutils literal notranslate"><span class="pre">test_calibration</span></code> computes an estimate of the best linear predictor of true CATE based on out-of-bag predictions <span class="math notranslate nohighlight">\(\hat{\tau}^{-i}(\cdot)\)</span>. The exact implementation seeks to fit the following linear model:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-97f73177-8af7-4b29-9964-6c081c4df5f9">
-<span class="eqno">()<a class="headerlink" href="#equation-97f73177-8af7-4b29-9964-6c081c4df5f9" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9de5249f-548c-44b0-9a95-b384ebc6d86d">
+<span class="eqno">(20)<a class="headerlink" href="#equation-9de5249f-548c-44b0-9a95-b384ebc6d86d" title="Permalink to this equation">¶</a></span>\[\begin{equation}
 Y_{i} - \hat{m}^{-i}(X_{i}) = \alpha\bar{\tau}\left(W_{i} - \hat{e}^{-i}(X_{i})\right) + \beta \left(\hat{\tau}^{-i}(X_{i}) - \bar{\tau} \right) \left(W_{i} - \hat{e}^{-i}(X_{i}) \right) + \epsilon,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\bar{\tau} := n^{-1}\sum_{i=1}^{n} \hat{\tau}^{-i}(X_{i})\)</span>. The coefficients <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> allow us to evaluate the performance of our estimates. If <span class="math notranslate nohighlight">\(\alpha = 1\)</span>, then the average prediction produced by the forest is correct. Meanwhile, if <span class="math notranslate nohighlight">\(\beta = 1\)</span>, then the forest predictions adequately capture the underlying heterogeneity.</p>
@@ -1511,7 +1522,21 @@ Interpret the test above. Is the forest producing correct estimate of the averag
               
             
                 <!-- Previous / next buttons -->
-<div class='prev-next-area'>
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="average_treatment_effect_1.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">ATE I: Binary treatment</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="policy-evaluation-1.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Policy Evaluation I - Binary Treatment</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
             
         </div>

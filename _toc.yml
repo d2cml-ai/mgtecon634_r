@@ -3,9 +3,13 @@
 
 format: jb-book
 root: md/intro
-chapters:
-- file: notebooks/Introduction_to_Machine_Learning
-- file: notebooks/average_treatment_effect_1
-- file: notebooks/heterogeneous-treatment-effect-1
-- file: notebooks/policy-evaluation-1
-- file: notebooks/6_Policy_Learning_I
+parts:
+- caption: Topics
+  numbered: true
+  chapters:
+  - file: md/1_introduction_1
+  - file: notebooks/2_Introduction_to_Machine_Learning_1
+  - file: notebooks/3_average_treatment_effect_1
+  - file: notebooks/4_heterogeneous_treatment_effect_1
+  - file: notebooks/5_policy_evaluation_1
+  - file: notebooks/6_Policy_Learning_1

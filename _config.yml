@@ -60,7 +60,7 @@ latex:
   latex_engine                : "pdflatex"
   use_jupyterbook_latex       : true
   latex_documents:
-    targetname: book.tex
+    targetname: MGTECON_634_r.tex
 
 # Interact link settings
 notebook_interface            : "notebook"
@@ -76,5 +76,4 @@ sphinx:
 #    latex_show_urls: 'footnote'
     latex_elements.papersize: a4paper
     latex_elements.pointsize: 12pt
-    # mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.jss
-    
+    mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js

@@ -55,8 +55,6 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ATE I: Binary treatment" href="average_treatment_effect_1.html" />
-    <link rel="prev" title="Introduction" href="../md/intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -100,30 +98,10 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
 </ul>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Introduction to Machine Learning {#intro-ml}
-  </a>
- </li>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="average_treatment_effect_1.html">
    ATE I: Binary treatment
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="heterogeneous-treatment-effect-1.html">
-   HTE I: Binary treatment
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="policy-evaluation-1.html">
-   Policy Evaluation I - Binary Treatment
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="6_Policy_Learning_I.html">
-   Policy Learning I - Binary Treatment
   </a>
  </li>
 </ul>
@@ -190,7 +168,7 @@ const thebe_selector_output = ".output, .cell_output"
             href="https://github.com/d2cml-ai/mgtecon634_r/issues/new?title=Issue%20on%20page%20%2Fnotebooks/Introduction_to_Machine_Learning.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/d2cml-ai/mgtecon634_r/edit/master/mgtecon634_r/_build/jupyter_execute/notebooks/Introduction_to_Machine_Learning.ipynb"><button
+        <a class="edit-button" href="https://github.com/d2cml-ai/mgtecon634_r/edit/master/_build/jupyter_execute/notebooks/Introduction_to_Machine_Learning.ipynb"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -210,7 +188,7 @@ const thebe_selector_output = ".output, .cell_output"
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/d2cml-ai/mgtecon634_r/master?urlpath=tree/mgtecon634_r/_build/jupyter_execute/notebooks/Introduction_to_Machine_Learning.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/d2cml-ai/mgtecon634_r/master?urlpath=tree/_build/jupyter_execute/notebooks/Introduction_to_Machine_Learning.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../_static/images/logo_binder.svg"
@@ -218,7 +196,7 @@ const thebe_selector_output = ".output, .cell_output"
         
         
         
-        <a class="colab-button" href="https://colab.research.google.com/github/d2cml-ai/mgtecon634_r/blob/master/mgtecon634_r/_build/jupyter_execute/notebooks/Introduction_to_Machine_Learning.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+        <a class="colab-button" href="https://colab.research.google.com/github/d2cml-ai/mgtecon634_r/blob/master/_build/jupyter_execute/notebooks/Introduction_to_Machine_Learning.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
                 title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
                     src="../_static/images/logo_colab.png"
                     alt="Interact on Colab">Colab</button></a>
@@ -433,8 +411,8 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="section" id="key-concepts">
 <h2>1.1 Key concepts<a class="headerlink" href="#key-concepts" title="Permalink to this headline">¶</a></h2>
 <p>The prediction problem is to accurately guess the value of some output variable <span class="math notranslate nohighlight">\(Y_i\)</span> from input variables <span class="math notranslate nohighlight">\(X_i\)</span>. For example, we might want to predict “house prices given house characteristics such as the number of rooms, age of the building, and so on. The relationship between input and output is modeled in very general terms by some function</p>
-<div class="amsmath math notranslate nohighlight" id="equation-435dc39c-5aec-4b45-8397-04478e183044">
-<span class="eqno">(1)<a class="headerlink" href="#equation-435dc39c-5aec-4b45-8397-04478e183044" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2c655aaa-9440-4a52-8946-62279269bb54">
+<span class="eqno">()<a class="headerlink" href="#equation-2c655aaa-9440-4a52-8946-62279269bb54" title="Permalink to this equation">¶</a></span>\[\begin{equation}
 (\#eq: true-model) 
   Y_i = f(X_i) + \epsilon_i
 \end{equation}\]</div>
@@ -1128,11 +1106,11 @@ Coefficients:
 </div>
 <p>To reduce the complexity of the tree, we <strong>prune</strong> the tree: we collapse its leaves, permitting bias to increase but forcing variance to decrease until the desired trade-off is achieved. In <code class="docutils literal notranslate"><span class="pre">rpart</span></code>, this is done by considering a modified loss function that takes into account the number of terminal nodes (i.e., the number of regions in which the original data was partitioned). Somewhat heuristically, if we denote tree predictions by <span class="math notranslate nohighlight">\(T(x)\)</span> and its number of terminal nodes by  <span class="math notranslate nohighlight">\(|T|\)</span>, the modified regression problem can be written as:</p>
 <div class="math notranslate nohighlight" id="equation-tree-cp">
-<span class="eqno">(2)<a class="headerlink" href="#equation-tree-cp" title="Permalink to this equation">¶</a></span>\[
+<span class="eqno">()<a class="headerlink" href="#equation-tree-cp" title="Permalink to this equation">¶</a></span>\[
   (#eq:tree-cp)
   \widehat{T} = \arg\min_{T} \sum_{i=1}^m \left( T(X_i) - Y_i \right)^2 + c_p |T|
 \]</div>
-<p>The complexity of the tree is controlled by the scalar parameter <span class="math notranslate nohighlight">\(c_p\)</span>, denoted as <code class="docutils literal notranslate"><span class="pre">cp</span></code> in <code class="docutils literal notranslate"><span class="pre">rpart</span></code>. For each value of <span class="math notranslate nohighlight">\(c_p\)</span>, we find the subtree that solves <a class="reference internal" href="#equation-tree-cp">(2)</a>. Large values of <span class="math notranslate nohighlight">\(c_p\)</span> lead to aggressively pruned trees, which have more bias and less variance. Small values of <span class="math notranslate nohighlight">\(c_p\)</span> allow for deeper trees whose predictions can vary more wildly. The plot below shows the cross-validated error (relative to a tree with only one node, which corresponds to predicting the sample mean everywhere) for trees obtained at different levels of  <span class="math notranslate nohighlight">\(c_p\)</span>. The bias-variance trade-off is optimized at the point at which the cross-validated error is minimized.</p>
+<p>The complexity of the tree is controlled by the scalar parameter <span class="math notranslate nohighlight">\(c_p\)</span>, denoted as <code class="docutils literal notranslate"><span class="pre">cp</span></code> in <code class="docutils literal notranslate"><span class="pre">rpart</span></code>. For each value of <span class="math notranslate nohighlight">\(c_p\)</span>, we find the subtree that solves <a class="reference internal" href="#equation-tree-cp">()</a>. Large values of <span class="math notranslate nohighlight">\(c_p\)</span> lead to aggressively pruned trees, which have more bias and less variance. Small values of <span class="math notranslate nohighlight">\(c_p\)</span> allow for deeper trees whose predictions can vary more wildly. The plot below shows the cross-validated error (relative to a tree with only one node, which corresponds to predicting the sample mean everywhere) for trees obtained at different levels of  <span class="math notranslate nohighlight">\(c_p\)</span>. The bias-variance trade-off is optimized at the point at which the cross-validated error is minimized.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plotcp</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
@@ -1381,21 +1359,7 @@ Std. Error   57.25873
               
             
                 <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="../md/intro.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Introduction</p>
-        </div>
-    </a>
-    <a class='right-next' id="next-link" href="average_treatment_effect_1.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">ATE I: Binary treatment</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
+<div class='prev-next-area'>
 </div>
             
         </div>

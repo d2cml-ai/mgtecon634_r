@@ -55,8 +55,6 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Policy Evaluation I - Binary Treatment" href="policy-evaluation-1.html" />
-    <link rel="prev" title="ATE I: Binary treatment" href="average_treatment_effect_1.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -100,30 +98,10 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
 </ul>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Machine_Learning.html">
-   Introduction to Machine Learning {#intro-ml}
-  </a>
- </li>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="average_treatment_effect_1.html">
    ATE I: Binary treatment
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   HTE I: Binary treatment
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="policy-evaluation-1.html">
-   Policy Evaluation I - Binary Treatment
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="6_Policy_Learning_I.html">
-   Policy Learning I - Binary Treatment
   </a>
  </li>
 </ul>
@@ -190,7 +168,7 @@ const thebe_selector_output = ".output, .cell_output"
             href="https://github.com/d2cml-ai/mgtecon634_r/issues/new?title=Issue%20on%20page%20%2Fnotebooks/heterogeneous-treatment-effect-1.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/d2cml-ai/mgtecon634_r/edit/master/mgtecon634_r/_build/jupyter_execute/notebooks/heterogeneous-treatment-effect-1.ipynb"><button
+        <a class="edit-button" href="https://github.com/d2cml-ai/mgtecon634_r/edit/master/_build/jupyter_execute/notebooks/heterogeneous-treatment-effect-1.ipynb"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -210,7 +188,7 @@ const thebe_selector_output = ".output, .cell_output"
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/d2cml-ai/mgtecon634_r/master?urlpath=tree/mgtecon634_r/_build/jupyter_execute/notebooks/heterogeneous-treatment-effect-1.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/d2cml-ai/mgtecon634_r/master?urlpath=tree/_build/jupyter_execute/notebooks/heterogeneous-treatment-effect-1.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../_static/images/logo_binder.svg"
@@ -218,7 +196,7 @@ const thebe_selector_output = ".output, .cell_output"
         
         
         
-        <a class="colab-button" href="https://colab.research.google.com/github/d2cml-ai/mgtecon634_r/blob/master/mgtecon634_r/_build/jupyter_execute/notebooks/heterogeneous-treatment-effect-1.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+        <a class="colab-button" href="https://colab.research.google.com/github/d2cml-ai/mgtecon634_r/blob/master/_build/jupyter_execute/notebooks/heterogeneous-treatment-effect-1.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
                 title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
                     src="../_static/images/logo_colab.png"
                     alt="Interact on Colab">Colab</button></a>
@@ -373,15 +351,15 @@ const thebe_selector_output = ".output, .cell_output"
 <h1>HTE I: Binary treatment<a class="headerlink" href="#hte-i-binary-treatment" title="Permalink to this headline">¶</a></h1>
 <p>Source RMD file: <a class="reference external" href="https://docs.google.com/uc?export=download&amp;id=1FSUi4WLfYYKnvWsNWypiQORhkqf5IlFP">link</a></p>
 <p>In the previous chapter, we learned how to estimate the effect of a binary treatment averaged over the entire population. However, the average may obscure important details about how different individuals react to the treatment. In this chapter, we will learn how to estimate the <strong>conditional average treatment effect (CATE)</strong>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d34d99f3-13dd-488f-8bb7-61a5379becb0">
-<span class="eqno">(20)<a class="headerlink" href="#equation-d34d99f3-13dd-488f-8bb7-61a5379becb0" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4d70df71-c5bd-4af6-95b0-d3931229c8f8">
+<span class="eqno">()<a class="headerlink" href="#equation-4d70df71-c5bd-4af6-95b0-d3931229c8f8" title="Permalink to this equation">¶</a></span>\[\begin{equation}
   (\#eq:cate)
   \tau(x) := E[Y_i(1) - Y_i(0) | X_i = x],
 \end{equation}\]</div>
 <p>which is a “localized” version of the average treatment effect conditional on a vector of observable characteristics.</p>
 <p>It’s often the case that &#64;ref(eq:cate) is too general to be immediately useful, especially when the observable covariates are high-dimensional. It can be hard to estimate reliably without making strong modeling assumptions, and hard to summarize in a useful manner after estimation. In such situations, we will instead try to estimate treatment effect averages for simpler groups</p>
-<div class="amsmath math notranslate nohighlight" id="equation-166b220a-2592-4a45-bc7d-e0e286690308">
-<span class="eqno">(21)<a class="headerlink" href="#equation-166b220a-2592-4a45-bc7d-e0e286690308" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-17ae56ea-e3b4-4fa8-a1f8-26fe0a155ccf">
+<span class="eqno">()<a class="headerlink" href="#equation-17ae56ea-e3b4-4fa8-a1f8-26fe0a155ccf" title="Permalink to this equation">¶</a></span>\[\begin{equation}
   (\#eq:cate-g)
   E[Y_i(1) - Y_i(0) | G_i = g],
 \end{equation}\]</div>
@@ -473,16 +451,16 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="section" id="pre-specified-hypotheses">
 <h2>4.1 Pre-specified hypotheses<a class="headerlink" href="#pre-specified-hypotheses" title="Permalink to this headline">¶</a></h2>
 <p>We will begin by learning how to test pre-specified null hypotheses of the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f532b6bf-58ce-40cf-a8a8-7a5be6373976">
-<span class="eqno">(22)<a class="headerlink" href="#equation-f532b6bf-58ce-40cf-a8a8-7a5be6373976" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-dd202c82-d82c-46f4-9e16-572a4c5e91c5">
+<span class="eqno">()<a class="headerlink" href="#equation-dd202c82-d82c-46f4-9e16-572a4c5e91c5" title="Permalink to this equation">¶</a></span>\[\begin{equation}
   (\#eq:hte-hyp)
   H_{0}: E[Y(1) - Y(0) | G_i = 1] = E[Y(1) - Y(0) | G_i = 0].
 \end{equation}\]</div>
 <p>That is, that the treatment effect is the same regardless of membership to some group
 <span class="math notranslate nohighlight">\(G_i\)</span>. Importantly, for now we’ll assume that the group <span class="math notranslate nohighlight">\(G_i\)</span> was <strong>pre-specified</strong> – it was decided <em>before</em> looking at the data.</p>
 <p>In a randomized setting, if the both the treatment  <span class="math notranslate nohighlight">\(W_i\)</span> and group membership <span class="math notranslate nohighlight">\(G_i\)</span> are binary, we can write</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e1e06a7d-609c-46d7-9b90-338569ba7b7f">
-<span class="eqno">(23)<a class="headerlink" href="#equation-e1e06a7d-609c-46d7-9b90-338569ba7b7f" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-05dc601b-a0a6-4bb0-bf99-baa998ae6139">
+<span class="eqno">()<a class="headerlink" href="#equation-05dc601b-a0a6-4bb0-bf99-baa998ae6139" title="Permalink to this equation">¶</a></span>\[\begin{equation}
   (\#eq:linear)
   E[Y_i(W_i)|G_i] = E[Y_i|W_i, G_i] = \beta_0 + \beta_w W_i + \beta_g G_i + \beta_{wg} W_i G_i
 \end{equation}\]</div>
@@ -490,8 +468,8 @@ const thebe_selector_output = ".output, .cell_output"
 When $W_i$ and $G_i$ are binary, this decomposition is true without loss of generality. Why?
 </font>
 <p>This allows us to write the average effects of <span class="math notranslate nohighlight">\(W_i\)</span> and <span class="math notranslate nohighlight">\(G_i\)</span> on <span class="math notranslate nohighlight">\(Y_i\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5e68a6f5-8bd0-4b73-93f3-f475ff253a96">
-<span class="eqno">(24)<a class="headerlink" href="#equation-5e68a6f5-8bd0-4b73-93f3-f475ff253a96" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c3641cb1-f955-4121-909f-7bd81edfe402">
+<span class="eqno">()<a class="headerlink" href="#equation-c3641cb1-f955-4121-909f-7bd81edfe402" title="Permalink to this equation">¶</a></span>\[\begin{equation}
   (\#eq:decomp)
   \begin{aligned}
     E[Y(1) | G_i=1] &amp;= \beta_0 + \beta_w W_i + \beta_g G_i + \beta_{wg} W_i G_i, \\
@@ -534,8 +512,8 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 Interpret the results above. The coefficient $\beta_{xw}$ is denoted by `w:conservativeTRUE`. Can we detect a difference in treatment effect for conservative vs liberal individuals? For whom is the effect larger?
 </font>
 <p>Sometimes there are many subgroups, leading to multiple hypotheses such as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c84d7d62-11c6-4c6d-b62e-d814172f4b3c">
-<span class="eqno">(25)<a class="headerlink" href="#equation-c84d7d62-11c6-4c6d-b62e-d814172f4b3c" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f7fb8c6a-7e82-4a2b-95ce-01b0fc4b0d57">
+<span class="eqno">()<a class="headerlink" href="#equation-f7fb8c6a-7e82-4a2b-95ce-01b0fc4b0d57" title="Permalink to this equation">¶</a></span>\[\begin{equation}
 (\#eq:mult-hyp)
 H_0: E[Y(1) - Y(0) \ | \  G_i = 1] = E[Y(1) - Y(0) \ | \  G_i = g]
 \qquad
@@ -1328,8 +1306,8 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <div class="section" id="assessing-heterogeneity">
 <h4>4.2.2.3 Assessing heterogeneity<a class="headerlink" href="#assessing-heterogeneity" title="Permalink to this headline">¶</a></h4>
 <p>The function <code class="docutils literal notranslate"><span class="pre">test_calibration</span></code> computes an estimate of the best linear predictor of true CATE based on out-of-bag predictions <span class="math notranslate nohighlight">\(\hat{\tau}^{-i}(\cdot)\)</span>. The exact implementation seeks to fit the following linear model:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-02d0d88f-0862-4b5d-939d-ce25334bd67c">
-<span class="eqno">(26)<a class="headerlink" href="#equation-02d0d88f-0862-4b5d-939d-ce25334bd67c" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-97f73177-8af7-4b29-9964-6c081c4df5f9">
+<span class="eqno">()<a class="headerlink" href="#equation-97f73177-8af7-4b29-9964-6c081c4df5f9" title="Permalink to this equation">¶</a></span>\[\begin{equation}
 Y_{i} - \hat{m}^{-i}(X_{i}) = \alpha\bar{\tau}\left(W_{i} - \hat{e}^{-i}(X_{i})\right) + \beta \left(\hat{\tau}^{-i}(X_{i}) - \bar{\tau} \right) \left(W_{i} - \hat{e}^{-i}(X_{i}) \right) + \epsilon,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\bar{\tau} := n^{-1}\sum_{i=1}^{n} \hat{\tau}^{-i}(X_{i})\)</span>. The coefficients <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> allow us to evaluate the performance of our estimates. If <span class="math notranslate nohighlight">\(\alpha = 1\)</span>, then the average prediction produced by the forest is correct. Meanwhile, if <span class="math notranslate nohighlight">\(\beta = 1\)</span>, then the forest predictions adequately capture the underlying heterogeneity.</p>
@@ -1533,21 +1511,7 @@ Interpret the test above. Is the forest producing correct estimate of the averag
               
             
                 <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="average_treatment_effect_1.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">ATE I: Binary treatment</p>
-        </div>
-    </a>
-    <a class='right-next' id="next-link" href="policy-evaluation-1.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Policy Evaluation I - Binary Treatment</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
+<div class='prev-next-area'>
 </div>
             
         </div>

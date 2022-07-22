@@ -55,8 +55,6 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Policy Learning I - Binary Treatment" href="6_Policy_Learning_I.html" />
-    <link rel="prev" title="HTE I: Binary treatment" href="heterogeneous-treatment-effect-1.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -100,30 +98,10 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
 </ul>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Introduction_to_Machine_Learning.html">
-   Introduction to Machine Learning {#intro-ml}
-  </a>
- </li>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="average_treatment_effect_1.html">
    ATE I: Binary treatment
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="heterogeneous-treatment-effect-1.html">
-   HTE I: Binary treatment
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Policy Evaluation I - Binary Treatment
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="6_Policy_Learning_I.html">
-   Policy Learning I - Binary Treatment
   </a>
  </li>
 </ul>
@@ -190,7 +168,7 @@ const thebe_selector_output = ".output, .cell_output"
             href="https://github.com/d2cml-ai/mgtecon634_r/issues/new?title=Issue%20on%20page%20%2Fnotebooks/policy-evaluation-1.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/d2cml-ai/mgtecon634_r/edit/master/mgtecon634_r/_build/jupyter_execute/notebooks/policy-evaluation-1.ipynb"><button
+        <a class="edit-button" href="https://github.com/d2cml-ai/mgtecon634_r/edit/master/_build/jupyter_execute/notebooks/policy-evaluation-1.ipynb"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -210,7 +188,7 @@ const thebe_selector_output = ".output, .cell_output"
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/d2cml-ai/mgtecon634_r/master?urlpath=tree/mgtecon634_r/_build/jupyter_execute/notebooks/policy-evaluation-1.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/d2cml-ai/mgtecon634_r/master?urlpath=tree/_build/jupyter_execute/notebooks/policy-evaluation-1.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../_static/images/logo_binder.svg"
@@ -218,7 +196,7 @@ const thebe_selector_output = ".output, .cell_output"
         
         
         
-        <a class="colab-button" href="https://colab.research.google.com/github/d2cml-ai/mgtecon634_r/blob/master/mgtecon634_r/_build/jupyter_execute/notebooks/policy-evaluation-1.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+        <a class="colab-button" href="https://colab.research.google.com/github/d2cml-ai/mgtecon634_r/blob/master/_build/jupyter_execute/notebooks/policy-evaluation-1.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
                 title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
                     src="../_static/images/logo_colab.png"
                     alt="Interact on Colab">Colab</button></a>
@@ -330,13 +308,13 @@ const thebe_selector_output = ".output, .cell_output"
 <p>In previous chapters, you learned how to estimate the effect of a binary treatment on an outcome variable. We saw how to estimate the average treatment effect for the entire population <span class="math notranslate nohighlight">\(E[Y_i(1) - Y_i(0)]\)</span>, for specific subgroups <span class="math notranslate nohighlight">\(E[Y_i(1) - Y_i(0) | G_i]\)</span>, and at specific covariate values <span class="math notranslate nohighlight">\(E[Y_i(1) - Y_i(0)|X_i = x]\)</span>. One common feature of these quantities is that they compare the average effect of treating everyone (in the population, subgroup, etc) to the average effect of treating no one. But what if we had a <em>treatment rule</em> that dictated who should be treated, and who should not? Would treating some people according to this rule be better than treating no one? Can we compare two possible treatment rules? Questions like these abound in applied work, so here we’ll learn how to answer them using experimental and observational data (with appropriate assumptions).</p>
 <p>Treatment rules that dictate which groups should be treatment are called <strong>policies</strong>. Formally, we’ll define a policy (for a binary treatment) to be a mapping from a vector of observable covariates to a number in the unit interval, i.e., <span class="math notranslate nohighlight">\(\pi: x \mapsto [0,1]\)</span>. Given some vector of covariates <span class="math notranslate nohighlight">\(x\)</span>, the expression <span class="math notranslate nohighlight">\(\pi(x) = 1\)</span> indicates a unit with this covariate value should be treated, <span class="math notranslate nohighlight">\(\pi(x) = 0\)</span> indicates no treatment, and  <span class="math notranslate nohighlight">\(\pi(x) = p \in (0, 1)\)</span> indicates randomization between treatment and control with probability <span class="math notranslate nohighlight">\(p\)</span>.</p>
 <p>There are two main objects of interest in this chapter. The first is the <strong>value</strong> of a policy <span class="math notranslate nohighlight">\(\pi\)</span>, defined as the average outcome attained if we assign individuals to treatments according to the policy <span class="math notranslate nohighlight">\(\pi\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c68e38f0-1b6f-460d-aaca-e95c790aeb33">
-<span class="eqno">(27)<a class="headerlink" href="#equation-c68e38f0-1b6f-460d-aaca-e95c790aeb33" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f271f33d-9b10-444c-9168-387a5f4d0bf0">
+<span class="eqno">()<a class="headerlink" href="#equation-f271f33d-9b10-444c-9168-387a5f4d0bf0" title="Permalink to this equation">¶</a></span>\[\begin{equation}
   E[Y_i(\pi(X_i))].
 \end{equation}\]</div>
 <p>The second object of interest is the <strong>difference in values</strong> between two policies <span class="math notranslate nohighlight">\(\pi\)</span> and <span class="math notranslate nohighlight">\(\pi'\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b0481e55-756a-4292-a873-5e350792de89">
-<span class="eqno">(28)<a class="headerlink" href="#equation-b0481e55-756a-4292-a873-5e350792de89" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-307e28bd-7413-41e2-8919-4d27821fd535">
+<span class="eqno">()<a class="headerlink" href="#equation-307e28bd-7413-41e2-8919-4d27821fd535" title="Permalink to this equation">¶</a></span>\[\begin{equation}
   E[Y_i(\pi(X_i)) - Y_i(\pi'(X_i))].
 \end{equation}\]</div>
 <p>Note how the average treatment effect (ATE) we saw in previous chapters is a difference in values taking <span class="math notranslate nohighlight">\(\pi(x) \equiv 1\)</span> (a policy that treats everyone) and <span class="math notranslate nohighlight">\(\pi(x) \equiv 0\)</span> (a policy that treats no one).</p>
@@ -409,8 +387,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <p>As a first example, let’s estimate the value of the following policy (assuming that it was given to or decided by us prior to looking at the data):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3934fca3-d391-40d7-b454-7246ad3b519e">
-<span class="eqno">(29)<a class="headerlink" href="#equation-3934fca3-d391-40d7-b454-7246ad3b519e" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-86a186db-a886-4935-8802-a339ea4a38f7">
+<span class="eqno">()<a class="headerlink" href="#equation-86a186db-a886-4935-8802-a339ea4a38f7" title="Permalink to this equation">¶</a></span>\[\begin{equation}
   (\#eq:pol)
   \pi(x) =
     \begin{cases}
@@ -419,8 +397,8 @@ const thebe_selector_output = ".output, .cell_output"
     \end{cases}
 \end{equation}\]</div>
 <p>This policy divides the plane into a “treatment” region <span class="math notranslate nohighlight">\(A\)</span> and a complementary “no treatment” region <span class="math notranslate nohighlight">\(A^c\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1394d2d2-2316-4fcb-8de0-0959b8d1325b">
-<span class="eqno">(30)<a class="headerlink" href="#equation-1394d2d2-2316-4fcb-8de0-0959b8d1325b" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-74867495-8236-4089-824d-25edaaaedc6e">
+<span class="eqno">()<a class="headerlink" href="#equation-74867495-8236-4089-824d-25edaaaedc6e" title="Permalink to this equation">¶</a></span>\[\begin{equation}
   A := \{ x : \pi(x) = 1 \} = \{x: x_{1} &gt; .5, x_{2} &gt; .5\}.
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -441,8 +419,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <p>We’ll consider the behavior of the policy <span class="math notranslate nohighlight">\(\pi\)</span> separately within each region. In the “treatment” region <span class="math notranslate nohighlight">\(A\)</span>, its average outcome is the same as the average outcome for the treated population.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4751ee5b-9fed-4a15-b4b6-498081fa503b">
-<span class="eqno">(31)<a class="headerlink" href="#equation-4751ee5b-9fed-4a15-b4b6-498081fa503b" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-32607674-f96b-4a4f-a398-840b589ee4d7">
+<span class="eqno">()<a class="headerlink" href="#equation-32607674-f96b-4a4f-a398-840b589ee4d7" title="Permalink to this equation">¶</a></span>\[\begin{equation}
   (\#eq:region-a)
   \begin{aligned}
     E[Y_i(\pi(X_i)) \ | \ A] 
@@ -451,8 +429,8 @@ const thebe_selector_output = ".output, .cell_output"
   \end{aligned}
 \end{equation}\]</div>
 <p>In the remaining region <span class="math notranslate nohighlight">\(A^c\)</span>, its average outcome is the same as the average outcome for the untreated population.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fa7efd87-090f-43ef-8040-7259a679e58d">
-<span class="eqno">(32)<a class="headerlink" href="#equation-fa7efd87-090f-43ef-8040-7259a679e58d" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-78e726e6-f696-40b6-8e74-59830a2e6f58">
+<span class="eqno">()<a class="headerlink" href="#equation-78e726e6-f696-40b6-8e74-59830a2e6f58" title="Permalink to this equation">¶</a></span>\[\begin{equation}
   (\#eq:region-not-a)
   \begin{aligned}
     E[Y_i(\pi(X_i)) \ | \ A^c] 
@@ -461,8 +439,8 @@ const thebe_selector_output = ".output, .cell_output"
   \end{aligned}
 \end{equation}\]</div>
 <p>The expected value of <span class="math notranslate nohighlight">\(\pi\)</span> is a weighted average of value within each region:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c562ed62-51b9-46e6-995e-a4cf76d2bb97">
-<span class="eqno">(33)<a class="headerlink" href="#equation-c562ed62-51b9-46e6-995e-a4cf76d2bb97" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e9cd0cba-17a2-4029-9875-6dddaa71b7d7">
+<span class="eqno">()<a class="headerlink" href="#equation-e9cd0cba-17a2-4029-9875-6dddaa71b7d7" title="Permalink to this equation">¶</a></span>\[\begin{align}
   (\#eq:pi-pop-value)
     E[Y(\pi(X_i))] &amp;= E[Y_i | A, W_i = 1] P(A) +  E[Y_i | A^c, W_i = 0] P(A^c), \\
 \end{align}\]</div>
@@ -484,13 +462,13 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <p>For another example, let’s consider the value of a  <em>random</em> policy <span class="math notranslate nohighlight">\(\pi'\)</span> that would assign observations to treatment and control with probability <span class="math notranslate nohighlight">\(p\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d3cf9efd-8134-487f-9ba1-3bca62a9771b">
-<span class="eqno">(34)<a class="headerlink" href="#equation-d3cf9efd-8134-487f-9ba1-3bca62a9771b" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e5687c89-5b82-49dd-8c1c-0457d11ed9fe">
+<span class="eqno">()<a class="headerlink" href="#equation-e5687c89-5b82-49dd-8c1c-0457d11ed9fe" title="Permalink to this equation">¶</a></span>\[\begin{equation}
   \pi(X_i) = Z_i \qquad Z_i \sim^{iid} \text{Binomial}(p).
 \end{equation}\]</div>
 <p>To identify the value of this policy, follow the same argument as above. However, instead of thinking in terms of “regions”, consider the output of the random variable <span class="math notranslate nohighlight">\(Z_i\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4ae09fc1-f98e-4dcf-92dc-f859ca5aed10">
-<span class="eqno">(35)<a class="headerlink" href="#equation-4ae09fc1-f98e-4dcf-92dc-f859ca5aed10" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3104e292-83be-4744-a5c3-fd0166e1cfa7">
+<span class="eqno">()<a class="headerlink" href="#equation-3104e292-83be-4744-a5c3-fd0166e1cfa7" title="Permalink to this equation">¶</a></span>\[\begin{equation}
   (\#eq:region-a)
   \begin{aligned}
     E[Y_i(\pi'(X_i)) \ | \ Z_i = 1]
@@ -500,8 +478,8 @@ const thebe_selector_output = ".output, .cell_output"
   \end{aligned}
 \end{equation}\]</div>
 <p>We can proceed similarly for the case of <span class="math notranslate nohighlight">\(Z_i = 0\)</span>. Finally, since <span class="math notranslate nohighlight">\(P(Z_i = 1) = p\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ea478a22-3cf9-4d6c-84da-2dad921b4945">
-<span class="eqno">(36)<a class="headerlink" href="#equation-ea478a22-3cf9-4d6c-84da-2dad921b4945" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-95223732-93b5-41cb-a3fa-99d87a6f1e13">
+<span class="eqno">()<a class="headerlink" href="#equation-95223732-93b5-41cb-a3fa-99d87a6f1e13" title="Permalink to this equation">¶</a></span>\[\begin{equation}
   (\#eq:pip-pop-value)
   E[Y_i(\pi'(X_i))] = pE[Y_i | W_i=1] + (1-p)E[Y_i | W_i = 0],
 \end{equation}\]</div>
@@ -525,14 +503,14 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="section" id="estimating-difference-in-values">
 <h3>5.1.1 Estimating difference in values<a class="headerlink" href="#estimating-difference-in-values" title="Permalink to this headline">¶</a></h3>
 <p>Next, let’s estimate the difference in value between two given policies. For a concrete example, let’s consider the gain from switching to <span class="math notranslate nohighlight">\(\pi\)</span> defined in &#64;ref(eq:pol) from a policy <span class="math notranslate nohighlight">\(\pi''\)</span> that never treats, i.e., <span class="math notranslate nohighlight">\(\pi''(X_i) \equiv 0\)</span>. That is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5fdcf95d-1323-4bf9-b34d-cba46cd9fe47">
-<span class="eqno">(37)<a class="headerlink" href="#equation-5fdcf95d-1323-4bf9-b34d-cba46cd9fe47" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3d7d1ab3-13d1-447f-925b-23301214f77f">
+<span class="eqno">()<a class="headerlink" href="#equation-3d7d1ab3-13d1-447f-925b-23301214f77f" title="Permalink to this equation">¶</a></span>\[\begin{equation}
   (\#eq:diff-0)
   E[Y(\pi(X_i)) - Y(\pi''(X_i))].
 \end{equation}\]</div>
 <p>We already derived the value of <span class="math notranslate nohighlight">\(\pi\)</span> in &#64;ref(eq:pip-pop-value). To derive the value of the second policy,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3634affc-7c21-4ef8-8de6-329a907548be">
-<span class="eqno">(38)<a class="headerlink" href="#equation-3634affc-7c21-4ef8-8de6-329a907548be" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-88a3d7d9-c0d5-4cdf-9ae8-318d6a742c59">
+<span class="eqno">()<a class="headerlink" href="#equation-88a3d7d9-c0d5-4cdf-9ae8-318d6a742c59" title="Permalink to this equation">¶</a></span>\[\begin{align}
   (\#eq:ey0-expand)
   &amp;E[Y(\pi''(X_i))] \\ 
     &amp;= E[Y_i(0)] &amp;&amp; \text{$\pi''(x) = 0$ for all $x$,}  \\
@@ -540,8 +518,8 @@ const thebe_selector_output = ".output, .cell_output"
     &amp;= E[Y|A,W=0]P(A) + E[Y|A^c,W=0]P(A^c) &amp;&amp;\text{randomized setting.} 
 \end{align}\]</div>
 <p>Substituting &#64;ref(eq:pip-pop-value) and &#64;ref(eq:ey0-expand) into &#64;ref(eq:diff-0) and simplifying,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3a474bea-5446-4cda-89fe-8b4e10c89828">
-<span class="eqno">(39)<a class="headerlink" href="#equation-3a474bea-5446-4cda-89fe-8b4e10c89828" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-80841a1b-aa4a-4a1a-845a-1cd5c80b693c">
+<span class="eqno">()<a class="headerlink" href="#equation-80841a1b-aa4a-4a1a-845a-1cd5c80b693c" title="Permalink to this equation">¶</a></span>\[\begin{equation}
   (\#eq:diff-0-result)
   E[Y(\pi(X_i)) - Y(\pi''(X_i))]
     = \left( E[Y_i|A, W_i=1] - E[Y_i|A,W_i=0] \right) \cdot P(A) + 0 \cdot P(A^c) 
@@ -564,8 +542,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <p>For another example, let’s consider the difference in value between <span class="math notranslate nohighlight">\(\pi\)</span> and a <em>random</em> policy <span class="math notranslate nohighlight">\(\pi'\)</span> that assigns observations to treatment and control with equal probability <span class="math notranslate nohighlight">\(p = 1/2\)</span>. We have already derived an expression for value of the random policy in &#64;ref(eq:pip-pop-value). Subtracting it from the value of the policy <span class="math notranslate nohighlight">\(\pi\)</span> derived in &#64;ref(eq:pi-pop-value) and simplifying,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f2461c53-bdad-4012-bd88-271dc33a05d0">
-<span class="eqno">(40)<a class="headerlink" href="#equation-f2461c53-bdad-4012-bd88-271dc33a05d0" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6280fa45-8b52-4fa1-bf16-797ba0a72172">
+<span class="eqno">()<a class="headerlink" href="#equation-6280fa45-8b52-4fa1-bf16-797ba0a72172" title="Permalink to this equation">¶</a></span>\[\begin{align}
   (\#eq:pi-pip-diff-results)
   E[Y(\pi) - Y(\pi'(X_i))] 
     &amp;= \frac{P(A)}{2} \left( E[Y_i(1) - Y_i(0) | A] \right) +
@@ -573,8 +551,8 @@ const thebe_selector_output = ".output, .cell_output"
 \end{align}\]</div>
 <p>Here’s how to interpret &#64;ref(eq:pi-pip-diff-results). In region <span class="math notranslate nohighlight">\(A\)</span>, policy <span class="math notranslate nohighlight">\(\pi\)</span> treats everyone, obtaining average value <span class="math notranslate nohighlight">\(E[Y_i(1)|A]\)</span>; meanwhile, policy <span class="math notranslate nohighlight">\(\pi'\)</span> treats half the observations (i.e., it treats each individual with one-half probability), obtaining average value <span class="math notranslate nohighlight">\((E[Y_i(1) + Y_i(0)|A])/2\)</span>. Subtracting the two gives the term multiplying <span class="math notranslate nohighlight">\(P(A)\)</span> in &#64;ref(eq:pi-pip-diff-results). In region <span class="math notranslate nohighlight">\(A^c\)</span>, policy <span class="math notranslate nohighlight">\(\pi\)</span> treats no one, obtaining average value <span class="math notranslate nohighlight">\(E[Y_i(0)|A]\)</span>; meanwhile, policy <span class="math notranslate nohighlight">\(\pi'\)</span> still obtains <span class="math notranslate nohighlight">\((E[Y_i(1) + Y_i(0)|A^c])/2\)</span> for the same reasons as above. Subtracting the two gives the term multiplying <span class="math notranslate nohighlight">\(P(A^c)\)</span> &#64;ref(eq:pi-pip-diff-results). Expression &#64;ref(eq:pi-pip-diff-results) is the average of these two terms weighted by the size of each region.</p>
 <p>Finally, in a randomized setting, &#64;ref(eq:pi-pip-diff-results) is equivalent to</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b197b2ad-9e33-41e6-955d-e6f67959351a">
-<span class="eqno">(41)<a class="headerlink" href="#equation-b197b2ad-9e33-41e6-955d-e6f67959351a" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-07da8fda-4a7f-4290-b905-87ab5c57e822">
+<span class="eqno">()<a class="headerlink" href="#equation-07da8fda-4a7f-4290-b905-87ab5c57e822" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \frac{P(A)}{2} \left( E[Y|A,W=1] - E[Y|A,W=0] \right) + 
         \frac{P(A^c)}{2} \left( E[Y|A^c,W=0] - E[Y|A,W=1] \right),
 \end{align}\]</div>
@@ -635,23 +613,23 @@ const thebe_selector_output = ".output, .cell_output"
 If we "naively" used the estimators based on sample averages above, the policy value estimate would be biased. Would the bias be upward or downward?
 </font>
 <p>In randomized setting and observational settings with unconfoundedness and overlap, there exists estimates of policy values and differences that are more efficient (i.e., they have smaller variance in large samples) than their counterparts based on sample averages. These are based on the <em>AIPW scores</em> that we studied in previous chapters. For example, to estimate the <span class="math notranslate nohighlight">\( E[Y_i(1)]\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-bf2f2cac-5de1-46c2-9353-ab18d68586b9">
-<span class="eqno">(42)<a class="headerlink" href="#equation-bf2f2cac-5de1-46c2-9353-ab18d68586b9" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-682ff82c-8004-44ff-a916-12c73da51c7f">
+<span class="eqno">()<a class="headerlink" href="#equation-682ff82c-8004-44ff-a916-12c73da51c7f" title="Permalink to this equation">¶</a></span>\[\begin{align}
   (\#eq:gamma-1)
   \hat{\Gamma}_{i,1} 
     &amp;= \hat{\mu}^{-i}(X_i, 1) + \frac{W_i}{\hat{e}^{-i}(X_i)} \left(Y_i -\hat{\mu}^{-i}(X_i, 1)\right) 
 \end{align}\]</div>
 <p>As we discussed in the chapter on ATE, averaging over AIPW scores &#64;ref(eq:gamma-1) across individuals yields an unbiased / consistent estimator of <span class="math notranslate nohighlight">\(E[Y_i(1)]\)</span> provided that at least one of <span class="math notranslate nohighlight">\(\hat{\mu}^{-i}(x, 1)\)</span> or <span class="math notranslate nohighlight">\(\hat{e}^{-i}(x)\)</span> is an unbiased / consistent estimator of the outcome model <span class="math notranslate nohighlight">\(\mu(x,w) := E[Y_i(w)|X_i=x]\)</span> or propensity model <span class="math notranslate nohighlight">\(e(x) := P[W_i=1|X_i=x]\)</span>. Provided that these are estimates using non-parametric methods like forests or neural networks, consistency should be guaranteed, and in addition the resulting estimates should have smaller asymptotic variance. Therefore, barring computational issues, AIPW-based estimates are usually superior to estimates based on sample means, even in randomized settings (though, for completeness, the latter should still be reported when valid).</p>
 <p>For the control, we have the following estimator based on AIPW scores,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9d106e93-4236-4775-a1a9-dafd0638b679">
-<span class="eqno">(43)<a class="headerlink" href="#equation-9d106e93-4236-4775-a1a9-dafd0638b679" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-06873ed3-8422-40c3-bfd2-3b51a6efff65">
+<span class="eqno">()<a class="headerlink" href="#equation-06873ed3-8422-40c3-bfd2-3b51a6efff65" title="Permalink to this equation">¶</a></span>\[\begin{align}
   (\#eq:gamma-0)
   \hat{\Gamma}_{i,0} 
     &amp;= \hat{\mu}^{-i}(X_i, 0) + \frac{1-W_i}{1-\hat{e}^{-i}(X_i)} \left(Y_i -\hat{\mu}^{-i}(X_i, 0)\right).
 \end{align}\]</div>
 <p>To estimate the value of a binary policy <span class="math notranslate nohighlight">\(\pi\)</span>, we average over AIPW scores, selecting &#64;ref(eq:gamma-1) or &#64;ref(eq:gamma-0) for each individual depending on whether the policy dictates that the individual should be treated or not. That is, we estimate the value of a policy <span class="math notranslate nohighlight">\(\pi\)</span> via the following average,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0bcf4a1f-3bbd-4402-97a5-713b2aeaf4e5">
-<span class="eqno">(44)<a class="headerlink" href="#equation-0bcf4a1f-3bbd-4402-97a5-713b2aeaf4e5" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ff1b4c6b-400a-4354-9733-800067f9d943">
+<span class="eqno">()<a class="headerlink" href="#equation-ff1b4c6b-400a-4354-9733-800067f9d943" title="Permalink to this equation">¶</a></span>\[\begin{align}
   \frac{1}{n} \sum_{i=1}^n \hat{\Gamma}_{i,\pi(X_i)} 
   \qquad  
   \hat{\Gamma}_{i,\pi(X_i)} := \pi(X_i) \hat{\Gamma}_{i,1} + (1 - \pi(X_i)) \hat{\Gamma}_{i,0}.
@@ -837,8 +815,8 @@ $<span class="math notranslate nohighlight">\(
 </div>
 </div>
 <p>We’ll take the following policy as an example. It asks individuals who are older (age &gt; 50) or more conservative (<code class="docutils literal notranslate"><span class="pre">polviews</span></code> <span class="math notranslate nohighlight">\(\leq\)</span> 4) if they think the government spends to much on “welfare”, and it asks yonger and more liberal individuals if they think the government spends too much on “assistance to the poor”.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-687f8382-acc7-47fd-89f3-9872c9383dbe">
-<span class="eqno">(45)<a class="headerlink" href="#equation-687f8382-acc7-47fd-89f3-9872c9383dbe" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7806a5cd-6b53-4ace-9d2f-9678baa8f152">
+<span class="eqno">()<a class="headerlink" href="#equation-7806a5cd-6b53-4ace-9d2f-9678baa8f152" title="Permalink to this equation">¶</a></span>\[\begin{equation}
   (\#eq:polage)
   \pi(x) =
     \begin{cases}
@@ -971,21 +949,7 @@ $<span class="math notranslate nohighlight">\(
               
             
                 <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="heterogeneous-treatment-effect-1.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">HTE I: Binary treatment</p>
-        </div>
-    </a>
-    <a class='right-next' id="next-link" href="6_Policy_Learning_I.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Policy Learning I - Binary Treatment</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
+<div class='prev-next-area'>
 </div>
             
         </div>

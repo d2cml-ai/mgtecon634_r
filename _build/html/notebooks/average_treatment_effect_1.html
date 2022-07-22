@@ -1,0 +1,1230 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATE I: Binary treatment &#8212; MGTECON 634 at Stanford (R scripts)</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Introduction" href="../md/intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">MGTECON 634 at Stanford (R scripts)</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../md/intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   ATE I: Binary treatment
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/notebooks/average_treatment_effect_1.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/d2cml-ai/mgtecon634_r"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/d2cml-ai/mgtecon634_r/issues/new?title=Issue%20on%20page%20%2Fnotebooks/average_treatment_effect_1.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/d2cml-ai/mgtecon634_r/edit/master/_build/jupyter_execute/notebooks/average_treatment_effect_1.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/d2cml-ai/mgtecon634_r/master?urlpath=tree/_build/jupyter_execute/notebooks/average_treatment_effect_1.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/d2cml-ai/mgtecon634_r/blob/master/_build/jupyter_execute/notebooks/average_treatment_effect_1.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#notation-and-definitions-notation">
+   3.1 Notation and definitions {#notation}
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#difference-in-means-estimator-diff-in-means">
+   3.2 Difference-in-means estimator {#diff-in-means}
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#turning-an-experimental-dataset-into-an-observational-one-obs">
+   3.3 Turning an experimental dataset into an observational one {#obs}
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#direct-estimation">
+   3.4 Direct estimation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#inverse-propensity-weighted-estimator-ipw">
+   3.5 Inverse propensity-weighted estimator {#ipw}
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#augmented-inverse-propensity-weighted-aipw-estimator-aipw">
+   3.6 Augmented inverse propensity-weighted (AIPW) estimator {#aipw}
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#diagnostics-diag">
+   3.7 Diagnostics {#diag}
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#assessing-balance-balance">
+     3.7.1 Assessing balance {#balance}
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#assessing-overlap">
+     3.7.2 Assessing overlap
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>ATE I: Binary treatment</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#notation-and-definitions-notation">
+   3.1 Notation and definitions {#notation}
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#difference-in-means-estimator-diff-in-means">
+   3.2 Difference-in-means estimator {#diff-in-means}
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#turning-an-experimental-dataset-into-an-observational-one-obs">
+   3.3 Turning an experimental dataset into an observational one {#obs}
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#direct-estimation">
+   3.4 Direct estimation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#inverse-propensity-weighted-estimator-ipw">
+   3.5 Inverse propensity-weighted estimator {#ipw}
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#augmented-inverse-propensity-weighted-aipw-estimator-aipw">
+   3.6 Augmented inverse propensity-weighted (AIPW) estimator {#aipw}
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#diagnostics-diag">
+   3.7 Diagnostics {#diag}
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#assessing-balance-balance">
+     3.7.1 Assessing balance {#balance}
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#assessing-overlap">
+     3.7.2 Assessing overlap
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="ate-i-binary-treatment">
+<h1>ATE I: Binary treatment<a class="headerlink" href="#ate-i-binary-treatment" title="Permalink to this headline">¶</a></h1>
+<p>Source RMD file: <a class="reference external" href="https://docs.google.com/uc?export=download&amp;id=1WYFBGKPkG3y4lkTox_P7gG2Q6upEjbWd">link</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">lmtest</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">sandwich</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">grf</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">glmnet</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">splines</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">reshape2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: zoo
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Attaching package: &#39;zoo&#39;
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The following objects are masked from &#39;package:base&#39;:
+
+    as.Date, as.Date.numeric
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: Matrix
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loaded glmnet 4.1-4
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="notation-and-definitions-notation">
+<h2>3.1 Notation and definitions {#notation}<a class="headerlink" href="#notation-and-definitions-notation" title="Permalink to this headline">¶</a></h2>
+<p>Let’s establish some notation. Each data point will be defined by the triple <span class="math notranslate nohighlight">\((X_i, W_i, Y_i)\)</span>. The vector <span class="math notranslate nohighlight">\(X_i\)</span> represents covariates that are observed for individual <span class="math notranslate nohighlight">\(i\)</span>. Treatment assignment is indicated by <span class="math notranslate nohighlight">\(W_i \in \{0, 1\}\)</span>, with 1 representing treatment, and 0 representing control. The scalar <span class="math notranslate nohighlight">\(Y_i\)</span> is the observed outcome, and it can be real or binary. Each observation is drawn independently and from the same distribution. We’ll be interested in assessing the causal effect of treatment on outcome.</p>
+<p>A difficulty in estimating causal quantities is that we observe each individual in only one treatment state: either they were treated, or they weren’t. However, it’s often useful to imagine that each individual is endowed with two random variables <span class="math notranslate nohighlight">\((Y_i(1), Y_i(0))\)</span>, where <span class="math notranslate nohighlight">\(Y_i(1)\)</span> represents the value of this individual’s outcome if they receive treatment, and <span class="math notranslate nohighlight">\(Y_i(0)\)</span> represents their outcome if they are not treated. These random variables are called  <strong>potential outcomes</strong>. The observed outcome <span class="math notranslate nohighlight">\(Y_i\)</span> corresponds to whichever potential outcome we got to see:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-6a61a695-5c4f-4bef-bf51-0b15fd9e0876">
+<span class="eqno">(1)<a class="headerlink" href="#equation-6a61a695-5c4f-4bef-bf51-0b15fd9e0876" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+  Y_i \equiv Y_i(W_i) =
+  \begin{cases}
+    Y_i(1) \qquad \text{if }W_i = 1 \text{ (treated)} \\ 
+    Y_i(0) \qquad \text{if }W_i = 0 \text{ (control)}\\ 
+  \end{cases}
+\end{equation}\]</div>
+<div class="math notranslate nohighlight" id="equation-my-label">
+<span class="eqno">(2)<a class="headerlink" href="#equation-my-label" title="Permalink to this equation">¶</a></span>\[\begin{split}Y_i(1) \qquad \text{if }W_i = 1 \text{ (treated)} \\ 
+Y_i(0) \qquad \text{if }W_i = 0 \text{ (control)}\\ \end{split}\]</div>
+<p><a class="reference internal" href="#equation-my-label">(2)</a></p>
+<p>Since we can’t observe both <span class="math notranslate nohighlight">\(Y_i(1)\)</span> and <span class="math notranslate nohighlight">\(Y_i(0)\)</span>, we won’t be able to make statistical claims about the individual treatment effect <span class="math notranslate nohighlight">\(Y_i(1) - Y_i(0)\)</span>. Instead, our goal will be to estimate the <strong>average treatment effect (ATE)</strong>:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f5c36af3-38eb-41b4-95a9-338b174742e0">
+<span class="eqno">(3)<a class="headerlink" href="#equation-f5c36af3-38eb-41b4-95a9-338b174742e0" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+  (\#eq:ate)
+  \tau := E[Y_i(1) - Y_i(0)].
+\end{equation}\]</div>
+<p>Here, when we refer to the <strong>randomized</strong> setting we mean that we have data generated by a randomized control trial. The key characteristic of this setting is that the probability that an individual is assigned to the treatment arm is fixed. In particular, it does not depend on the individual’s potential outcomes:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-0747e880-d8e1-4ac7-9f06-e6abba44f5f3">
+<span class="eqno">(4)<a class="headerlink" href="#equation-0747e880-d8e1-4ac7-9f06-e6abba44f5f3" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+  (\#eq:unconf)
+  Y_i(1), Y_i(0) \perp W_i.
+\end{equation}\]</div>
+<p>This precludes situations in which individuals may self-select into or out of treatment. The canonical failure example is a job training program in which workers enroll more often if they are more likely to benefit from treatment because in that case <span class="math notranslate nohighlight">\(W_i\)</span> and <span class="math notranslate nohighlight">\(Y_i(1) - Y_i(0)\)</span> would be positively correlated.</p>
+<p>When condition <code class="docutils literal notranslate"><span class="pre">unconf</span></code> &#64;ref(eq:unconf) is violated, we say that we are in an <strong>observational</strong> setting. This is a more complex setting encompassing several different scenarios: sometimes it’s still possible to estimate the ATE under additional assumptions, sometimes the researcher can exploit other sources of variation to obtain other interesting estimands. Here, we will focus on ATE estimation under the following assumption:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-12e26c15-bb1b-4c2d-b7b3-5fb60e30d7e0">
+<span class="eqno">(5)<a class="headerlink" href="#equation-12e26c15-bb1b-4c2d-b7b3-5fb60e30d7e0" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+  (\#eq:cond-unconf)
+  Y_i(1), Y_i(0) \perp W_i \ | \ X_i.
+\end{equation}\]</div>
+<p>In this document we will call this assumption <strong>unconfoundeness</strong>, though it is also known as <strong>no unmeasured confounders</strong>, <strong>ignorability</strong> or <strong>selection on observables</strong>. It says that all possible sources of self-selection, etc., can be explained by the observable covariates <span class="math notranslate nohighlight">\(X_i\)</span>. Continuing the example above, it may be that older or more educated are more likely to self-select into treatment; but when we compare two workers that have the same age and level of education, etc., there’s nothing else that we could infer about their relative potential outcomes if we knew that one went into job training and the other did not.</p>
+<p>As we’ll see below, a key quantity of interest will be the treatment assignment probability, or <strong>propensity score</strong> <span class="math notranslate nohighlight">\(e(X_i) := \PP[W_i = 1 | X_i]\)</span>. In an experimental setting this quantity is usually known and fixed, and in observational settings it must be estimated from the data. We will often need to assume that the propensity score is bounded away from zero and one. That is, there exists some <span class="math notranslate nohighlight">\(\eta &gt; 0\)</span> such that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-15aa3208-3b45-4250-b030-6629ecb9ff92">
+<span class="eqno">(6)<a class="headerlink" href="#equation-15aa3208-3b45-4250-b030-6629ecb9ff92" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+  (\#eq:overlap)
+  \eta &lt; e(x) &lt; 1 - \eta  \qquad \text{for all }x.
+\end{equation}\]</div>
+<p>This assumption is known as <strong>overlap</strong>, and it means that for all types of people in our population (i.e., all values of observable characteristics) we can find some portion of individuals in treatment and some in control. Intuitively, this is necessary because we’d like to will be comparing treatment and control at each level of the covariates and then aggregate those results.</p>
+<p>As a running example, in what follows we’ll be using an abridged version of a public dataset from the General Social Survey (GSS) <a class="reference external" href="https://gss.norc.org/Documents/reports/project-reports/GSSProject%20report32.pdf">(Smith, 2016)</a>. The setting is a randomized control trial. Individuals were asked about their thoughts on government spending on the social safety net. The treatment is the wording of the question: about half of the individuals were asked if they thought government spends too much on “welfare” <span class="math notranslate nohighlight">\((W_i = 1)\)</span>, while the remaining half was asked about “assistance to the poor” <span class="math notranslate nohighlight">\((W_i = 0)\)</span>. The outcome is binary, with <span class="math notranslate nohighlight">\(Y_i = 1\)</span> corresponding to a positive answer. In the data set below, we also collect a few other demographic covariates.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in data</span>
+<span class="n">data</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;https://docs.google.com/uc?id=1kSxrVci_EUcSr_Lg1JKk1l7Xd5I9zfRC&amp;export=download&quot;</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">&lt;-</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+
+<span class="c1"># Treatment: does the the gov&#39;t spend too much on &quot;welfare&quot; (1) or &quot;assistance to the poor&quot; (0)</span>
+<span class="n">treatment</span> <span class="o">&lt;-</span> <span class="s">&quot;w&quot;</span>
+
+<span class="c1"># Outcome: 1 for &#39;yes&#39;, 0 for &#39;no&#39;</span>
+<span class="n">outcome</span> <span class="o">&lt;-</span> <span class="s">&quot;y&quot;</span>
+
+<span class="c1"># Additional covariates</span>
+<span class="n">covariates</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;age&quot;</span><span class="p">,</span> <span class="s">&quot;polviews&quot;</span><span class="p">,</span> <span class="s">&quot;income&quot;</span><span class="p">,</span> <span class="s">&quot;educ&quot;</span><span class="p">,</span> <span class="s">&quot;marital&quot;</span><span class="p">,</span> <span class="s">&quot;sex&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="difference-in-means-estimator-diff-in-means">
+<h2>3.2 Difference-in-means estimator {#diff-in-means}<a class="headerlink" href="#difference-in-means-estimator-diff-in-means" title="Permalink to this headline">¶</a></h2>
+<p>Let’s begin by considering a simple estimator that is available in experimental settings. The <strong>difference-in-means</strong> estimator is the sample average of outcomes in treatment minus the sample average of outcomes in control.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-95324252-1c84-48c0-928e-8ca22e484058">
+<span class="eqno">(7)<a class="headerlink" href="#equation-95324252-1c84-48c0-928e-8ca22e484058" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+  (\#eq:ate-dm)
+  \widehat{\tau}^{DIFF} =
+    \frac{1}{n_1} \sum_{i:W_i = 1} Y_i -
+    \frac{1}{n_0} \sum_{i:W_i = 0} Y_i
+    \qquad \text{where} \qquad
+    n_w := |\{i : W_i = w \}|
+\end{equation}\]</div>
+<p>Here’s one way to compute the difference-in-means estimator and its associated statistics (t-stats, p-values, etc.) directly:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Only valid in the randomized setting. Do not use in observational settings.</span>
+<span class="n">Y</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span><span class="n">outcome</span><span class="p">]</span>
+<span class="n">W</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span><span class="n">treatment</span><span class="p">]</span>
+<span class="n">ate.est</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">W</span><span class="o">==</span><span class="m">1</span><span class="p">])</span> <span class="o">-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">W</span><span class="o">==</span><span class="m">0</span><span class="p">])</span>
+<span class="n">ate.se</span> <span class="o">&lt;-</span> <span class="nf">sqrt</span><span class="p">(</span><span class="nf">var</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">W</span> <span class="o">==</span> <span class="m">1</span><span class="p">])</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">W</span> <span class="o">==</span> <span class="m">1</span><span class="p">)</span> <span class="o">+</span> <span class="nf">var</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">W</span> <span class="o">==</span> <span class="m">0</span><span class="p">])</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">W</span> <span class="o">==</span> <span class="m">0</span><span class="p">))</span>
+<span class="n">ate.tstat</span> <span class="o">&lt;-</span> <span class="n">ate.est</span> <span class="o">/</span> <span class="n">ate.se</span>
+<span class="n">ate.pvalue</span> <span class="o">&lt;-</span> <span class="m">2</span><span class="o">*</span><span class="p">(</span><span class="nf">pnorm</span><span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="nf">abs</span><span class="p">(</span><span class="n">ate.est</span><span class="o">/</span><span class="n">ate.se</span><span class="p">)))</span>
+<span class="n">ate.results</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="n">estimate</span><span class="o">=</span><span class="n">ate.est</span><span class="p">,</span> <span class="n">std.error</span><span class="o">=</span><span class="n">ate.se</span><span class="p">,</span> <span class="n">t.stat</span><span class="o">=</span><span class="n">ate.tstat</span><span class="p">,</span> <span class="n">pvalue</span><span class="o">=</span><span class="n">ate.pvalue</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">ate.results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     estimate     std.error        t.stat        pvalue 
+ -0.347115545   0.004895638 -70.903028958   0.000000000 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Or, alternatively, via the <code class="docutils literal notranslate"><span class="pre">t.test</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="s">&#39;~&#39;</span><span class="p">,</span> <span class="n">treatment</span><span class="p">))</span>  <span class="c1"># y ~ w</span>
+<span class="nf">t.test</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>	Welch Two Sample t-test
+
+data:  y by w
+t = 70.903, df = 20840, p-value &lt; 2.2e-16
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ 0.3375197 0.3567114
+sample estimates:
+mean in group 0 mean in group 1 
+      0.4398290       0.0927135 
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also compute the same quantity via linear regression, using the fact that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-8e664c1e-bb5b-48ac-991f-2c01464f02f5">
+<span class="eqno">(8)<a class="headerlink" href="#equation-8e664c1e-bb5b-48ac-991f-2c01464f02f5" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+  Y_i = Y_i(0) + W_i \left( Y_i(1) - Y_i(0) \right),
+\end{equation}\]</div>
+<p>so that taking expectations conditional on treatment assignment,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-22e21fba-ed68-4bf5-b920-cd02781fe630">
+<span class="eqno">(9)<a class="headerlink" href="#equation-22e21fba-ed68-4bf5-b920-cd02781fe630" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+  E[Y_i | W_i] = \alpha + W_i \tau \qquad \text{where} \qquad \alpha := E[Y_i(0)]
+\end{equation}\]</div>
+<font size=1>
+[Exercise: make sure you understand this decomposition. Where is the unconfoundedness assumption \@ref(eq:unconf) used?]
+</font>
+<p>This result implies that we can estimate the ATE of a binary treatment via a linear regression of observed outcomes <span class="math notranslate nohighlight">\(Y_i\)</span> on a vector consisting of intercept and treatment assignment <span class="math notranslate nohighlight">\((1, W_i)\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Do not use! standard errors are not robust to heteroskedasticity! (See below)</span>
+<span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="s">&#39;~&#39;</span><span class="p">,</span> <span class="n">treatment</span><span class="p">))</span>
+<span class="n">ols</span> <span class="o">&lt;-</span> <span class="nf">lm</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+<span class="nf">coef</span><span class="p">(</span><span class="nf">summary</span><span class="p">(</span><span class="n">ols</span><span class="p">))[</span><span class="m">2</span><span class="p">,]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.dl-inline {width: auto; margin:0; padding: 0}
+.dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
+.dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
+.dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
+</style><dl class=dl-inline><dt>Estimate</dt><dd>-0.347115544792086</dd><dt>Std. Error</dt><dd>0.00473234264940525</dd><dt>t value</dt><dd>-73.3496220599559</dd><dt>Pr(&gt;|t|)</dt><dd>0</dd></dl>
+</div></div>
+</div>
+<p>The point estimate we get is the same as we got above by computing the ATE “directly” via <code class="docutils literal notranslate"><span class="pre">mean(Y[W==1])</span> <span class="pre">-</span> <span class="pre">mean(Y[W==0])</span></code>. However, the standard errors are different. This is because in <code class="docutils literal notranslate"><span class="pre">R</span></code> the command <code class="docutils literal notranslate"><span class="pre">lm</span></code> does not compute heteroskedasticity-robust standard errors. This is easily solvable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use this instead. Standard errors are heteroskedasticity-robust.</span>
+<span class="c1"># Only valid in randomized setting.</span>
+<span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="s">&#39;~&#39;</span><span class="p">,</span> <span class="n">treatment</span><span class="p">))</span>
+<span class="n">ols</span> <span class="o">&lt;-</span> <span class="nf">lm</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+<span class="nf">coeftest</span><span class="p">(</span><span class="n">ols</span><span class="p">,</span> <span class="n">vcov</span><span class="o">=</span><span class="nf">vcovHC</span><span class="p">(</span><span class="n">ols</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&#39;HC2&#39;</span><span class="p">))[</span><span class="m">2</span><span class="p">,]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.dl-inline {width: auto; margin:0; padding: 0}
+.dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
+.dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
+.dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
+</style><dl class=dl-inline><dt>Estimate</dt><dd>-0.347115544792086</dd><dt>Std. Error</dt><dd>0.00489563774488196</dd><dt>t value</dt><dd>-70.9030289577635</dd><dt>Pr(&gt;|t|)</dt><dd>0</dd></dl>
+</div></div>
+</div>
+<p>The difference-in-means estimator is a simple, easily computable, unbiased, “model-free” estimator of the treatment effect. It should always be reported when dealing with experimental data. However, as we’ll see later in this chapter, it may not necessarily be the one with smallest variance.</p>
+</div>
+<div class="section" id="turning-an-experimental-dataset-into-an-observational-one-obs">
+<h2>3.3 Turning an experimental dataset into an observational one {#obs}<a class="headerlink" href="#turning-an-experimental-dataset-into-an-observational-one-obs" title="Permalink to this headline">¶</a></h2>
+<p>In what follows we’ll purposely create a biased sample to show how the difference in means estimator fails in observational settings. We’ll focus on two covariates: <code class="docutils literal notranslate"><span class="pre">age</span></code> and political views (<code class="docutils literal notranslate"><span class="pre">polviews</span></code>). Presumably, younger or more liberal individuals are less affected by the change in wording in the question. So let’s see what happens when we make these individuals more prominent in our sample of treated individuals, and less prominent in our sample of untreated individuals.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Probabilistically dropping observations in a manner that depends on x</span>
+
+<span class="c1"># copying old dataset, just in case</span>
+<span class="n">data.exp</span> <span class="o">&lt;-</span> <span class="n">data</span>
+
+<span class="c1"># defining group that we will be dropped with some high probaibility</span>
+<span class="n">grp</span> <span class="o">&lt;-</span> <span class="p">((</span><span class="n">data</span><span class="o">$</span><span class="n">w</span> <span class="o">==</span> <span class="m">1</span><span class="p">)</span> <span class="o">&amp;</span>  <span class="c1"># if treated AND...</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="n">data</span><span class="o">$</span><span class="n">age</span> <span class="o">&gt;</span> <span class="m">45</span><span class="p">)</span> <span class="o">|</span>     <span class="c1"># belongs an older group OR</span>
+            <span class="p">(</span><span class="n">data</span><span class="o">$</span><span class="n">polviews</span> <span class="o">&lt;</span> <span class="m">5</span><span class="p">)</span>   <span class="c1"># more conservative</span>
+        <span class="p">))</span> <span class="o">|</span> <span class="c1"># OR</span>
+        <span class="p">((</span><span class="n">data</span><span class="o">$</span><span class="n">w</span> <span class="o">==</span> <span class="m">0</span><span class="p">)</span> <span class="o">&amp;</span>  <span class="c1"># if untreated AND...</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="n">data</span><span class="o">$</span><span class="n">age</span> <span class="o">&lt;</span> <span class="m">45</span><span class="p">)</span> <span class="o">|</span>     <span class="c1"># belongs a younger group OR</span>
+            <span class="p">(</span><span class="n">data</span><span class="o">$</span><span class="n">polviews</span> <span class="o">&gt;</span> <span class="m">4</span><span class="p">)</span>   <span class="c1"># more liberal</span>
+        <span class="p">))</span> 
+
+<span class="c1"># Individuals in the group above have a small chance of being kept in the sample</span>
+<span class="n">prob.keep</span> <span class="o">&lt;-</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">grp</span><span class="p">,</span> <span class="n">.</span><span class="m">15</span><span class="p">,</span> <span class="n">.</span><span class="m">85</span><span class="p">)</span>
+<span class="n">keep.idx</span> <span class="o">&lt;-</span> <span class="nf">as.logical</span><span class="p">(</span><span class="nf">rbinom</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nf">nrow</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">prob</span><span class="o">=</span><span class="n">prob.keep</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="m">1</span><span class="p">))</span>
+
+<span class="c1"># Dropping</span>
+<span class="n">data</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[</span><span class="n">keep.idx</span><span class="p">,]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see what happens to our sample before and after the change. This next figure shows the original dataset. Each observation is represented by a point on either the left or right scatterplots. An outcome of <span class="math notranslate nohighlight">\(Y_i=1\)</span> is denoted by a blue circle, and <span class="math notranslate nohighlight">\(Y_i=0\)</span> is denoted by a red square, but let’s not focus on the outcome at the moment. For now, what’s important to note is that the covariate distributions for treated and untreated populations are very similar. This is what we should expect in an experimental setting under unconfoundedness.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">&lt;-</span> <span class="nf">model.matrix</span><span class="p">(</span><span class="nf">formula</span><span class="p">(</span><span class="s">&quot;~ 0 + age + polviews&quot;</span><span class="p">),</span> <span class="n">data.exp</span><span class="p">)</span>  <span class="c1"># old &#39;experimental&#39; dataset</span>
+<span class="n">W</span> <span class="o">&lt;-</span> <span class="n">data.exp</span><span class="o">$</span><span class="n">w</span>
+<span class="n">Y</span> <span class="o">&lt;-</span> <span class="n">data.exp</span><span class="o">$</span><span class="n">y</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">w</span> <span class="n">in</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span> <span class="p">{</span>
+  <span class="nf">plot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">W</span><span class="o">==</span><span class="n">w</span><span class="p">,</span><span class="m">1</span><span class="p">]</span> <span class="o">+</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nf">sum</span><span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="n">w</span><span class="p">),</span> <span class="n">sd</span><span class="o">=</span><span class="n">.</span><span class="m">1</span><span class="p">),</span> <span class="n">X</span><span class="p">[</span><span class="n">W</span><span class="o">==</span><span class="n">w</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">+</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nf">sum</span><span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="n">w</span><span class="p">),</span> <span class="n">sd</span><span class="o">=</span><span class="n">.</span><span class="m">1</span><span class="p">),</span> 
+       <span class="n">pch</span><span class="o">=</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="m">23</span><span class="p">,</span> <span class="m">21</span><span class="p">),</span> <span class="n">cex</span><span class="o">=</span><span class="m">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="nf">rgb</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="o">/</span><span class="m">4</span><span class="p">),</span> <span class="nf">rgb</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="o">/</span><span class="m">4</span><span class="p">)),</span>
+       <span class="n">bg</span><span class="o">=</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="nf">rgb</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="o">/</span><span class="m">4</span><span class="p">),</span> <span class="nf">rgb</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="o">/</span><span class="m">4</span><span class="p">)),</span> <span class="n">main</span><span class="o">=</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">&quot;Treated&quot;</span><span class="p">,</span> <span class="s">&quot;Untreated&quot;</span><span class="p">),</span> <span class="n">xlab</span><span class="o">=</span><span class="s">&quot;age&quot;</span><span class="p">,</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;polviews&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/average_treatment_effect_1_15_0.png" src="../_images/average_treatment_effect_1_15_0.png" />
+</div>
+</div>
+<p>On the other hand, this is what the modified dataset looks like. The treated population is much younger and more liberal, while the untreated population is older and more conservative.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">&lt;-</span> <span class="nf">model.matrix</span><span class="p">(</span><span class="nf">formula</span><span class="p">(</span><span class="s">&quot;~ 0 + age + polviews&quot;</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span>
+<span class="n">W</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="o">$</span><span class="n">w</span>
+<span class="n">Y</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="o">$</span><span class="n">y</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">w</span> <span class="n">in</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span> <span class="p">{</span>
+  <span class="nf">plot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">W</span><span class="o">==</span><span class="n">w</span><span class="p">,</span><span class="m">1</span><span class="p">]</span> <span class="o">+</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nf">sum</span><span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="n">w</span><span class="p">),</span> <span class="n">sd</span><span class="o">=</span><span class="n">.</span><span class="m">1</span><span class="p">),</span> <span class="n">X</span><span class="p">[</span><span class="n">W</span><span class="o">==</span><span class="n">w</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">+</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nf">sum</span><span class="p">(</span><span class="n">W</span><span class="o">==</span><span class="n">w</span><span class="p">),</span> <span class="n">sd</span><span class="o">=</span><span class="n">.</span><span class="m">1</span><span class="p">),</span> 
+       <span class="n">pch</span><span class="o">=</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="m">23</span><span class="p">,</span> <span class="m">21</span><span class="p">),</span> <span class="n">cex</span><span class="o">=</span><span class="m">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="nf">rgb</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="o">/</span><span class="m">4</span><span class="p">),</span> <span class="nf">rgb</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="o">/</span><span class="m">4</span><span class="p">)),</span>
+       <span class="n">bg</span><span class="o">=</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="nf">rgb</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="o">/</span><span class="m">4</span><span class="p">),</span> <span class="nf">rgb</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="o">/</span><span class="m">4</span><span class="p">)),</span> <span class="n">main</span><span class="o">=</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">&quot;Treated&quot;</span><span class="p">,</span> <span class="s">&quot;Untreated&quot;</span><span class="p">),</span> <span class="n">xlab</span><span class="o">=</span><span class="s">&quot;age&quot;</span><span class="p">,</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;polviews&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/average_treatment_effect_1_17_0.png" src="../_images/average_treatment_effect_1_17_0.png" />
+</div>
+</div>
+<p>As we would expect the difference-in-means estimate is biased toward zero because in this new dataset we mostly treated individuals for which we expect the effect to be smaller.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Do not use in observational settings.</span>
+<span class="c1"># This is only to show how the difference-in-means estimator is biased in that case.</span>
+<span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="s">&#39;~&#39;</span><span class="p">,</span> <span class="n">treatment</span><span class="p">))</span>
+<span class="n">ols</span> <span class="o">&lt;-</span> <span class="nf">lm</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+<span class="nf">coeftest</span><span class="p">(</span><span class="n">ols</span><span class="p">,</span> <span class="n">vcov</span><span class="o">=</span><span class="nf">vcovHC</span><span class="p">(</span><span class="n">ols</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&#39;HC2&#39;</span><span class="p">))[</span><span class="m">2</span><span class="p">,]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.dl-inline {width: auto; margin:0; padding: 0}
+.dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
+.dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
+.dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
+</style><dl class=dl-inline><dt>Estimate</dt><dd>-0.28830072753081</dd><dt>Std. Error</dt><dd>0.00865177763369506</dd><dt>t value</dt><dd>-33.3227158321776</dd><dt>Pr(&gt;|t|)</dt><dd>1.88998254161564e-229</dd></dl>
+</div></div>
+</div>
+<p>Note that the dataset created above still satisfies unconfoundedness &#64;ref(eq:cond-unconf), since discrepancies in treatment assignment probability are described by observable covariates (<code class="docutils literal notranslate"><span class="pre">age</span></code> and <code class="docutils literal notranslate"><span class="pre">polviews</span></code>). Moreover, it also satisfies the overlap assumption &#64;ref(eq:overlap), since never completely dropped all treated or all untreated observations in any region of the covariate space. This is important because, in what follows, we’ll consider different estimators of the ATE that are available in observational settings under unconfoundedness and overlap.</p>
+</div>
+<div class="section" id="direct-estimation">
+<h2>3.4 Direct estimation<a class="headerlink" href="#direct-estimation" title="Permalink to this headline">¶</a></h2>
+<p>Our first estimator is suggested by the following decomposition of the ATE, which is possible due to unconfoundedness &#64;ref(eq:cond-unconf).</p>
+<div class="amsmath math notranslate nohighlight" id="equation-b71ec99c-ddea-468b-ad5a-17f922114f57">
+<span class="eqno">(10)<a class="headerlink" href="#equation-b71ec99c-ddea-468b-ad5a-17f922114f57" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+  E[Y_i(1) - Y_i(0)]
+  = E[E[Y_i | X_i, W_i=1]] - E[E[Y_i | X_i, W_i=0]]
+\end{equation}\]</div>
+<font size=1>
+[Exercise: make sure you understand this. Where is the unconfoundedness assumption used?]
+</font>
+<p>The decomposition above suggests the following procedure, sometimes called the <strong>direct estimate</strong> of the ATE:</p>
+<ol class="simple">
+<li><p>Estimate <span class="math notranslate nohighlight">\(\mu(x, w) := E[Y_i|X_i = x,W_i=w]\)</span>, preferably using nonparametric methods.</p></li>
+<li><p>Predict <span class="math notranslate nohighlight">\(\hat{\mu}(X_i, 1)\)</span> and <span class="math notranslate nohighlight">\(\hat{\mu}(X_i, 0)\)</span> for each observation in the data.</p></li>
+<li><p>Average out the predictions and subtract them.</p></li>
+</ol>
+<div class="amsmath math notranslate nohighlight" id="equation-5d86cf94-b1eb-4011-ac50-c3176954c1b6">
+<span class="eqno">(11)<a class="headerlink" href="#equation-5d86cf94-b1eb-4011-ac50-c3176954c1b6" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+  \hat{\tau}^{DM} := \frac{1}{n} \sum_{i=1}^{n} \hat{\mu}(X_i, 1) - \hat{\mu}(X_i, 0)
+\end{equation}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Do not use! We&#39;ll see a better estimator below.</span>
+
+<span class="c1"># Fitting some model of E[Y|X,W]</span>
+<span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">as.formula</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="s">&quot;~ &quot;</span><span class="p">,</span> <span class="nf">paste</span><span class="p">(</span><span class="s">&quot;bs(&quot;</span><span class="p">,</span> <span class="n">covariates</span><span class="p">,</span> <span class="s">&quot;, df=3)&quot;</span><span class="p">,</span> <span class="s">&quot;*&quot;</span><span class="p">,</span> <span class="n">treatment</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot;+&quot;</span><span class="p">)))</span>
+<span class="n">model</span> <span class="o">&lt;-</span> <span class="nf">lm</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>  
+
+<span class="c1"># Predicting E[Y|X,W=w] for w in {0, 1}</span>
+<span class="n">data.1</span> <span class="o">&lt;-</span> <span class="n">data</span>
+<span class="n">data.1</span><span class="p">[,</span><span class="n">treatment</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">1</span>
+<span class="n">data.0</span> <span class="o">&lt;-</span> <span class="n">data</span>
+<span class="n">data.0</span><span class="p">[,</span><span class="n">treatment</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">0</span>
+<span class="n">muhat.treat</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">data.1</span><span class="p">)</span>
+<span class="n">muhat.ctrl</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">data.0</span><span class="p">)</span>
+
+<span class="c1"># Averaging predictions and taking their difference</span>
+<span class="n">ate.est</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">muhat.treat</span><span class="p">)</span> <span class="o">-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">muhat.ctrl</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">ate.est</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message in predict.lm(model, newdata = data.1):
+&quot;prediction from a rank-deficient fit may be misleading&quot;
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message in predict.lm(model, newdata = data.0):
+&quot;prediction from a rank-deficient fit may be misleading&quot;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] -0.3444333
+</pre></div>
+</div>
+</div>
+</div>
+<p>This estimator allows us to leverage regression techniques to estimate the ATE, so the resulting estimate should have smaller root-mean-squared error. However, it has several disadvantages that make it undesirable. First, its properties will rely heavily on the model  <span class="math notranslate nohighlight">\(\hat{\mu}(x, w)\)</span> being correctly specified: it will be an unbiased and/or consistent estimate of the ATE provided that <span class="math notranslate nohighlight">\(\hat{\mu}(x, w)\)</span>  is an unbiased and/or consistent estimator of  <span class="math notranslate nohighlight">\(E[Y|X=x, W=w]\)</span>. In practice, having a well-specified model is not something we want to rely upon. In general, it will also not be asymptotically normal, which means that we can’t easily compute t-statistics and p-values for it.</p>
+<p>A technical note. Step 1 above can be done by regressing <span class="math notranslate nohighlight">\(Y_i\)</span> on <span class="math notranslate nohighlight">\(X_i\)</span> using only treated observations to get an estimate <span class="math notranslate nohighlight">\(\hat{\mu}(x, 1)\)</span> first, and then repeating the same to obtain <span class="math notranslate nohighlight">\(\hat{\mu}(x, 0)\)</span> from the control observations. Or it can be done by regression <span class="math notranslate nohighlight">\(Y_i\)</span> on both covariates <span class="math notranslate nohighlight">\((X_i, W_i)\)</span> together and obtaining a function <span class="math notranslate nohighlight">\(\hat{\mu}(x, w)\)</span>. Both have advantages and disadvantages, and we refer to <a class="reference external" href="https://www.pnas.org/content/116/10/4156.short">Künzel, Sekhon, Bickel, Yu  (2019)</a> for a discussion.</p>
+</div>
+<div class="section" id="inverse-propensity-weighted-estimator-ipw">
+<h2>3.5 Inverse propensity-weighted estimator {#ipw}<a class="headerlink" href="#inverse-propensity-weighted-estimator-ipw" title="Permalink to this headline">¶</a></h2>
+<p>To understand this estimator, let’s first consider a toy problem. Suppose that we’d like to estimate the average effect of a certain learning intervention on students’ grades, measured on a scale of 0-100. We run two separate experiments in schools of type A and B. Suppose that, unknown to us, grades among treated students in schools of type A are approximately distributed as <span class="math notranslate nohighlight">\(Y_i(1) | A \sim N(60, 5^2)\)</span>, whereas in schools of type B they are distributed as <span class="math notranslate nohighlight">\(Y_i(1) | B \sim N(70, 5^2)\)</span>. Moreover, for simplicity both schools have the same number of students. If we could treat the same number of students in both types of schools, we’d get an unbiased estimate of the population mean grade among treated individuals: <span class="math notranslate nohighlight">\((1/2)60 + (1/2)70 = 75\)</span>.</p>
+<p>However, suppose that enrollment in the treatment is voluntary. In school A, only 5% enroll in the study, whereas in school B the number is 40%. Therefore, if we take an average of treated students’ grades without taking school membership into account, school B’s students would be over-represented, and therefore our estimate of treated student’s grades would be biased upward.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simulating the scenario above a large number of times</span>
+<span class="n">A.mean</span> <span class="o">&lt;-</span> <span class="m">60</span>
+<span class="n">B.mean</span> <span class="o">&lt;-</span> <span class="m">70</span>
+<span class="n">pop.mean</span> <span class="o">&lt;-</span> <span class="n">.</span><span class="m">5</span> <span class="o">*</span> <span class="n">A.mean</span> <span class="o">+</span> <span class="n">.</span><span class="m">5</span> <span class="o">*</span> <span class="n">B.mean</span>  <span class="c1"># both schools have the same size</span>
+
+<span class="c1"># simulating the scenario about a large number of times</span>
+<span class="n">sample.means</span> <span class="o">&lt;-</span> <span class="nf">replicate</span><span class="p">(</span><span class="m">1000</span><span class="p">,</span> <span class="p">{</span>
+    <span class="n">school</span> <span class="o">&lt;-</span> <span class="nf">sample</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="s">&quot;B&quot;</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">.</span><span class="m">5</span><span class="p">,</span> <span class="n">.</span><span class="m">5</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="m">100</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+    <span class="n">treated</span> <span class="o">&lt;-</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">school</span> <span class="o">==</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="nf">rbinom</span><span class="p">(</span><span class="m">100</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">.</span><span class="m">05</span><span class="p">),</span> <span class="nf">rbinom</span><span class="p">(</span><span class="m">100</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">.</span><span class="m">4</span><span class="p">))</span>
+    <span class="n">grades</span> <span class="o">&lt;-</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">school</span> <span class="o">==</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="nf">rnorm</span><span class="p">(</span><span class="m">100</span><span class="p">,</span> <span class="n">A.mean</span><span class="p">,</span> <span class="m">5</span><span class="p">),</span> <span class="nf">rnorm</span><span class="p">(</span><span class="m">100</span><span class="p">,</span> <span class="n">B.mean</span><span class="p">,</span> <span class="m">5</span><span class="p">))</span>
+    <span class="nf">mean</span><span class="p">(</span><span class="n">grades</span><span class="p">[</span><span class="n">treated</span> <span class="o">==</span> <span class="m">1</span><span class="p">])</span>  <span class="c1"># average grades among treated students, without taking school into account</span>
+  <span class="p">})</span>
+<span class="nf">hist</span><span class="p">(</span><span class="n">sample.means</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="bp">F</span><span class="p">,</span> <span class="n">main</span><span class="o">=</span><span class="s">&quot;Sample means of treated students&#39; grades&quot;</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">55</span><span class="p">,</span> <span class="m">75</span><span class="p">),</span> <span class="n">col</span><span class="o">=</span><span class="nf">rgb</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="o">/</span><span class="m">8</span><span class="p">),</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">xlab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="nf">abline</span><span class="p">(</span><span class="n">v</span><span class="o">=</span><span class="n">pop.mean</span><span class="p">,</span> <span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">,</span> <span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;topleft&quot;</span><span class="p">,</span> <span class="s">&quot;truth&quot;</span><span class="p">,</span> <span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">,</span> <span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">bty</span><span class="o">=</span><span class="s">&quot;n&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/average_treatment_effect_1_23_0.png" src="../_images/average_treatment_effect_1_23_0.png" />
+</div>
+</div>
+<p>To solve this problem, we can consider each school separately, and then aggregate the results. Denote by <span class="math notranslate nohighlight">\(n_A\)</span> the number of students from school <span class="math notranslate nohighlight">\(A\)</span>, and <span class="math notranslate nohighlight">\(n_{A,1}\)</span> denote the number of treated students in that school. Likewise, denote by <span class="math notranslate nohighlight">\(n_B\)</span> and <span class="math notranslate nohighlight">\(n_{B,1}\)</span> the same quantities for school <span class="math notranslate nohighlight">\(B\)</span>. Then our aggregated means estimator can be written as:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-7ff5d2b9-f9d8-4384-8a45-edce3c7b8a00">
+<span class="eqno">(12)<a class="headerlink" href="#equation-7ff5d2b9-f9d8-4384-8a45-edce3c7b8a00" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+  (\#eq:agg)
+  \overbrace{
+  {\frac{n_{A}}{n}}
+  }^{\text{Proportion of A}}
+  \underbrace{
+  \frac{1}{n_{A, 1}} \sum_{\substack{i \in A \\ i \text{ treated}}} Y_i
+  }_{\text{avg. among treated in A}}
+  +
+ \overbrace{
+ {\frac{n_{B}}{n}}
+ }^{\text{Proportion of B}}
+ \underbrace{
+  \frac{1}{n_{B, 1}} \sum_{\substack{i \in B \\ i \text{ treated}}} Y_i
+  }_{\text{avg. among treated in B}}.
+\end{equation}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulating the scenario about a large number of times</span>
+<span class="n">agg.means</span> <span class="o">&lt;-</span> <span class="nf">replicate</span><span class="p">(</span><span class="m">1000</span><span class="p">,</span> <span class="p">{</span>
+    <span class="n">school</span> <span class="o">&lt;-</span> <span class="nf">sample</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="s">&quot;B&quot;</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">.</span><span class="m">5</span><span class="p">,</span> <span class="n">.</span><span class="m">5</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="m">100</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+    <span class="n">treated</span> <span class="o">&lt;-</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">school</span> <span class="o">==</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="nf">rbinom</span><span class="p">(</span><span class="m">100</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">.</span><span class="m">05</span><span class="p">),</span> <span class="nf">rbinom</span><span class="p">(</span><span class="m">100</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">.</span><span class="m">4</span><span class="p">))</span>
+    <span class="n">grades</span> <span class="o">&lt;-</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">school</span> <span class="o">==</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="nf">rnorm</span><span class="p">(</span><span class="m">100</span><span class="p">,</span> <span class="n">A.mean</span><span class="p">,</span> <span class="m">5</span><span class="p">),</span> <span class="nf">rnorm</span><span class="p">(</span><span class="m">100</span><span class="p">,</span> <span class="n">B.mean</span><span class="p">,</span> <span class="m">5</span><span class="p">))</span>
+    <span class="c1"># average grades among treated students in each school</span>
+    <span class="n">mean.treated.A</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">grades</span><span class="p">[(</span><span class="n">treated</span> <span class="o">==</span> <span class="m">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">school</span> <span class="o">==</span> <span class="s">&#39;A&#39;</span><span class="p">)])</span>
+    <span class="n">mean.treated.B</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">grades</span><span class="p">[(</span><span class="n">treated</span> <span class="o">==</span> <span class="m">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">school</span> <span class="o">==</span> <span class="s">&#39;B&#39;</span><span class="p">)])</span>
+    <span class="c1"># probability of belonging to each school</span>
+    <span class="n">prob.A</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">school</span> <span class="o">==</span> <span class="s">&#39;A&#39;</span><span class="p">)</span>
+    <span class="n">prob.B</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">school</span> <span class="o">==</span> <span class="s">&#39;B&#39;</span><span class="p">)</span>
+    <span class="n">prob.A</span> <span class="o">*</span> <span class="n">mean.treated.A</span> <span class="o">+</span> <span class="n">prob.B</span> <span class="o">*</span> <span class="n">mean.treated.B</span>
+  <span class="p">})</span>
+<span class="nf">hist</span><span class="p">(</span><span class="n">agg.means</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="bp">F</span><span class="p">,</span> <span class="n">main</span><span class="o">=</span><span class="s">&quot;Aggregated sample means of treated students&#39; grades&quot;</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">50</span><span class="p">,</span> <span class="m">75</span><span class="p">),</span> <span class="n">col</span><span class="o">=</span><span class="nf">rgb</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="o">/</span><span class="m">8</span><span class="p">),</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">xlab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="nf">abline</span><span class="p">(</span><span class="n">v</span><span class="o">=</span><span class="n">pop.mean</span><span class="p">,</span> <span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">,</span> <span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;topright&quot;</span><span class="p">,</span> <span class="s">&quot;truth&quot;</span><span class="p">,</span> <span class="n">lwd</span><span class="o">=</span><span class="m">3</span><span class="p">,</span> <span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">bty</span><span class="o">=</span><span class="s">&quot;n&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/average_treatment_effect_1_25_0.png" src="../_images/average_treatment_effect_1_25_0.png" />
+</div>
+</div>
+<p>Next, we’ll manipulate the expression &#64;ref(eq:agg). This next derivation can be a bit overwhelming, but please keep in mind that we’re simply doing algebraic manipulations, as well as establishing some common and useful notation. First, note that we can rewrite the average for school A in &#64;ref(eq:agg) as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-34a353f7-fc29-4618-b2a1-221b69de3592">
+<span class="eqno">(13)<a class="headerlink" href="#equation-34a353f7-fc29-4618-b2a1-221b69de3592" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+    (\#eq:avg1)
+    \frac{1}{n_{A, 1}} \sum_{\substack{i \in A \\ i \text{ treated}}} Y_i
+    =
+    \frac{1}{n_A} \sum_{\substack{i \in A \\ i \text{ treated}}} \frac{1}{(n_{A,1} / n_A)} Y_i
+    =
+    \frac{1}{n_A} \sum_{i \in A} \frac{W_i}{(n_{A,1} / n_A)} Y_i,
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(W_i\)</span> is the treatment indicator. Plugging &#64;ref(eq:avg1) back into &#64;ref(eq:agg),</p>
+<div class="amsmath math notranslate nohighlight" id="equation-07e55934-4be8-49cc-aea8-b9038fa914c1">
+<span class="eqno">(14)<a class="headerlink" href="#equation-07e55934-4be8-49cc-aea8-b9038fa914c1" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+  {( \frac{n_{A}}{n})}
+    \frac{1}{n_A} \sum_{i \in A} \frac{W_i}{(n_{A,1} / n_A)} Y_i
+  +
+ {(\frac{n_{B}}{n})}
+\frac{1}{n_B} \sum_{i \in B} \frac{W_i}{(n_{B,1} / n_B)} Y_i.
+\end{equation}\]</div>
+<p>Note that the <span class="math notranslate nohighlight">\(n_A\)</span> and <span class="math notranslate nohighlight">\(n_B\)</span> will cancel out. Finally, if we denote the sample proportion of treated students in school <span class="math notranslate nohighlight">\(A\)</span> by <span class="math notranslate nohighlight">\(\hat{e}(A_i) \approx n_{A,1}/n_A\)</span> and similar for school <span class="math notranslate nohighlight">\(B\)</span>, &#64;ref(eq:agg) can be written compactly as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a13988ca-8e8e-4bb5-8eb4-080c44a3297d">
+<span class="eqno">(15)<a class="headerlink" href="#equation-a13988ca-8e8e-4bb5-8eb4-080c44a3297d" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+  (\#eq:ipw-treated)
+  \frac{1}{n} \sum_{i=1}^{n}  \frac{W_i}{\hat{e}(X_i)} Y_i,
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(X_i \in \{A, B\}\)</span> denotes the school membership. Quantity <span class="math notranslate nohighlight">\(\hat{e}(X_i)\)</span> is an estimate of the probability of treatment given the control variable <span class="math notranslate nohighlight">\(e(X_i) = P[W_i=1 | X_i ]\)</span>, also called the <strong>propensity score</strong>. Because &#64;ref(eq:ipw-treated) is a weighted average with weights <span class="math notranslate nohighlight">\(W_i/\hat{e}(X_i)\)</span>, when written in this form we say that it is an <strong>inverse propensity-weighted estimator</strong> (IPW).</p>
+<p>The IPW estimator is also defined for the case of continuous covariates. In that case, we must estimate the assignment probability given some model, for example using logistic regression, forests, etc. With respect to modeling, the behavior of the IPW estimator is similar to the direct estimator: if <span class="math notranslate nohighlight">\(\hat{e}(X_i)\)</span> is an unbiased estimate of <span class="math notranslate nohighlight">\(e(X_i)\)</span>, then &#64;ref(eq:ipw-treated) is an unbiased estimate of <span class="math notranslate nohighlight">\(E[Y(1)]\)</span>; and we can show that if <span class="math notranslate nohighlight">\(\hat{e}(X_i)\)</span> is a consistent estimator of <span class="math notranslate nohighlight">\(e(X_i)\)</span>, then &#64;ref(eq:ipw-treated) is consistent for <span class="math notranslate nohighlight">\(E[Y(1)]\)</span>.</p>
+<p>Another important point is that when the estimated treatment propensity <span class="math notranslate nohighlight">\(\hat{e}(X_i)\)</span> is small, the summands in &#64;ref(eq:ipw-treated) can be very large. In particular, if <span class="math notranslate nohighlight">\(\hat{e}(x)\)</span> is exactly zero, then this estimator is undefined. That is why, in addition to requiring conditional unconfoundedness &#64;ref(eq:cond-unconf), it also requires the overlap condition &#64;ref(eq:overlap). In any case, when overlap is small (i.e., <span class="math notranslate nohighlight">\(\hat{e}(x)\)</span> is very close to zero for many <span class="math notranslate nohighlight">\(x\)</span>), IPW becomes an unattractive estimator due to its high variance. We’ll see in the next section an improved estimator that builds upon IPW but is strictly superior and should be used instead.</p>
+<p>Finally, we just derived an estimator of the average treated outcome, but we could repeat the argument for control units instead. Subtracting the two estimators leads to the following inverse propensity-weighted estimate of the treatment effect:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e226663e-b211-4871-aa56-a5addcc940e8">
+<span class="eqno">(16)<a class="headerlink" href="#equation-e226663e-b211-4871-aa56-a5addcc940e8" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+  (\#eq:ipw)
+  \widehat{\tau}^{IPW} :=
+  \frac{1}{n} \sum_{i=1}^{n} Y_i \frac{W_i}{\hat{e}(X_i)}
+  -
+  \frac{1}{n} \sum_{i=1}^{n} Y_i \frac{(1 - W_i) }{1-\hat{e}(X_i)}.
+\end{equation}\]</div>
+<p>The argument above suggests the following algorithm:</p>
+<ol class="simple">
+<li><p>Estimate the propensity scores <span class="math notranslate nohighlight">\(e(X_i)\)</span> by regressing <span class="math notranslate nohighlight">\(W_i\)</span> on <span class="math notranslate nohighlight">\(X_i\)</span>, preferably using a non-parametric method.</p></li>
+<li><p>Compute the IPW estimator summand:
+$<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{\hat{e}(X_i)} - \frac{(1-W_i)}{(1-\hat{e}(X_i)} \right)\)</span>$</p></li>
+<li><p>Compute the mean and standard error of the new variable <span class="math notranslate nohighlight">\(Z_i\)</span></p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Available in randomized settings and observational settings with unconfoundedness+overlap</span>
+
+<span class="c1"># Estimate the propensity score e(X) via logistic regression using splines</span>
+<span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">as.formula</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;~&quot;</span><span class="p">,</span> <span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;bs(&quot;</span><span class="p">,</span> <span class="n">covariates</span><span class="p">,</span> <span class="s">&quot;, df=3)&quot;</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot;+&quot;</span><span class="p">)))</span>
+<span class="n">W</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span><span class="n">treatment</span><span class="p">]</span>
+<span class="n">Y</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span><span class="n">outcome</span><span class="p">]</span>
+<span class="n">XX</span> <span class="o">&lt;-</span> <span class="nf">model.matrix</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<span class="n">logit</span> <span class="o">&lt;-</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">XX</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">W</span><span class="p">,</span> <span class="n">family</span><span class="o">=</span><span class="s">&quot;binomial&quot;</span><span class="p">)</span>
+<span class="n">e.hat</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">logit</span><span class="p">,</span> <span class="n">XX</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&quot;lambda.min&quot;</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;response&quot;</span><span class="p">)</span>
+
+<span class="c1"># Using the fact that</span>
+<span class="n">z</span> <span class="o">&lt;-</span> <span class="n">Y</span> <span class="o">*</span> <span class="p">(</span><span class="n">W</span><span class="o">/</span><span class="n">e.hat</span> <span class="o">-</span> <span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">W</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">e.hat</span><span class="p">))</span>
+<span class="n">ate.est</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="n">ate.se</span> <span class="o">&lt;-</span> <span class="nf">sd</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">/</span> <span class="nf">sqrt</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+<span class="n">ate.tstat</span> <span class="o">&lt;-</span> <span class="n">ate.est</span> <span class="o">/</span> <span class="n">ate.se</span>
+<span class="n">ate.pvalue</span> <span class="o">&lt;-</span> <span class="m">2</span><span class="o">*</span><span class="p">(</span><span class="nf">pnorm</span><span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="nf">abs</span><span class="p">(</span><span class="n">ate.est</span><span class="o">/</span><span class="n">ate.se</span><span class="p">)))</span>
+<span class="n">ate.results</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="n">estimate</span><span class="o">=</span><span class="n">ate.est</span><span class="p">,</span> <span class="n">std.error</span><span class="o">=</span><span class="n">ate.se</span><span class="p">,</span> <span class="n">t.stat</span><span class="o">=</span><span class="n">ate.tstat</span><span class="p">,</span> <span class="n">pvalue</span><span class="o">=</span><span class="n">ate.pvalue</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">ate.results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      estimate      std.error         t.stat         pvalue 
+ -3.358505e-01   1.431268e-02  -2.346523e+01  9.083558e-112 
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="augmented-inverse-propensity-weighted-aipw-estimator-aipw">
+<h2>3.6 Augmented inverse propensity-weighted (AIPW) estimator {#aipw}<a class="headerlink" href="#augmented-inverse-propensity-weighted-aipw-estimator-aipw" title="Permalink to this headline">¶</a></h2>
+<p>The next <strong>augmented inverse propensity-weighted estimator</strong> (AIPW) of the treatment effect is available under unconfoundedness &#64;ref(eq:cond-unconf) and overlap &#64;ref(eq:overlap):</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f646ca94-aaa0-4702-bdc3-1a9f45dd3d01">
+<span class="eqno">(17)<a class="headerlink" href="#equation-f646ca94-aaa0-4702-bdc3-1a9f45dd3d01" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+  (\#eq:aipw)
+  \begin{aligned}
+  \hat{\tau}^{AIPW} &amp;:=
+    \frac{1}{n} \sum_{i=1}^{n}
+      \hat{\mu}^{-i}(X_i, 1) - \hat{\mu}^{-i}(X_i, 0) \\
+      &amp;+
+      \frac{W}{\hat{\epsilon}^{-i}(X_i)}  \left({ Y_i - \hat{\mu}^{-i}(X_i, 1)}\right)
+      -
+      \frac{1-W}{1-\hat{\epsilon}^{-i}(X_i)}  \left({ Y_i - \hat{\mu}^{-i}(X_i, 0)}\right)
+    \end{aligned}
+\end{equation}\]</div>
+<p>Let’s parse &#64;ref(eq:aipw). Ignoring the superscripts for now, the first two terms correspond to an estimate of the treatment effect obtained via direct estimation. The next two terms resemble the IPW estimator, except that we replaced the outcome <span class="math notranslate nohighlight">\(Y_i\)</span> with the residuals <span class="math notranslate nohighlight">\(Y_i - \hat{\mu}(X_i, W_i)\)</span>. At a high level, the last two terms estimate and subtract an estimate of the bias of the first.</p>
+<p>The superscripts have to do with a technicality called <strong>cross-fitting</strong> that is required to prevent a specific form of overfitting and allow certain desirable asymptotic properties to hold. That is, we need to fit the outcome and propensity models using one portion of the data, and compute predictions on the remaining portion. An easy way of accomplishing this is to divide the data into K folds, and then estimate <span class="math notranslate nohighlight">\(K\)</span> models that are fitted on <span class="math notranslate nohighlight">\(K-1\)</span> folds, and then compute predictions on the remaining Kth fold. The example below does that with <span class="math notranslate nohighlight">\(K=5\)</span>. Note that this is different from cross-validation: the goal of cross-validation is to obtain accurate estimates of the loss function for model selection, whereas the goal of cross-fitting is simply to not use the same observation to fit the model and produce predictions.</p>
+<p>The AIPW estimator &#64;ref(eq:aipw) has several desirable properties. First, it will be unbiased provided that either <span class="math notranslate nohighlight">\(\hat{\mu}(X_i, w)\)</span> or <span class="math notranslate nohighlight">\(\hat{\epsilon}(X_i, w)\)</span> is unbiased. Second, it will be consistent provided that either  <span class="math notranslate nohighlight">\(\hat{\mu} (X_i, w)\)</span> or <span class="math notranslate nohighlight">\(\hat{\epsilon}(X_i, w)\)</span> is consistent. This property is called <strong>double robustness (DR)</strong>, because only one of the outcome or propensity score models needs to be correctly specified, so the estimator is “robust” to misspecification in the remaining model. Under mild assumptions, it is also asymptotically normal and it is efficient, that is has the smallest asymptotic variance than any other estimator. In fact, it even has smaller variance than the difference-in-means estimators in the <em>randomized</em> setting and is therefore superior to it.</p>
+<p>The next snippet provides an implementation of the AIPW estimator where outcome and propensity models are estimated using generalized linear models with splines (via <code class="docutils literal notranslate"><span class="pre">glmnet</span></code> and <code class="docutils literal notranslate"><span class="pre">splines</span></code> packages).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Available in randomized settings and observational settings with unconfoundedness+overlap</span>
+
+<span class="c1"># A list of vectors indicating the left-out subset</span>
+<span class="n">n</span> <span class="o">&lt;-</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">n.folds</span> <span class="o">&lt;-</span> <span class="m">5</span>
+<span class="n">indices</span> <span class="o">&lt;-</span> <span class="nf">split</span><span class="p">(</span><span class="nf">seq</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="nf">sort</span><span class="p">(</span><span class="nf">seq</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">%%</span> <span class="n">n.folds</span><span class="p">))</span>
+
+<span class="c1"># Preparing data</span>
+<span class="n">W</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span><span class="n">treatment</span><span class="p">]</span>
+<span class="n">Y</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span><span class="n">outcome</span><span class="p">]</span>
+
+<span class="c1"># Matrix of (transformed) covariates used to estimate E[Y|X,W]</span>
+<span class="n">fmla.xw</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;~ 0 +&quot;</span><span class="p">,</span> <span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;bs(&quot;</span><span class="p">,</span> <span class="n">covariates</span><span class="p">,</span> <span class="s">&quot;, df=3)&quot;</span><span class="p">,</span> <span class="s">&quot;*&quot;</span><span class="p">,</span> <span class="n">treatment</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot; + &quot;</span><span class="p">)))</span>
+<span class="n">XW</span> <span class="o">&lt;-</span> <span class="nf">model.matrix</span><span class="p">(</span><span class="n">fmla.xw</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<span class="c1"># Matrix of (transformed) covariates used to predict E[Y|X,W=w] for each w in {0, 1}</span>
+<span class="n">data.1</span> <span class="o">&lt;-</span> <span class="n">data</span>
+<span class="n">data.1</span><span class="p">[,</span><span class="n">treatment</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">1</span>
+<span class="n">XW1</span> <span class="o">&lt;-</span> <span class="nf">model.matrix</span><span class="p">(</span><span class="n">fmla.xw</span><span class="p">,</span> <span class="n">data.1</span><span class="p">)</span>  <span class="c1"># setting W=1</span>
+<span class="n">data.0</span> <span class="o">&lt;-</span> <span class="n">data</span>
+<span class="n">data.0</span><span class="p">[,</span><span class="n">treatment</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">0</span>
+<span class="n">XW0</span> <span class="o">&lt;-</span> <span class="nf">model.matrix</span><span class="p">(</span><span class="n">fmla.xw</span><span class="p">,</span> <span class="n">data.0</span><span class="p">)</span>  <span class="c1"># setting W=0</span>
+
+<span class="c1"># Matrix of (transformed) covariates used to estimate and predict e(X) = P[W=1|X]</span>
+<span class="n">fmla.x</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot; ~ 0 + &quot;</span><span class="p">,</span> <span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;bs(&quot;</span><span class="p">,</span> <span class="n">covariates</span><span class="p">,</span> <span class="s">&quot;, df=3)&quot;</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot; + &quot;</span><span class="p">)))</span>
+<span class="n">XX</span> <span class="o">&lt;-</span> <span class="nf">model.matrix</span><span class="p">(</span><span class="n">fmla.x</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># (Optional) Not penalizing the main effect (the coefficient on W)</span>
+<span class="n">penalty.factor</span> <span class="o">&lt;-</span> <span class="nf">rep</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="nf">ncol</span><span class="p">(</span><span class="n">XW</span><span class="p">))</span>
+<span class="n">penalty.factor</span><span class="p">[</span><span class="nf">colnames</span><span class="p">(</span><span class="n">XW</span><span class="p">)</span> <span class="o">==</span> <span class="n">treatment</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cross-fitted estimates of E[Y|X,W=1], E[Y|X,W=0] and e(X) = P[W=1|X]</span>
+<span class="n">mu.hat.1</span> <span class="o">&lt;-</span> <span class="nf">rep</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">mu.hat.0</span> <span class="o">&lt;-</span> <span class="nf">rep</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">e.hat</span> <span class="o">&lt;-</span> <span class="nf">rep</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="nf">for </span><span class="p">(</span><span class="n">idx</span> <span class="n">in</span> <span class="n">indices</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1"># Estimate outcome model and propensity models</span>
+  <span class="c1"># Note how cross-validation is done (via cv.glmnet) within cross-fitting! </span>
+  <span class="n">outcome.model</span> <span class="o">&lt;-</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">XW</span><span class="p">[</span><span class="o">-</span><span class="n">idx</span><span class="p">,],</span> <span class="n">y</span><span class="o">=</span><span class="n">Y</span><span class="p">[</span><span class="o">-</span><span class="n">idx</span><span class="p">],</span> <span class="n">family</span><span class="o">=</span><span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">penalty.factor</span><span class="o">=</span><span class="n">penalty.factor</span><span class="p">)</span>
+  <span class="n">propensity.model</span> <span class="o">&lt;-</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">XX</span><span class="p">[</span><span class="o">-</span><span class="n">idx</span><span class="p">,],</span> <span class="n">y</span><span class="o">=</span><span class="n">W</span><span class="p">[</span><span class="o">-</span><span class="n">idx</span><span class="p">],</span> <span class="n">family</span><span class="o">=</span><span class="s">&quot;binomial&quot;</span><span class="p">)</span>
+
+  <span class="c1"># Predict with cross-fitting</span>
+  <span class="n">mu.hat.1</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">outcome.model</span><span class="p">,</span> <span class="n">newx</span><span class="o">=</span><span class="n">XW1</span><span class="p">[</span><span class="n">idx</span><span class="p">,],</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;response&quot;</span><span class="p">)</span>
+  <span class="n">mu.hat.0</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">outcome.model</span><span class="p">,</span> <span class="n">newx</span><span class="o">=</span><span class="n">XW0</span><span class="p">[</span><span class="n">idx</span><span class="p">,],</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;response&quot;</span><span class="p">)</span>
+  <span class="n">e.hat</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">propensity.model</span><span class="p">,</span> <span class="n">newx</span><span class="o">=</span><span class="n">XX</span><span class="p">[</span><span class="n">idx</span><span class="p">,],</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;response&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1"># Commpute the summand in AIPW estimator</span>
+<span class="n">aipw.scores</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">mu.hat.1</span> <span class="o">-</span> <span class="n">mu.hat.0</span>
+                <span class="o">+</span> <span class="n">W</span> <span class="o">/</span> <span class="n">e.hat</span> <span class="o">*</span> <span class="p">(</span><span class="n">Y</span> <span class="o">-</span>  <span class="n">mu.hat.1</span><span class="p">)</span>
+                <span class="o">-</span> <span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="n">W</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="n">e.hat</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Y</span> <span class="o">-</span>  <span class="n">mu.hat.0</span><span class="p">))</span>
+
+<span class="c1"># Tally up results</span>
+<span class="n">ate.aipw.est</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">aipw.scores</span><span class="p">)</span>
+<span class="n">ate.aipw.se</span> <span class="o">&lt;-</span> <span class="nf">sd</span><span class="p">(</span><span class="n">aipw.scores</span><span class="p">)</span> <span class="o">/</span> <span class="nf">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">ate.aipw.tstat</span> <span class="o">&lt;-</span> <span class="n">ate.aipw.est</span> <span class="o">/</span> <span class="n">ate.aipw.se</span>
+<span class="n">ate.aipw.pvalue</span> <span class="o">&lt;-</span> <span class="m">2</span><span class="o">*</span><span class="p">(</span><span class="nf">pnorm</span><span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="nf">abs</span><span class="p">(</span><span class="n">ate.aipw.tstat</span><span class="p">)))</span>
+<span class="n">ate.aipw.results</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="n">estimate</span><span class="o">=</span><span class="n">ate.aipw.est</span><span class="p">,</span> <span class="n">std.error</span><span class="o">=</span><span class="n">ate.aipw.se</span><span class="p">,</span> <span class="n">t.stat</span><span class="o">=</span><span class="n">ate.aipw.tstat</span><span class="p">,</span> <span class="n">pvalue</span><span class="o">=</span><span class="n">ate.aipw.pvalue</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">ate.aipw.results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      estimate      std.error         t.stat         pvalue 
+ -3.373966e-01   9.831833e-03  -3.431675e+01  2.208892e-243 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">head</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A data.frame: 6 × 9</caption>
+<thead>
+	<tr><th></th><th scope=col>X</th><th scope=col>y</th><th scope=col>w</th><th scope=col>age</th><th scope=col>polviews</th><th scope=col>income</th><th scope=col>educ</th><th scope=col>marital</th><th scope=col>sex</th></tr>
+	<tr><th></th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>4</th><td> 6</td><td>0</td><td>0</td><td>47</td><td>1</td><td> 5</td><td>10</td><td>4</td><td>1</td></tr>
+	<tr><th scope=row>12</th><td>15</td><td>1</td><td>0</td><td>66</td><td>6</td><td> 7</td><td> 8</td><td>2</td><td>2</td></tr>
+	<tr><th scope=row>13</th><td>16</td><td>1</td><td>0</td><td>63</td><td>3</td><td> 4</td><td>10</td><td>1</td><td>1</td></tr>
+	<tr><th scope=row>14</th><td>17</td><td>0</td><td>1</td><td>36</td><td>3</td><td>12</td><td>11</td><td>5</td><td>1</td></tr>
+	<tr><th scope=row>17</th><td>26</td><td>1</td><td>0</td><td>67</td><td>4</td><td> 9</td><td>12</td><td>1</td><td>1</td></tr>
+	<tr><th scope=row>21</th><td>31</td><td>0</td><td>1</td><td>30</td><td>5</td><td>11</td><td>16</td><td>4</td><td>2</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<p>Here’s another example of AIPW-based estimation using random forests via the package <code class="docutils literal notranslate"><span class="pre">grf</span></code>. The function <code class="docutils literal notranslate"><span class="pre">average_treatment_effect</span></code> computes the AIPW estimate of the treatment effect, and uses forest-based estimates of the outcome model and propensity scores (unless those are passed directly via the arguments <code class="docutils literal notranslate"><span class="pre">Y.hat</span></code> and <code class="docutils literal notranslate"><span class="pre">W.hat</span></code>). Also, because forests are an ensemble method, cross-fitting is accomplished via <em>out-of-bag</em> predictions – that is, predictions for observation <span class="math notranslate nohighlight">\(i\)</span> are computed using trees that were not constructed using observation <span class="math notranslate nohighlight">\(i\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Available in randomized settings and observational settings with unconfoundedness+overlap</span>
+
+<span class="c1"># Input covariates need to be numeric. </span>
+<span class="n">XX</span> <span class="o">&lt;-</span> <span class="nf">model.matrix</span><span class="p">(</span><span class="nf">formula</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;~&quot;</span><span class="p">,</span> <span class="nf">paste0</span><span class="p">(</span><span class="n">covariates</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot;+&quot;</span><span class="p">))),</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Estimate a causal forest.</span>
+<span class="n">forest</span> <span class="o">&lt;-</span> <span class="nf">causal_forest</span><span class="p">(</span>
+              <span class="n">X</span><span class="o">=</span><span class="n">XX</span><span class="p">,</span>  
+              <span class="n">W</span><span class="o">=</span><span class="n">data</span><span class="p">[,</span><span class="n">treatment</span><span class="p">],</span>
+              <span class="n">Y</span><span class="o">=</span><span class="n">data</span><span class="p">[,</span><span class="n">outcome</span><span class="p">],</span>
+              <span class="c1">#W.hat=...,  # In randomized settings, set W.hat to the (known) probability of assignment</span>
+              <span class="n">num.trees</span> <span class="o">=</span> <span class="m">100</span><span class="p">)</span>
+<span class="n">forest.ate</span> <span class="o">&lt;-</span> <span class="nf">average_treatment_effect</span><span class="p">(</span><span class="n">forest</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">forest.ate</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message in average_treatment_effect(forest):
+&quot;Estimated treatment propensities go as high as 1 which means that treatment effects for some treated units may not be well identified. In this case, using `target.sample=control` may be helpful.&quot;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>estimate  std.err 
+    -Inf      NaN 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, even when overlap holds, when the propensity score is small AIPW can have unstable performance. In that case, other estimators of the average treatment effect are available. For example, see the <em>approximate residual balancing</em> (ARB) method in <a class="reference external" href="https://arxiv.org/abs/1604.07125">Athey, Imbens and Wager (2016)</a> and its accompanying <code class="docutils literal notranslate"><span class="pre">R</span></code> package <a class="reference external" href="https://github.com/swager/balanceHD"><code class="docutils literal notranslate"><span class="pre">balanceHD</span></code></a>.</p>
+</div>
+<div class="section" id="diagnostics-diag">
+<h2>3.7 Diagnostics {#diag}<a class="headerlink" href="#diagnostics-diag" title="Permalink to this headline">¶</a></h2>
+<p>Here we show some basic diagnostics and best practices that should always be conducted. Although failing these tests should usually cause concern, passing them does not mean that the analysis is entirely free from issues. For example, even if our estimated propensity scores are bounded away from zero and one (and therefore seem to satisfy the overlap assumption), they may still be incorrect – for example, if we rely on modeling assumptions that are simply not true. Also, although we should expect to pass all the diagnostic tests below in randomized settings, it’s good practice to check them anyway, as one may find problems with the experimental design.</p>
+<div class="section" id="assessing-balance-balance">
+<h3>3.7.1 Assessing balance {#balance}<a class="headerlink" href="#assessing-balance-balance" title="Permalink to this headline">¶</a></h3>
+<p>As we saw in Section &#64;ref(obs), in observational settings the covariate distributions can be very different for treated and untreated individuals. Such discrepancies can lead to biased estimates of the ATE, but as hinted in Section &#64;ref(ipw), one would hope that by up- or down-weighting observations based on inverse propensity weights their averages should be similar. In fact, we should also expect that averages of basis functions of the covariates should be similar after reweighting. This property is called <strong>balance</strong>. One way to check it is as follows. Given some variable <span class="math notranslate nohighlight">\(Z_i\)</span> (e.g., a covariate <span class="math notranslate nohighlight">\(X_{i1}\)</span>, or an interaction between covariates <span class="math notranslate nohighlight">\(X_{i1}X_{i2}\)</span>, or a polynomial in covariates <span class="math notranslate nohighlight">\(X_{i1}^2\)</span>, etc), we can check the absolute standardized mean difference (ASMD) of <span class="math notranslate nohighlight">\(Z_i\)</span> between treated and untreated individuals in our data,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-cf7a9c68-9601-42a5-bd3e-98b752df034d">
+<span class="eqno">(18)<a class="headerlink" href="#equation-cf7a9c68-9601-42a5-bd3e-98b752df034d" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+  \frac{|\bar{Z}_1 - \bar{Z}_0|}{\sqrt{s_1^2 + s_0^2}},
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\bar{Z}_1\)</span> and <span class="math notranslate nohighlight">\(\bar{Z}_0\)</span> are sample averages of <span class="math notranslate nohighlight">\(Z_i\)</span>, and <span class="math notranslate nohighlight">\(s_1\)</span> and <span class="math notranslate nohighlight">\(s_0\)</span> are standard deviations of <span class="math notranslate nohighlight">\(Z_i\)</span> for the two samples of treated and untreated individuals. Next, we can check the same quantity for their weighted counterparts <span class="math notranslate nohighlight">\(Z_{i}W_i/\hat{e}(X_i)\)</span> and <span class="math notranslate nohighlight">\(Z_i(1-W_i)/(1-\hat{e}(X_i))\)</span>. If our propensity scores are well-calibrated, the ASMD for the weighted version should be close to zero.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here, adding covariates and their interactions, though there are many other possibilities.</span>
+<span class="n">fmla</span> <span class="o">&lt;-</span> <span class="nf">formula</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;~ 0 +&quot;</span><span class="p">,</span> <span class="nf">paste</span><span class="p">(</span><span class="nf">apply</span><span class="p">(</span><span class="nf">expand.grid</span><span class="p">(</span><span class="n">covariates</span><span class="p">,</span> <span class="n">covariates</span><span class="p">),</span> <span class="m">1</span><span class="p">,</span> <span class="nf">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="nf">paste0</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot;*&quot;</span><span class="p">)),</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot;+&quot;</span><span class="p">)))</span>
+
+<span class="c1"># Using the propensity score estimated above</span>
+<span class="n">e.hat</span> <span class="o">&lt;-</span> <span class="n">forest</span><span class="o">$</span><span class="n">W.hat</span>
+
+<span class="n">XX</span> <span class="o">&lt;-</span> <span class="nf">model.matrix</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<span class="n">W</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span><span class="n">treatment</span><span class="p">]</span>
+<span class="n">pp</span> <span class="o">&lt;-</span> <span class="nf">ncol</span><span class="p">(</span><span class="n">XX</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Unadjusted covariate means, variances and standardized abs mean differences</span>
+<span class="n">means.treat</span> <span class="o">&lt;-</span> <span class="nf">apply</span><span class="p">(</span><span class="n">XX</span><span class="p">[</span><span class="n">W</span> <span class="o">==</span> <span class="m">1</span><span class="p">,],</span> <span class="m">2</span><span class="p">,</span> <span class="n">mean</span><span class="p">)</span>
+<span class="n">means.ctrl</span> <span class="o">&lt;-</span> <span class="nf">apply</span><span class="p">(</span><span class="n">XX</span><span class="p">[</span><span class="n">W</span> <span class="o">==</span> <span class="m">0</span><span class="p">,],</span> <span class="m">2</span><span class="p">,</span> <span class="n">mean</span><span class="p">)</span>
+<span class="n">abs.mean.diff</span> <span class="o">&lt;-</span> <span class="nf">abs</span><span class="p">(</span><span class="n">means.treat</span> <span class="o">-</span> <span class="n">means.ctrl</span><span class="p">)</span>
+
+<span class="n">var.treat</span> <span class="o">&lt;-</span> <span class="nf">apply</span><span class="p">(</span><span class="n">XX</span><span class="p">[</span><span class="n">W</span> <span class="o">==</span> <span class="m">1</span><span class="p">,],</span> <span class="m">2</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span>
+<span class="n">var.ctrl</span> <span class="o">&lt;-</span> <span class="nf">apply</span><span class="p">(</span><span class="n">XX</span><span class="p">[</span><span class="n">W</span> <span class="o">==</span> <span class="m">0</span><span class="p">,],</span> <span class="m">2</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span>
+<span class="n">std</span> <span class="o">&lt;-</span> <span class="nf">sqrt</span><span class="p">(</span><span class="n">var.treat</span> <span class="o">+</span> <span class="n">var.ctrl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adjusted covariate means, variances and standardized abs mean differences</span>
+<span class="n">means.treat.adj</span> <span class="o">&lt;-</span> <span class="nf">apply</span><span class="p">(</span><span class="n">XX</span><span class="o">*</span><span class="n">W</span><span class="o">/</span><span class="n">e.hat</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="n">mean</span><span class="p">)</span>
+<span class="n">means.ctrl.adj</span> <span class="o">&lt;-</span> <span class="nf">apply</span><span class="p">(</span><span class="n">XX</span><span class="o">*</span><span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">W</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">e.hat</span><span class="p">),</span> <span class="m">2</span><span class="p">,</span> <span class="n">mean</span><span class="p">)</span>
+<span class="n">abs.mean.diff.adj</span> <span class="o">&lt;-</span> <span class="nf">abs</span><span class="p">(</span><span class="n">means.treat.adj</span> <span class="o">-</span> <span class="n">means.ctrl.adj</span><span class="p">)</span>
+
+<span class="n">var.treat.adj</span> <span class="o">&lt;-</span> <span class="nf">apply</span><span class="p">(</span><span class="n">XX</span><span class="o">*</span><span class="n">W</span><span class="o">/</span><span class="n">e.hat</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span>
+<span class="n">var.ctrl.adj</span> <span class="o">&lt;-</span> <span class="nf">apply</span><span class="p">(</span><span class="n">XX</span><span class="o">*</span><span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">W</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">e.hat</span><span class="p">),</span> <span class="m">2</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span>
+<span class="n">std.adj</span> <span class="o">&lt;-</span> <span class="nf">sqrt</span><span class="p">(</span><span class="n">var.treat.adj</span> <span class="o">+</span> <span class="n">var.ctrl.adj</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">oma</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">))</span>
+<span class="nf">plot</span><span class="p">(</span><span class="m">-2</span><span class="p">,</span> <span class="n">xaxt</span><span class="o">=</span><span class="s">&quot;n&quot;</span><span class="p">,</span> <span class="n">yaxt</span><span class="o">=</span><span class="s">&quot;n&quot;</span><span class="p">,</span> <span class="n">xlab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-.01</span><span class="p">,</span> <span class="m">1.3</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">pp</span><span class="m">+1</span><span class="p">),</span> <span class="n">main</span><span class="o">=</span><span class="s">&quot;Standardized absolute mean differences&quot;</span><span class="p">)</span>
+<span class="nf">axis</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="m">1</span><span class="p">,</span> <span class="n">at</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span> <span class="n">las</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">abs.mean.diff</span> <span class="o">/</span> <span class="n">std</span><span class="p">,</span> <span class="nf">seq</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">pp</span><span class="p">),</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;p&quot;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">,</span> <span class="n">pch</span><span class="o">=</span><span class="m">19</span><span class="p">)</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">abs.mean.diff.adj</span> <span class="o">/</span> <span class="n">std.adj</span><span class="p">,</span> <span class="nf">seq</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">pp</span><span class="p">),</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;p&quot;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&quot;orange&quot;</span><span class="p">,</span> <span class="n">pch</span><span class="o">=</span><span class="m">19</span><span class="p">)</span>
+<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;topright&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;Unadjusted&quot;</span><span class="p">,</span> <span class="s">&quot;Adjusted&quot;</span><span class="p">),</span> <span class="n">col</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;blue&quot;</span><span class="p">,</span> <span class="s">&quot;orange&quot;</span><span class="p">),</span> <span class="n">pch</span><span class="o">=</span><span class="m">19</span><span class="p">)</span>
+<span class="nf">abline</span><span class="p">(</span><span class="n">v</span> <span class="o">=</span> <span class="nf">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="n">.</span><span class="m">25</span><span class="p">),</span> <span class="n">lty</span> <span class="o">=</span> <span class="m">2</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="s">&quot;grey&quot;</span><span class="p">,</span> <span class="n">lwd</span><span class="o">=</span><span class="n">.</span><span class="m">5</span><span class="p">)</span>
+<span class="nf">abline</span><span class="p">(</span><span class="n">h</span> <span class="o">=</span> <span class="m">1</span><span class="o">:</span><span class="n">pp</span><span class="p">,</span>  <span class="n">lty</span> <span class="o">=</span> <span class="m">2</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="s">&quot;grey&quot;</span><span class="p">,</span> <span class="n">lwd</span><span class="o">=</span><span class="n">.</span><span class="m">5</span><span class="p">)</span>
+<span class="nf">mtext</span><span class="p">(</span><span class="nf">colnames</span><span class="p">(</span><span class="n">XX</span><span class="p">),</span> <span class="n">side</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">cex</span><span class="o">=</span><span class="m">0.7</span><span class="p">,</span> <span class="n">at</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="n">pp</span><span class="p">,</span> <span class="n">padj</span><span class="o">=</span><span class="n">.</span><span class="m">4</span><span class="p">,</span> <span class="n">adj</span><span class="o">=</span><span class="m">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span> <span class="n">las</span><span class="o">=</span><span class="m">1</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="n">.</span><span class="m">3</span><span class="p">)</span>
+<span class="nf">abline</span><span class="p">(</span><span class="n">v</span> <span class="o">=</span> <span class="m">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/average_treatment_effect_1_39_0.png" src="../_images/average_treatment_effect_1_39_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">abs.mean.diff</span> <span class="o">/</span> <span class="n">std</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+.dl-inline {width: auto; margin:0; padding: 0}
+.dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
+.dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
+.dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
+</style><dl class=dl-inline><dt>age</dt><dd>0.629574486479874</dd><dt>polviews</dt><dd>0.620488593071102</dd><dt>income</dt><dd>0.0666432759882046</dd><dt>educ</dt><dd>0.124182658677689</dd><dt>marital</dt><dd>0.114183914385198</dd><dt>sex</dt><dd>0.0507918330378771</dd><dt>age:polviews</dt><dd>0.0674353848216275</dd><dt>age:income</dt><dd>0.475577772013086</dd><dt>age:educ</dt><dd>0.460366318860063</dd><dt>age:marital</dt><dd>0.222433600316826</dd><dt>age:sex</dt><dd>0.463725873043892</dd><dt>polviews:income</dt><dd>0.516221471655275</dd><dt>polviews:educ</dt><dd>0.569798801477683</dd><dt>polviews:marital</dt><dd>0.334699352495986</dd><dt>polviews:sex</dt><dd>0.380022194032164</dd><dt>income:educ</dt><dd>0.111923957673838</dd><dt>income:marital</dt><dd>0.11904865394972</dd><dt>income:sex</dt><dd>0.00182600561246503</dd><dt>educ:marital</dt><dd>0.127942537285094</dd><dt>educ:sex</dt><dd>0.0293118025505392</dd><dt>marital:sex</dt><dd>0.0753082453447788</dd></dl>
+</div></div>
+</div>
+<p>Note above how in particular <code class="docutils literal notranslate"><span class="pre">age</span></code> and <code class="docutils literal notranslate"><span class="pre">polviews</span></code> – the variables we chose to introduce imbalance in Section &#64;ref(obs) – are far from balanced before adjustment, as are other variables that correlate with them.</p>
+<p>In addition to the above, we can check the entire distribution of covariates (and their transformations). The next snippet plots histograms for treated and untreated individuals with and without adjustment. Note how the adjusted histograms are very similar – that is what we should expect.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># change this if working on different data set</span>
+<span class="n">XX</span> <span class="o">&lt;-</span> <span class="nf">model.matrix</span><span class="p">(</span><span class="n">fmla</span><span class="p">,</span> <span class="n">data</span><span class="p">)[,</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;age&quot;</span><span class="p">,</span> <span class="s">&quot;polviews&quot;</span><span class="p">,</span> <span class="s">&quot;age:polviews&quot;</span><span class="p">,</span> <span class="s">&quot;educ&quot;</span><span class="p">)]</span> 
+<span class="n">W</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="p">[,</span><span class="n">treatment</span><span class="p">]</span>
+<span class="n">pp</span> <span class="o">&lt;-</span> <span class="nf">ncol</span><span class="p">(</span><span class="n">XX</span><span class="p">)</span>
+
+<span class="n">plot.df</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span><span class="n">XX</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="nf">as.factor</span><span class="p">(</span><span class="n">W</span><span class="p">),</span> <span class="n">IPW</span> <span class="o">=</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">W</span> <span class="o">==</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span> <span class="o">/</span> <span class="n">e.hat</span><span class="p">,</span> <span class="m">1</span> <span class="o">/</span> <span class="p">(</span><span class="m">1</span> <span class="o">-</span> <span class="n">e.hat</span><span class="p">)))</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">plot.df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A data.frame: 6 × 6</caption>
+<thead>
+	<tr><th></th><th scope=col>age</th><th scope=col>polviews</th><th scope=col>age.polviews</th><th scope=col>educ</th><th scope=col>W</th><th scope=col>IPW</th></tr>
+	<tr><th></th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>4</th><td>47</td><td>1</td><td> 47</td><td>10</td><td>0</td><td>1.197918</td></tr>
+	<tr><th scope=row>12</th><td>66</td><td>6</td><td>396</td><td> 8</td><td>0</td><td>2.224439</td></tr>
+	<tr><th scope=row>13</th><td>63</td><td>3</td><td>189</td><td>10</td><td>0</td><td>1.173746</td></tr>
+	<tr><th scope=row>14</th><td>36</td><td>3</td><td>108</td><td>11</td><td>1</td><td>1.371530</td></tr>
+	<tr><th scope=row>17</th><td>67</td><td>4</td><td>268</td><td>12</td><td>0</td><td>1.209735</td></tr>
+	<tr><th scope=row>21</th><td>30</td><td>5</td><td>150</td><td>16</td><td>1</td><td>1.316031</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">plot.df</span> <span class="o">&lt;-</span> <span class="nf">reshape</span><span class="p">(</span><span class="n">plot.df</span><span class="p">,</span> <span class="n">varying</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="n">pp</span><span class="p">),</span> <span class="n">direction</span> <span class="o">=</span> <span class="s">&quot;long&quot;</span><span class="p">,</span> <span class="n">v.names</span> <span class="o">=</span> <span class="s">&quot;X&quot;</span><span class="p">,</span>
+                   <span class="n">times</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="nf">colnames</span><span class="p">(</span><span class="n">XX</span><span class="p">),</span> <span class="n">levels</span> <span class="o">=</span> <span class="nf">colnames</span><span class="p">(</span><span class="n">XX</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">ggplot</span><span class="p">(</span><span class="n">plot.df</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">X</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="n">W</span><span class="p">))</span> <span class="o">+</span>
+  <span class="nf">geom_histogram</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="m">0.5</span><span class="p">,</span> <span class="n">position</span> <span class="o">=</span> <span class="s">&quot;identity&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="m">30</span><span class="p">)</span> <span class="o">+</span>
+  <span class="nf">facet_wrap</span><span class="p">(</span> <span class="o">~</span> <span class="n">time</span><span class="p">,</span> <span class="n">ncol</span> <span class="o">=</span> <span class="m">2</span><span class="p">,</span> <span class="n">scales</span> <span class="o">=</span> <span class="s">&quot;free&quot;</span><span class="p">)</span> <span class="o">+</span>
+  <span class="nf">ggtitle</span><span class="p">(</span><span class="s">&quot;Covariate histograms (unajusted)&quot;</span><span class="p">)</span>
+
+<span class="nf">ggplot</span><span class="p">(</span><span class="n">plot.df</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">X</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">IPW</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="n">W</span><span class="p">))</span> <span class="o">+</span>
+  <span class="nf">geom_histogram</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="m">0.5</span><span class="p">,</span> <span class="n">position</span> <span class="o">=</span> <span class="s">&quot;identity&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="m">30</span><span class="p">)</span> <span class="o">+</span>
+  <span class="nf">facet_wrap</span><span class="p">(</span> <span class="o">~</span> <span class="n">time</span><span class="p">,</span> <span class="n">ncol</span> <span class="o">=</span> <span class="m">2</span><span class="p">,</span> <span class="n">scales</span> <span class="o">=</span> <span class="s">&quot;free&quot;</span><span class="p">)</span> <span class="o">+</span>
+  <span class="nf">ggtitle</span><span class="p">(</span><span class="s">&quot;Covariate histograms (adjusted)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/average_treatment_effect_1_44_0.png" src="../_images/average_treatment_effect_1_44_0.png" />
+<img alt="../_images/average_treatment_effect_1_44_1.png" src="../_images/average_treatment_effect_1_44_1.png" />
+</div>
+</div>
+<p>There exist other types of balance checks. We recommend checking out the <code class="docutils literal notranslate"><span class="pre">R</span></code> package <code class="docutils literal notranslate"><span class="pre">cobalt</span></code>. This <a class="reference external" href="https://cran.r-project.org/web/packages/cobalt/vignettes/cobalt.html">vignette</a> is a good place to start.</p>
+</div>
+<div class="section" id="assessing-overlap">
+<h3>3.7.2 Assessing overlap<a class="headerlink" href="#assessing-overlap" title="Permalink to this headline">¶</a></h3>
+<p>It’s also important to check the estimated propensity scores. If they seem to cluster at zero or one, we should expect IPW and AIPW estimators to behave very poorly. Here, the propensity score is trimodal because of our sample modification procedure in Section &#64;ref(obs): some observations are untouched and therefore remain with assignment probability <span class="math notranslate nohighlight">\(0.5\)</span>, some are dropped (kept) with probability 15% (85%).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">e.hat</span> <span class="o">&lt;-</span> <span class="n">forest</span><span class="o">$</span><span class="n">W.hat</span>
+<span class="nf">hist</span><span class="p">(</span><span class="n">e.hat</span><span class="p">,</span> <span class="n">main</span><span class="o">=</span><span class="s">&quot;Estimated propensity scores (causal forest)&quot;</span><span class="p">,</span> <span class="n">breaks</span><span class="o">=</span><span class="m">100</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span> <span class="n">xlab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-.1</span><span class="p">,</span> <span class="m">1.1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/average_treatment_effect_1_46_0.png" src="../_images/average_treatment_effect_1_46_0.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "d2cml-ai/mgtecon634_r",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            kernelName: "ir",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../md/intro.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Introduction</p>
+        </div>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Phd Susan Athey<br/>
+    
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

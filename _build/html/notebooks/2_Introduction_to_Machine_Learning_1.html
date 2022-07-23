@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>2. Introduction to Machine Learning {#intro-ml} &#8212; MGTECON 634 at Stanford (R scripts)</title>
+    <title>2. Introduction to Machine Learning &#8212; MGTECON 634 at Stanford (R scripts)</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet">
   <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -113,7 +113,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   2. Introduction to Machine Learning {#intro-ml}
+   2. Introduction to Machine Learning
   </a>
  </li>
  <li class="toctree-l1">
@@ -252,34 +252,34 @@ const thebe_selector_output = ".output, .cell_output"
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#key-concepts">
-   2.1. 2.1 Key concepts
+   2.1. Key concepts
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#common-machine-learning-algorithms">
-   2.2. 2.2 Common machine learning algorithms
+   2.2. Common machine learning algorithms
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#generalized-linear-models">
-     2.2.1. 2.2.1 Generalized linear models
+     2.2.1. Generalized linear models
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#decision-trees">
-     2.2.2. 2.2.2 Decision trees
+     2.2.2. Decision trees
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#forests">
-     2.2.3. 2.2.3 Forests
+     2.2.3. Forests
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#further-reading">
-   2.3. 2.3 Further reading
+   2.3. Further reading
   </a>
  </li>
 </ul>
@@ -292,7 +292,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Introduction to Machine Learning {#intro-ml}</h1>
+                <h1>Introduction to Machine Learning</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -304,34 +304,34 @@ const thebe_selector_output = ".output, .cell_output"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#key-concepts">
-   2.1. 2.1 Key concepts
+   2.1. Key concepts
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#common-machine-learning-algorithms">
-   2.2. 2.2 Common machine learning algorithms
+   2.2. Common machine learning algorithms
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#generalized-linear-models">
-     2.2.1. 2.2.1 Generalized linear models
+     2.2.1. Generalized linear models
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#decision-trees">
-     2.2.2. 2.2.2 Decision trees
+     2.2.2. Decision trees
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#forests">
-     2.2.3. 2.2.3 Forests
+     2.2.3. Forests
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#further-reading">
-   2.3. 2.3 Further reading
+   2.3. Further reading
   </a>
  </li>
 </ul>
@@ -354,8 +354,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<div class="tex2jax_ignore mathjax_ignore section" id="introduction-to-machine-learning-intro-ml">
-<h1><span class="section-number">2. </span>Introduction to Machine Learning {#intro-ml}<a class="headerlink" href="#introduction-to-machine-learning-intro-ml" title="Permalink to this headline">¶</a></h1>
+<div class="tex2jax_ignore mathjax_ignore section" id="introduction-to-machine-learning">
+<h1><span class="section-number">2. </span>Introduction to Machine Learning<a class="headerlink" href="#introduction-to-machine-learning" title="Permalink to this headline">¶</a></h1>
 <p>RMD source: <a class="reference external" href="https://docs.google.com/uc?export=download&amp;id=110N1b5MYNXcIFZqWPqLbpqmgIkoMFqaF">link</a></p>
 <p>In this chapter, we’ll briefly review machine learning concepts that will be relevant later. We’ll focus in particular on the problem of <strong>prediction</strong>, that is, to model some output variable as a function of observed input covariates.</p>
 <div class="cell docutils container">
@@ -441,14 +441,14 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <p>Note: If you’d like to run the code below on a different dataset, you can replace the dataset above with another <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> of your choice, and redefine the key variable identifiers (<code class="docutils literal notranslate"><span class="pre">outcome</span></code>, <code class="docutils literal notranslate"><span class="pre">covariates</span></code>) accordingly. Although we try to make the code as general as possible, you may also need to make a few minor changes to the code below; read the comments carefully.</p>
 <div class="section" id="key-concepts">
-<h2><span class="section-number">2.1. </span>2.1 Key concepts<a class="headerlink" href="#key-concepts" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.1. </span>Key concepts<a class="headerlink" href="#key-concepts" title="Permalink to this headline">¶</a></h2>
 <p>The prediction problem is to accurately guess the value of some output variable <span class="math notranslate nohighlight">\(Y_i\)</span> from input variables <span class="math notranslate nohighlight">\(X_i\)</span>. For example, we might want to predict “house prices given house characteristics such as the number of rooms, age of the building, and so on. The relationship between input and output is modeled in very general terms by some function</p>
-<div class="math notranslate nohighlight" id="equation-true-model">
-<span class="eqno">(2.1)<a class="headerlink" href="#equation-true-model" title="Permalink to this equation">¶</a></span>\[
+<div class="amsmath math notranslate nohighlight" id="equation-6204a155-7094-441a-8174-f7a10b803246">
+<span class="eqno">(2.1)<a class="headerlink" href="#equation-6204a155-7094-441a-8174-f7a10b803246" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{eq:true-model} \tag{2.1}
   Y_i = f(X_i) + \epsilon_i
-\]</div>
+\end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\epsilon_i\)</span> represents all that is not captured by information obtained from <span class="math notranslate nohighlight">\(X_i\)</span> via the mapping <span class="math notranslate nohighlight">\(f\)</span>. We say that error <span class="math notranslate nohighlight">\(\epsilon_i\)</span> is irreducible.</p>
-<p>We highlight that <a class="reference internal" href="#equation-true-model">(2.1)</a> is <strong>not modeling a causal relationship</strong> between inputs and outputs. For an extreme example, consider taking <span class="math notranslate nohighlight">\(Y_i\)</span> to be “distance from the equator” and <span class="math notranslate nohighlight">\(X_i\)</span> to be “average temperature.” We can still think of the problem of guessing (“predicting”) “distance from the equator” given some information about “average temperature,” even though one would expect the former to cause the latter.</p>
+<p>We highlight that \eqref{eq:true-model} is <strong>not modeling a causal relationship</strong> between inputs and outputs. For an extreme example, consider taking <span class="math notranslate nohighlight">\(Y_i\)</span> to be “distance from the equator” and <span class="math notranslate nohighlight">\(X_i\)</span> to be “average temperature.” We can still think of the problem of guessing (“predicting”) “distance from the equator” given some information about “average temperature,” even though one would expect the former to cause the latter.</p>
 <p>In general, we can’t know the “ground truth”  <span class="math notranslate nohighlight">\(f\)</span>, so we will approximate it from data. Given <span class="math notranslate nohighlight">\(n\)</span> data points <span class="math notranslate nohighlight">\(\{(X_1, Y_1), \cdots, (X_n, Y_n)\}\)</span>, our goal is to obtain an estimated model  <span class="math notranslate nohighlight">\(\hat{f}\)</span> such that our predictions <span class="math notranslate nohighlight">\(\widehat{Y}_i := \hat{f}(X_i)\)</span> are “close” to the true outcome values <span class="math notranslate nohighlight">\(Y_i\)</span> given some criterion. To formalize this, we’ll follow these three steps:</p>
 <ul class="simple">
 <li><p><strong>Modeling:</strong> Decide on some suitable class of functions that our estimated model may belong to. In machine learning applications the class of functions can be very large and complex (e.g., deep decision trees, forests, high-dimensional linear models, etc). Also, we must decide on a loss function that serves as our criterion to evaluate the quality of our predictions (e.g., mean-squared error).</p></li>
@@ -456,11 +456,11 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p><strong>Evaluation:</strong> Evaluate our fitted model <span class="math notranslate nohighlight">\(\hat{f}\)</span>. That is, if we were given a new, yet unseen, input and output pair <span class="math notranslate nohighlight">\((X',Y')\)</span>, we’d like to know if <span class="math notranslate nohighlight">\(Y' \approx \hat{f}(X_i)\)</span> by some metric.</p></li>
 </ul>
 <p>For concreteness, let’s work through an example. Let’s say that, given the data simulated above, we’d like to predict <span class="math notranslate nohighlight">\(Y_i\)</span> from the first covariate  <span class="math notranslate nohighlight">\(X_{i1}\)</span> only. Also, let’s say that our model class will be polynomials of degree <span class="math notranslate nohighlight">\(q\)</span> in <span class="math notranslate nohighlight">\(X_{i1}\)</span>, and we’ll evaluate fit based on mean squared error. That is, <span class="math notranslate nohighlight">\(\hat{f}(X_{i1}) = \hat{b}_0 + X_{i1}\hat{b}_1 + \cdots + X_{i1}^q \hat{b}_q\)</span>, where the coefficients are obtained by solving the following problem:</p>
-<div class="math notranslate nohighlight">
-\[
+<div class="amsmath math notranslate nohighlight" id="equation-1bfb90a6-5bea-4c39-9b78-60759ca0f811">
+<span class="eqno">(2.2)<a class="headerlink" href="#equation-1bfb90a6-5bea-4c39-9b78-60759ca0f811" title="Permalink to this equation">¶</a></span>\[\begin{equation}
   \hat{b} = \arg\min_b \sum_{i=1}^m
     \left(Y_i - b_0 - X_{i1}b_1 - \cdots - X_{iq}^q b_q \right)^2
-\]</div>
+\end{equation}\]</div>
 <p>An important question is what is <span class="math notranslate nohighlight">\(q\)</span>, the degree of the polynomial. It controls the complexity of the model. One may imagine that more complex models are better, but that is not always true, because a very flexible model may try to simply interpolate over the data at hand, but fail to generalize well for new data points. We call this <strong>overfitting</strong>. The main feature of overfitting is <strong>high variance</strong>, in the sense that, if we were given a different data set of the same size, we’d likely get a very different model.</p>
 <p>To illustrate, in the figure below we let the degree be  <span class="math notranslate nohighlight">\(q=10\)</span> but use only the first few data points. The fitted model is shown in green, and the original data points are in red.</p>
 <div class="cell docutils container">
@@ -495,7 +495,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2_Introduction_to_Machine_Learning_1_9_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_9_0.png" />
+<img alt="../_images/2_Introduction_to_Machine_Learning_1_10_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_10_0.png" />
 </div>
 </div>
 <p>On the other hand, when <span class="math notranslate nohighlight">\(q\)</span> is too small relative to our data, we permit only very simple models and may suffer from misspecification bias. We call this <strong>underfitting</strong>. The main feature of underfitting is <strong>high bias</strong> – the selected model just isn’t complex enough to accurately capture the relationship between input and output variables.</p>
@@ -532,7 +532,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2_Introduction_to_Machine_Learning_1_11_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_11_0.png" />
+<img alt="../_images/2_Introduction_to_Machine_Learning_1_12_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_12_0.png" />
 </div>
 </div>
 <p>This tension is called the <strong>bias-variance trade-off</strong>: simpler models underfit and have more bias, more complex models overfit and have more variance.</p>
@@ -580,7 +580,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2_Introduction_to_Machine_Learning_1_13_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_13_0.png" />
+<img alt="../_images/2_Introduction_to_Machine_Learning_1_14_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_14_0.png" />
 </div>
 </div>
 <p>To make better use of the data we will often divide the data into <span class="math notranslate nohighlight">\(K\)</span> subsets, or <em>folds</em>. Then one fits <span class="math notranslate nohighlight">\(K\)</span> models, each using  <span class="math notranslate nohighlight">\(K-1\)</span> folds and then evaluation the fitted model on the remaining fold. This is called <strong>k-fold cross-validation</strong>.</p>
@@ -625,9 +625,14 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2_Introduction_to_Machine_Learning_1_15_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_15_0.png" />
+<img alt="../_images/2_Introduction_to_Machine_Learning_1_16_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_16_0.png" />
 </div>
 </div>
+<p>This is one of the benefits of using machine learning-based models: more data implies more flexible modeling, and therefore potentially better predictive power – provided that we carefully avoid overfitting.</p>
+<p>The example above based on polynomial regression was used mostly for illustration. In practice, there are often better-performing algorithms. We’ll see some of them next.</p>
+</div>
+<div class="section" id="common-machine-learning-algorithms">
+<h2><span class="section-number">2.2. </span>Common machine learning algorithms<a class="headerlink" href="#common-machine-learning-algorithms" title="Permalink to this headline">¶</a></h2>
 <p>A final remark is that, in machine learning applications, the complexity of the model often is allowed to increase with the available data. In the example above, even though we weren’t very successful when fitting a high-dimensional model on very little data, if we had much more data perhaps such a model would be appropriate. The next figure again fits a high order polynomial model, but this time on many data points. Note how, at least in data-rich regions, the model is much better behaved, and tracks the average outcome reasonably well without trying to interpolate wildly of the data points.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -662,14 +667,9 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2_Introduction_to_Machine_Learning_1_17_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_17_0.png" />
+<img alt="../_images/2_Introduction_to_Machine_Learning_1_20_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_20_0.png" />
 </div>
 </div>
-<p>This is one of the benefits of using machine learning-based models: more data implies more flexible modeling, and therefore potentially better predictive power – provided that we carefully avoid overfitting.</p>
-<p>The example above based on polynomial regression was used mostly for illustration. In practice, there are often better-performing algorithms. We’ll see some of them next.</p>
-</div>
-<div class="section" id="common-machine-learning-algorithms">
-<h2><span class="section-number">2.2. </span>2.2 Common machine learning algorithms<a class="headerlink" href="#common-machine-learning-algorithms" title="Permalink to this headline">¶</a></h2>
 <p>Next, we’ll introduce three machine learning algorithms: (regularized) linear models, trees, and forests. Although this isn’t an exhaustive list, these algorithms are common enough that every machine learning practitioner should know about them. They also have convenient <code class="docutils literal notranslate"><span class="pre">R</span></code> packages that allow for easy coding.</p>
 <p>In this tutorial, we’ll focus heavily on how to <strong>interpret</strong> the output of machine learning models – or, at least, how not to <em>mis</em>-interpret it. However, in this chapter we won’t be making any causal claims about the relationships between variables yet. But please hang tight, as estimating causal effects will be one of the main topics presented in the next chapters.</p>
 <p>For the remainder of the chapter we will use a real dataset. Each row in this data set represents the characteristics of a owner-occupied housing unit. Our goal is to predict the (log) price of the housing unit (<code class="docutils literal notranslate"><span class="pre">LOGVALUE</span></code>, our outcome variable) from features such as the size of the lot (<code class="docutils literal notranslate"><span class="pre">LOT</span></code>) and square feet area (<code class="docutils literal notranslate"><span class="pre">UNITSF</span></code>), number of bedrooms (<code class="docutils literal notranslate"><span class="pre">BEDRMS</span></code>) and bathrooms (<code class="docutils literal notranslate"><span class="pre">BATHS</span></code>), year in which it was built (<code class="docutils literal notranslate"><span class="pre">BUILT</span></code>) etc. This dataset comes from the American Housing Survey and was used in <a class="reference external" href="https://www.aeaweb.org/articles?id=10.1257/jep.31.2.87">Mullainathan and Spiess (2017, JEP)</a>. In addition, we will append to this data columns that are pure noise. Ideally, our fitted model should not take them into acccount.</p>
@@ -729,26 +729,26 @@ const thebe_selector_output = ".output, .cell_output"
 </div></div>
 </div>
 <div class="section" id="generalized-linear-models">
-<h3><span class="section-number">2.2.1. </span>2.2.1 Generalized linear models<a class="headerlink" href="#generalized-linear-models" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.2.1. </span>Generalized linear models<a class="headerlink" href="#generalized-linear-models" title="Permalink to this headline">¶</a></h3>
 <p>This class of models extends common methods such as linear and logistic regression by adding a penalty to the magnitude of the coefficients. <strong>Lasso</strong> penalizes the absolute value of slope coefficients. For regression problems, it becomes</p>
-<div class="math notranslate nohighlight" id="equation-lasso">
-<span class="eqno">(2.2)<a class="headerlink" href="#equation-lasso" title="Permalink to this equation">¶</a></span>\[
+<div class="amsmath math notranslate nohighlight" id="equation-0a5e3310-b0f6-456e-8847-8693c6a948cd">
+<span class="eqno">(2.3)<a class="headerlink" href="#equation-0a5e3310-b0f6-456e-8847-8693c6a948cd" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{eq:lasso}\tag{2.2}
   \hat{b}_{Lasso} = \arg\min_b \sum_{i=1}^m
     \left( Y_i - b_0 - X_{i1}b_1 - \cdots - X_{ip}b_p \right)^2
     - \lambda \sum_{j=1}^p |b_j|
-\]</div>
+\end{equation}\]</div>
 <p>Similarly, in a regression problem <strong>Ridge</strong> penalizes the sum of squares of the slope coefficients,</p>
-<div class="math notranslate nohighlight" id="equation-ridge">
-<span class="eqno">(2.3)<a class="headerlink" href="#equation-ridge" title="Permalink to this equation">¶</a></span>\[
+<div class="amsmath math notranslate nohighlight" id="equation-8aba6cfc-83c4-45a0-ae83-436d00290537">
+<span class="eqno">(2.4)<a class="headerlink" href="#equation-8aba6cfc-83c4-45a0-ae83-436d00290537" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{eq:ridge}\tag{2.3}
   \hat{b}_{Ridge} = \arg\min_b \sum_{i=1}^m
     \left( Y_i - b_0 - X_{i1}b_1 - \cdots - X_{ip}b_p \right)^2
     - \lambda \sum_{j=1}^p b_j^2
-\]</div>
+\end{equation}\]</div>
 <p>Also, there exists the <strong>Elastic Net</strong> penalization which consists of a convex combination between the other two. In all cases, the scalar parameter
 <span class="math notranslate nohighlight">\(\lambda\)</span> controls the complexity of the model. For <span class="math notranslate nohighlight">\(\lambda=0\)</span>, the problem reduces to the “usual” linear regression. As <span class="math notranslate nohighlight">\(\lambda\)</span> increases, we favor simpler models. As we’ll see below, the optimal parameter <span class="math notranslate nohighlight">\(\lambda\)</span> is selected via cross-validation.</p>
 <p>An important feature of Lasso-type penalization is that it promotes <strong>sparsity</strong> – that is, it forces many coefficients to be exactly zero. This is different from Ridge-type penalization, which forces coefficients to be small.</p>
 <p>Another interesting property of these models is that, even though they are called “linear” models, this should actually be understood as <strong>linear in transformations</strong> of the covariates. For example, we could use polynomials or splines (continuous piecewise polynomials) of the covariates and allow for much more flexible models.</p>
-<p>In fact, because of the penalization term, problems <a class="reference internal" href="#equation-lasso">(2.2)</a> and <a class="reference internal" href="#equation-ridge">(2.3)</a> remain well-defined and have a unique solution even in <strong>high-dimensional</strong> problems in which the number of coefficients <span class="math notranslate nohighlight">\(p\)</span> is larger than the sample size <span class="math notranslate nohighlight">\(n\)</span> – that is, our data is “fat” with more columns than rows. These situations can arise either naturally (e.g. genomics problems in which we have hundreds of thousands of gene expression information for a few individuals) or because we are including many transformations of a smaller set of covariates.</p>
+<p>In fact, because of the penalization term, problems \eqref{eq:lasso} and \eqref{eq:ridge} remain well-defined and have a unique solution even in <strong>high-dimensional</strong> problems in which the number of coefficients <span class="math notranslate nohighlight">\(p\)</span> is larger than the sample size <span class="math notranslate nohighlight">\(n\)</span> – that is, our data is “fat” with more columns than rows. These situations can arise either naturally (e.g. genomics problems in which we have hundreds of thousands of gene expression information for a few individuals) or because we are including many transformations of a smaller set of covariates.</p>
 <p>Finally, although here we are focusing on regression problems, other generalized linear models such as logistic regression can also be similarly modified by adding a Lasso, Ridge, or Elastic Net-type penalty to similar consequences.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -786,7 +786,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2_Introduction_to_Machine_Learning_1_25_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_25_0.png" />
+<img alt="../_images/2_Introduction_to_Machine_Learning_1_29_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_29_0.png" />
 </div>
 </div>
 <p>Here are the first few estimated coefficients at the <span class="math notranslate nohighlight">\(\lambda\)</span> value that minimizes cross-validated MSE. Note that many estimated coefficients them are exactly zero</p>
@@ -836,7 +836,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2_Introduction_to_Machine_Learning_1_31_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_31_0.png" />
+<img alt="../_images/2_Introduction_to_Machine_Learning_1_35_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_35_0.png" />
 </div>
 </div>
 <p>It’s tempting to try to interpret the coefficients obtained via Lasso. Unfortunately, that can be very difficult, because by dropping covariates Lasso introduces a form of <strong>omitted variable bias</strong> (<a class="reference external" href="https://en.wikipedia.org/wiki/Omitted-variable_bias">wikipedia</a>). To understand this form of bias, consider the following toy example. We have two positively correlated independent variables, <code class="docutils literal notranslate"><span class="pre">x.1</span></code> and <code class="docutils literal notranslate"><span class="pre">x.2</span></code>, that are linearly related to the outcome <code class="docutils literal notranslate"><span class="pre">y</span></code>. Linear regression of <code class="docutils literal notranslate"><span class="pre">y</span></code> on <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">x2</span></code> gives us the correct coefficients. However, if we <em>omit</em> <code class="docutils literal notranslate"><span class="pre">x2</span></code> from the estimation model, the coefficient on <code class="docutils literal notranslate"><span class="pre">x1</span></code> increases. This is because <code class="docutils literal notranslate"><span class="pre">x1</span></code> is now “picking up” the effect of the variable that was left out. In other words, the effect of <code class="docutils literal notranslate"><span class="pre">x1</span></code> seems stronger because we aren’t controlling for some other confounding variable. Note that the second model this still works for prediction, but we cannot interpret the coefficient as a measure of strength of the causal relationship between <code class="docutils literal notranslate"><span class="pre">x1</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
@@ -937,7 +937,7 @@ Coefficients:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2_Introduction_to_Machine_Learning_1_36_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_36_0.png" />
+<img alt="../_images/2_Introduction_to_Machine_Learning_1_40_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_40_0.png" />
 </div>
 </div>
 <p>The OLS coefficients are not penalized, so they remain constant. Ridge estimates decrease monotonically as <span class="math notranslate nohighlight">\(\lambda\)</span> grows. Also, for this dataset, Lasso estimates first increase and then decrease. Meanwhile, the post-lasso coefficient estimates seem to behave somewhat erratically with <span class="math notranslate nohighlight">\(lambda\)</span>. To understand this behavior, let’s see what happens to the magnitude of other selected variables that are correlated with <code class="docutils literal notranslate"><span class="pre">BATHS</span></code>.</p>
@@ -950,7 +950,7 @@ Coefficients:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2_Introduction_to_Machine_Learning_1_38_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_38_0.png" />
+<img alt="../_images/2_Introduction_to_Machine_Learning_1_42_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_42_0.png" />
 </div>
 </div>
 <p>Note how the discrete jumps in magnitude for the <code class="docutils literal notranslate"><span class="pre">BATHS</span></code> coefficient in the first coincide with, for example, variables <code class="docutils literal notranslate"><span class="pre">DINING</span></code> and <code class="docutils literal notranslate"><span class="pre">BEDRMS</span></code> being exactly zero. As these variables got dropped from the model, the coefficient on <code class="docutils literal notranslate"><span class="pre">BATHS</span></code> increased to pick up their effect.</p>
@@ -970,7 +970,7 @@ Coefficients:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2_Introduction_to_Machine_Learning_1_40_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_40_0.png" />
+<img alt="../_images/2_Introduction_to_Machine_Learning_1_44_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_44_0.png" />
 </div>
 </div>
 <p>As we have seen above, any interpretation needs to take into account the joint distribution of covariates. One possible heuristic is to consider <strong>data-driven subgroups</strong>. For example, we can analyze what differentiates observations whose predictions are high from those whose predictions are low. The following code estimates a flexible Lasso model with splines, ranks the observations into a few subgroups according to their predicted outcomes, and then estimates the average covariate value for each subgroup.</p>
@@ -1098,14 +1098,14 @@ Coefficients:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2_Introduction_to_Machine_Learning_1_44_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_44_0.png" />
+<img alt="../_images/2_Introduction_to_Machine_Learning_1_48_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_48_0.png" />
 </div>
 </div>
 <p>As we just saw above, houses that have, e.g., been built more recently (<code class="docutils literal notranslate"><span class="pre">BUILT</span></code>), have more baths (<code class="docutils literal notranslate"><span class="pre">BATHS</span></code>) are associated with larger price predictions.</p>
 <p>This sort of interpretation exercise did not rely on reading any coefficients, and in fact it could also be done using any other flexible method, including decisions trees and forests.</p>
 </div>
 <div class="section" id="decision-trees">
-<h3><span class="section-number">2.2.2. </span>2.2.2 Decision trees<a class="headerlink" href="#decision-trees" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.2.2. </span>Decision trees<a class="headerlink" href="#decision-trees" title="Permalink to this headline">¶</a></h3>
 <p>This next class of algorithms divides the covariate space into “regions” and estimates a constant prediction within each region.</p>
 <p>To estimate a decision tree, we following a recursive partition algorithm. At each stage, we select one variable <span class="math notranslate nohighlight">\(j\)</span> and one split point
 <span class="math notranslate nohighlight">\(s\)</span>, and divide the observations into “left” and “right” subsets, depending on whether <span class="math notranslate nohighlight">\(X_{ij} \leq s\)</span> or <span class="math notranslate nohighlight">\(X_{ij} &gt; s\)</span>. For regression problems, the variable and split points are often selected so that the sum of the variances of the outcome variable in each “child” subset is smallest. For classification problems, we split to separate the classes. Then, for each child, we separately repeat the process of finding variables and split points. This continues until a minimum subset size is reached, or improvement falls below some threshold.</p>
@@ -1128,15 +1128,15 @@ Coefficients:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2_Introduction_to_Machine_Learning_1_48_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_48_0.png" />
+<img alt="../_images/2_Introduction_to_Machine_Learning_1_52_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_52_0.png" />
 </div>
 </div>
 <p>To reduce the complexity of the tree, we <strong>prune</strong> the tree: we collapse its leaves, permitting bias to increase but forcing variance to decrease until the desired trade-off is achieved. In <code class="docutils literal notranslate"><span class="pre">rpart</span></code>, this is done by considering a modified loss function that takes into account the number of terminal nodes (i.e., the number of regions in which the original data was partitioned). Somewhat heuristically, if we denote tree predictions by <span class="math notranslate nohighlight">\(T(x)\)</span> and its number of terminal nodes by  <span class="math notranslate nohighlight">\(|T|\)</span>, the modified regression problem can be written as:</p>
-<div class="math notranslate nohighlight" id="equation-pruned-tree">
-<span class="eqno">(2.4)<a class="headerlink" href="#equation-pruned-tree" title="Permalink to this equation">¶</a></span>\[
+<div class="amsmath math notranslate nohighlight" id="equation-18adf1b2-9b26-4576-86b3-c64625d078eb">
+<span class="eqno">(2.5)<a class="headerlink" href="#equation-18adf1b2-9b26-4576-86b3-c64625d078eb" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{eq:pruned-tree}\tag{2.4}
   \widehat{T} = \arg\min_{T} \sum_{i=1}^m \left( T(X_i) - Y_i \right)^2 + c_p |T|
-\]</div>
-<p>The complexity of the tree is controlled by the scalar parameter <span class="math notranslate nohighlight">\(c_p\)</span>, denoted as <code class="docutils literal notranslate"><span class="pre">ccp_alpha</span></code> in <code class="docutils literal notranslate"><span class="pre">sklearn.tree.DecisionTreeRegressor</span></code>. For each value of <span class="math notranslate nohighlight">\(c_p\)</span>, we find the subtree that solves <a class="reference internal" href="#equation-pruned-tree">(2.4)</a>. Large values of <span class="math notranslate nohighlight">\(c_p\)</span> lead to aggressively pruned trees, which have more bias and less variance. Small values of <span class="math notranslate nohighlight">\(c_p\)</span> allow for deeper trees whose predictions can vary more wildly.</p>
+\end{equation}\]</div>
+<p>The complexity of the tree is controlled by the scalar parameter <span class="math notranslate nohighlight">\(c_p\)</span>, denoted as <code class="docutils literal notranslate"><span class="pre">ccp_alpha</span></code> in <code class="docutils literal notranslate"><span class="pre">sklearn.tree.DecisionTreeRegressor</span></code>. For each value of <span class="math notranslate nohighlight">\(c_p\)</span>, we find the subtree that solves \eqref{eq:pruned-tree}. Large values of <span class="math notranslate nohighlight">\(c_p\)</span> lead to aggressively pruned trees, which have more bias and less variance. Small values of <span class="math notranslate nohighlight">\(c_p\)</span> allow for deeper trees whose predictions can vary more wildly.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">plotcp</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
@@ -1144,7 +1144,7 @@ Coefficients:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2_Introduction_to_Machine_Learning_1_50_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_50_0.png" />
+<img alt="../_images/2_Introduction_to_Machine_Learning_1_54_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_54_0.png" />
 </div>
 </div>
 <p>The following code retrieves the optimal parameter and prunes the tree. Here, instead of choosing the parameter that minimizes the mean-squared-error, we’re following another common heuristic: we will choose the most regularized model whose error is within one standard error of the minimum error.</p>
@@ -1170,7 +1170,7 @@ Coefficients:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2_Introduction_to_Machine_Learning_1_54_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_54_0.png" />
+<img alt="../_images/2_Introduction_to_Machine_Learning_1_58_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_58_0.png" />
 </div>
 </div>
 <p>Finally, here’s how to extract predictions and mse estimates from the pruned tree.</p>
@@ -1293,12 +1293,12 @@ Std. Error   57.25873
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2_Introduction_to_Machine_Learning_1_60_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_60_0.png" />
+<img alt="../_images/2_Introduction_to_Machine_Learning_1_64_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_64_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="forests">
-<h3><span class="section-number">2.2.3. </span>2.2.3 Forests<a class="headerlink" href="#forests" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.2.3. </span>Forests<a class="headerlink" href="#forests" title="Permalink to this headline">¶</a></h3>
 <p>Forests are a type of <strong>ensemble</strong> estimators: they aggregate information about many decision trees to compute a new estimate that typically has much smaller variance.</p>
 <p>At a high level, the process of fitting a (regression) forest consists of fitting many decision trees, each on a different subsample of the data. The forest prediction for a particular point <span class="math notranslate nohighlight">\(x\)</span> is the average of all tree predictions for that point.</p>
 <p>One interesting aspect of forests and many other ensemble methods is that cross-validation can be built into the algorithm itself. Since each tree only uses a subset of the data, the remaining subset is effectively a test set for that tree. We call these observations <strong>out-of-bag</strong> (there were not in the “bag” of training observations). They can be used to evaluate the performance of that tree, and the average of out-of-bag evaluations is evidence of the performance of the forest itself.</p>
@@ -1353,7 +1353,7 @@ Std. Error   57.25873
 </div>
 </div>
 <div class="section" id="further-reading">
-<h2><span class="section-number">2.3. </span>2.3 Further reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.3. </span>Further reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
 <p>In this tutorial we briefly reviewed some key concepts that we recur later in this tutorial. For readers who are entirely new to this field or interested in learning about it more depth, the first few chapters of the following textbook are an acccessible introduction:</p>
 <p>James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2013). An introduction to statistical learning (Vol. 112, p. 18). New York: springer. Available for free at <a class="reference external" href="https://www.statlearning.com/">the authors’ website</a>.</p>
 <p>Some of the discussion in the Lasso section in particular was drawn from <a class="reference external" href="https://www.aeaweb.org/articles?id=10.1257/jep.31.2.87">Mullainathan and Spiess (JEP, 2017)</a>, which contains a good discussion of the interpretability issues discussed here.</p>

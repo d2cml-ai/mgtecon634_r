@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>5. Policy Evaluation I - Binary Treatment &#8212; MGTECON 634 at Stanford (R scripts)</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,20 +20,16 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -39,12 +37,13 @@
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -64,7 +63,21 @@ const thebe_selector_output = ".output, .cell_output"
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -73,9 +86,10 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -93,14 +107,15 @@ const thebe_selector_output = ".output, .cell_output"
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../md/intro.html">
-   Machine Learning-Based Causal Inference
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../md/intro.html">
+                    Machine Learning-Based Causal Inference
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Topics
  </span>
@@ -136,120 +151,270 @@ const thebe_selector_output = ".output, .cell_output"
    6. Policy Learning I - Binary Treatment
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="7_LM_forest_RDD_1.html">
+   7. LM Forest RDD
+  </a>
+ </li>
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notebooks/5_policy_evaluation_1.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/d2cml-ai/mgtecon634_r"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/d2cml-ai/mgtecon634_r/issues/new?title=Issue%20on%20page%20%2Fnotebooks/5_policy_evaluation_1.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/d2cml-ai/mgtecon634_r/edit/master/_build/jupyter_execute/notebooks/5_policy_evaluation_1.ipynb"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/d2cml-ai/mgtecon634_r/master?urlpath=tree/_build/jupyter_execute/notebooks/5_policy_evaluation_1.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/d2cml-ai/mgtecon634_r/blob/master/_build/jupyter_execute/notebooks/5_policy_evaluation_1.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        <button type="button" class="btn btn-secondary topbarbtn"
-            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
-                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/d2cml-ai/mgtecon634_r/master?urlpath=tree/_build/jupyter_execute/notebooks/5_policy_evaluation_1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/d2cml-ai/mgtecon634_r/blob/master/_build/jupyter_execute/notebooks/5_policy_evaluation_1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/d2cml-ai/mgtecon634_r"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/d2cml-ai/mgtecon634_r/issues/new?title=Issue%20on%20page%20%2Fnotebooks/5_policy_evaluation_1.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/d2cml-ai/mgtecon634_r/edit/master/_build/jupyter_execute/notebooks/5_policy_evaluation_1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/notebooks/5_policy_evaluation_1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#via-sample-means">
    5.1. Via sample means
@@ -279,12 +444,11 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1>Policy Evaluation I - Binary Treatment</h1>
@@ -330,11 +494,12 @@ const thebe_selector_output = ".output, .cell_output"
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="policy-evaluation-i-binary-treatment">
-<h1><span class="section-number">5. </span>Policy Evaluation I - Binary Treatment<a class="headerlink" href="#policy-evaluation-i-binary-treatment" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="policy-evaluation-i-binary-treatment">
+<h1><span class="section-number">5. </span>Policy Evaluation I - Binary Treatment<a class="headerlink" href="#policy-evaluation-i-binary-treatment" title="Permalink to this headline">#</a></h1>
 <p>Source RMD file: <a class="reference external" href="https://docs.google.com/uc?export=download&amp;id=1TGPxR6L12kLeXbJeJBfCpXCnRFNA3hAC">link</a></p>
 <p><font color="#fa8072">Note: this chapter is in ‘beta’ version and may be edited in the near future.</font></p>
 <p>In previous chapters, you learned how to estimate the effect of a binary treatment on an outcome variable. We saw how to estimate the average treatment effect for the entire population <span class="math notranslate nohighlight">\(\mathbf{E}[Y_i(1) - Y_i(0)]\)</span>, for specific subgroups <span class="math notranslate nohighlight">\(\mathbf{E}[Y_i(1) - Y_i(0) | G_i]\)</span>, and at specific covariate values <span class="math notranslate nohighlight">\(\mathbf{E}[Y_i(1) - Y_i(0)|X_i = x]\)</span>. One common feature of these quantities is that they compare the average effect of treating everyone (in the population, subgroup, etc) to the average effect of treating no one. But what if we had a <em>treatment rule</em> that dictated who should be treated, and who should not? Would treating some people according to this rule be better than treating no one? Can we compare two possible treatment rules? Questions like these abound in applied work, so here we’ll learn how to answer them using experimental and observational data (with appropriate assumptions).</p>
@@ -358,6 +523,10 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
+&quot;package &#39;grf&#39; was built under R version 4.2.1&quot;
+</pre></div>
+</div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: Matrix
 </pre></div>
 </div>
@@ -366,8 +535,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<div class="section" id="via-sample-means">
-<h2><span class="section-number">5.1. </span>Via sample means<a class="headerlink" href="#via-sample-means" title="Permalink to this headline">¶</a></h2>
+<section id="via-sample-means">
+<h2><span class="section-number">5.1. </span>Via sample means<a class="headerlink" href="#via-sample-means" title="Permalink to this headline">#</a></h2>
 <p>To fix ideas, we will begin assuming that we are in a <em>randomized</em> setting. For concreteness, let’s work with the following toy setting with two uniformly-distributed covariates and a continuous outcome.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -415,8 +584,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <p>As a first example, let’s estimate the value of the following policy (assuming that it was given to or decided by us prior to looking at the data):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3fb52dbe-03a4-49db-b13d-3af5e53f7c15">
-<span class="eqno">(5.1)<a class="headerlink" href="#equation-3fb52dbe-03a4-49db-b13d-3af5e53f7c15" title="Permalink to this equation">¶</a></span>\[\begin{equation} \label{eq:value_est} \tag{5.1}
+<div class="amsmath math notranslate nohighlight" id="equation-901dcb22-9435-4b01-98ec-a470c30dd69b">
+<span class="eqno">(5.1)<a class="headerlink" href="#equation-901dcb22-9435-4b01-98ec-a470c30dd69b" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:value_est} \tag{5.1}
   \pi(x) =
     \begin{cases} 
      1 \quad \text{if } x_1 &gt; .5 \text{ and } x_2 &gt; .5 \\
@@ -424,8 +593,8 @@ const thebe_selector_output = ".output, .cell_output"
     \end{cases}
 \end{equation}\]</div>
 <p>This policy divides the plane into a “treatment” region <span class="math notranslate nohighlight">\(A\)</span> and a complementary “no treatment” region <span class="math notranslate nohighlight">\(A^c\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ec3a5890-232b-4eaf-9199-96be2efce9b1">
-<span class="eqno">(5.2)<a class="headerlink" href="#equation-ec3a5890-232b-4eaf-9199-96be2efce9b1" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-779b6cee-a2a2-4ec9-b91d-006cfef3f764">
+<span class="eqno">(5.2)<a class="headerlink" href="#equation-779b6cee-a2a2-4ec9-b91d-006cfef3f764" title="Permalink to this equation">#</a></span>\[\begin{equation}
   A := \{ x : \pi(x) = 1 \} = \{x: x_{1} &gt; .5, x_{2} &gt; .5\}.
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -446,8 +615,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <p>We’ll consider the behavior of the policy <span class="math notranslate nohighlight">\(\pi\)</span> separately within each region. In the “treatment” region <span class="math notranslate nohighlight">\(A\)</span>, its average outcome is the same as the average outcome for the treated population.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-06859681-12d4-4513-a7df-d1c4051e1efd">
-<span class="eqno">(5.3)<a class="headerlink" href="#equation-06859681-12d4-4513-a7df-d1c4051e1efd" title="Permalink to this equation">¶</a></span>\[\begin{equation} \tag{5.2}
+<div class="amsmath math notranslate nohighlight" id="equation-e08a0238-4ab4-463a-bdbb-b3a6d8cb63fa">
+<span class="eqno">(5.3)<a class="headerlink" href="#equation-e08a0238-4ab4-463a-bdbb-b3a6d8cb63fa" title="Permalink to this equation">#</a></span>\[\begin{equation} \tag{5.2}
   \begin{aligned}
     \mathbf{E}[Y_i(\pi(X_i)) \ | \ A] 
       &amp;= \mathbf{E}[Y_i(1)|A]  \quad &amp;&amp;\text{because $\pi(x) = 1$ for all $x \in A$,} \\
@@ -455,8 +624,8 @@ const thebe_selector_output = ".output, .cell_output"
   \end{aligned}
 \end{equation}\]</div>
 <p>In the remaining region <span class="math notranslate nohighlight">\(A^c\)</span>, its average outcome is the same as the average outcome for the untreated population.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2d33e68f-4dca-4605-96d1-ccaf6ab96f0c">
-<span class="eqno">(5.4)<a class="headerlink" href="#equation-2d33e68f-4dca-4605-96d1-ccaf6ab96f0c" title="Permalink to this equation">¶</a></span>\[\begin{equation} \tag{5.3}
+<div class="amsmath math notranslate nohighlight" id="equation-a3763540-21c3-4237-b169-0c49ed1864f7">
+<span class="eqno">(5.4)<a class="headerlink" href="#equation-a3763540-21c3-4237-b169-0c49ed1864f7" title="Permalink to this equation">#</a></span>\[\begin{equation} \tag{5.3}
   \begin{aligned}
     \mathbf{E}[Y_i(\pi(X_i)) \ | \ A^c] 
       &amp;= \mathbf{E}[Y_i(0)|A^c]  \quad &amp;&amp;\text{because $\pi(x) = 0$ for all $x \in A^c$,} \\
@@ -464,8 +633,8 @@ const thebe_selector_output = ".output, .cell_output"
   \end{aligned}
 \end{equation}\]</div>
 <p>The expected value of <span class="math notranslate nohighlight">\(\pi\)</span> is a weighted average of value within each region:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2fe49004-5fe6-4187-858b-7b5bf3da5a01">
-<span class="eqno">(5.5)<a class="headerlink" href="#equation-2fe49004-5fe6-4187-858b-7b5bf3da5a01" title="Permalink to this equation">¶</a></span>\[\begin{align} \tag{5.4} \label{pi-pop-value}
+<div class="amsmath math notranslate nohighlight" id="equation-c70cfa9c-9669-4508-b7d5-c7b44c0a6fdc">
+<span class="eqno">(5.5)<a class="headerlink" href="#equation-c70cfa9c-9669-4508-b7d5-c7b44c0a6fdc" title="Permalink to this equation">#</a></span>\[\begin{align} \tag{5.4} \label{pi-pop-value}
     \mathbf{E}[Y(\pi(X_i))] &amp;= \mathbf{E}[Y_i | A, W_i = 1] P(A) +  \mathbf{E}[Y_i | A^c, W_i = 0] P(A^c), \\
 \end{align}\]</div>
 <p>where we denote the probability of drawn a covariate from <span class="math notranslate nohighlight">\(A\)</span> as <span class="math notranslate nohighlight">\(P(A)\)</span>. In a randomized setting, we can estimate \eqref{pi-pop-value} by replacing population quantities by simple empirical counterparts based on sample averages; i.e., estimating <span class="math notranslate nohighlight">\(\mathbf{E}[Y_i | A, W_i = 1]\)</span> by the sample average of outcomes among treated individuals in region <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(\mathbf{E}[Y_i | A^c, W_i = 0]\)</span> by the sample average of outcomes among untreated individuals not in region <span class="math notranslate nohighlight">\(A\)</span>, and <span class="math notranslate nohighlight">\(P(A)\)</span> and <span class="math notranslate nohighlight">\(P(A^c)\)</span> by the proportions of individuals inside and outside of region <span class="math notranslate nohighlight">\(A\)</span>.</p>
@@ -486,13 +655,13 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <p>For another example, let’s consider the value of a  <em>random</em> policy <span class="math notranslate nohighlight">\(\pi'\)</span> that would assign observations to treatment and control with probability <span class="math notranslate nohighlight">\(p\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0e8e00b0-9a94-4dcd-87e5-3fdb85787236">
-<span class="eqno">(5.6)<a class="headerlink" href="#equation-0e8e00b0-9a94-4dcd-87e5-3fdb85787236" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8b1e6007-80e0-46d5-a5e1-924d3dc600c3">
+<span class="eqno">(5.6)<a class="headerlink" href="#equation-8b1e6007-80e0-46d5-a5e1-924d3dc600c3" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \pi(X_i) = Z_i \qquad Z_i \sim^{iid} \text{Binomial}(p).
 \end{equation}\]</div>
 <p>To identify the value of this policy, follow the same argument as above. However, instead of thinking in terms of “regions”, consider the output of the random variable <span class="math notranslate nohighlight">\(Z_i\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-54da33bb-65b6-4444-875f-0d0eecf1d226">
-<span class="eqno">(5.7)<a class="headerlink" href="#equation-54da33bb-65b6-4444-875f-0d0eecf1d226" title="Permalink to this equation">¶</a></span>\[\begin{equation} \label{region-a}
+<div class="amsmath math notranslate nohighlight" id="equation-e7e1b931-7159-4e8a-8f2b-21a51159d4fd">
+<span class="eqno">(5.7)<a class="headerlink" href="#equation-e7e1b931-7159-4e8a-8f2b-21a51159d4fd" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{region-a}
   \begin{aligned}
     \mathbf{E}[Y_i(\pi'(X_i)) \ | \ Z_i = 1]
       &amp;= \mathbf{E}[Y_i(1)| Z_i = 1] \quad &amp;&amp;\text{because $\pi'(\cdot) = 1$ when $Z_i = 1$,} \\ 
@@ -501,8 +670,8 @@ const thebe_selector_output = ".output, .cell_output"
   \end{aligned}
 \end{equation}\]</div>
 <p>We can proceed similarly for the case of <span class="math notranslate nohighlight">\(Z_i = 0\)</span>. Finally, since <span class="math notranslate nohighlight">\(P(Z_i = 1) = p\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-91e873d9-f822-4885-8ba7-db532524c7bb">
-<span class="eqno">(5.8)<a class="headerlink" href="#equation-91e873d9-f822-4885-8ba7-db532524c7bb" title="Permalink to this equation">¶</a></span>\[\begin{equation}  \tag{5.5}
+<div class="amsmath math notranslate nohighlight" id="equation-c29889b6-e363-45c3-a9bd-e12866df11c9">
+<span class="eqno">(5.8)<a class="headerlink" href="#equation-c29889b6-e363-45c3-a9bd-e12866df11c9" title="Permalink to this equation">#</a></span>\[\begin{equation}  \tag{5.5}
   \mathbf{E}[Y_i(\pi'(X_i))] = p\mathbf{E}[Y_i | W_i=1] + (1-p)\mathbf{E}[Y_i | W_i = 0],
 \end{equation}\]</div>
 <p>which in a randomized setting can be estimated in a manner analogous to the previous example.</p>
@@ -522,24 +691,24 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<div class="section" id="estimating-difference-in-values">
-<h3><span class="section-number">5.1.1. </span>Estimating difference in values<a class="headerlink" href="#estimating-difference-in-values" title="Permalink to this headline">¶</a></h3>
+<section id="estimating-difference-in-values">
+<h3><span class="section-number">5.1.1. </span>Estimating difference in values<a class="headerlink" href="#estimating-difference-in-values" title="Permalink to this headline">#</a></h3>
 <p>Next, let’s estimate the difference in value between two given policies. For a concrete example, let’s consider the gain from switching to <span class="math notranslate nohighlight">\(\pi\)</span> defined in (5.1) from a policy <span class="math notranslate nohighlight">\(\pi''\)</span> that never treats, i.e., <span class="math notranslate nohighlight">\(\pi''(X_i) \equiv 0\)</span>. That is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-57c988b8-23ea-4146-a662-b0fc7d77ad9a">
-<span class="eqno">(5.9)<a class="headerlink" href="#equation-57c988b8-23ea-4146-a662-b0fc7d77ad9a" title="Permalink to this equation">¶</a></span>\[\begin{equation} \tag{5.6} \label{diff-0}
+<div class="amsmath math notranslate nohighlight" id="equation-e1229e27-8e04-4176-bf46-85f099568709">
+<span class="eqno">(5.9)<a class="headerlink" href="#equation-e1229e27-8e04-4176-bf46-85f099568709" title="Permalink to this equation">#</a></span>\[\begin{equation} \tag{5.6} \label{diff-0}
   \mathbf{E}[Y(\pi(X_i)) - Y(\pi''(X_i))].
 \end{equation}\]</div>
 <p>We already derived the value of <span class="math notranslate nohighlight">\(\pi\)</span> in (5.5). To derive the value of the second policy,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-56395b9c-f2da-4e73-be51-6dbc59e5ca11">
-<span class="eqno">(5.10)<a class="headerlink" href="#equation-56395b9c-f2da-4e73-be51-6dbc59e5ca11" title="Permalink to this equation">¶</a></span>\[\begin{align} \tag{5.7} \label{ey0-expand}
+<div class="amsmath math notranslate nohighlight" id="equation-5b875773-d254-4238-9270-bd8065a4872e">
+<span class="eqno">(5.10)<a class="headerlink" href="#equation-5b875773-d254-4238-9270-bd8065a4872e" title="Permalink to this equation">#</a></span>\[\begin{align} \tag{5.7} \label{ey0-expand}
   &amp;\mathbf{E}[Y(\pi''(X_i))] \\ 
     &amp;= \mathbf{E}[Y_i(0)] &amp;&amp; \text{$\pi''(x) = 0$ for all $x$,}  \\
     &amp;= \mathbf{E}[Y_i(0)|A]P(A) + E[Y_i(0)|A^c]P(A^c) &amp;&amp; \text{law of total expectation,} \\
     &amp;= \mathbf{E}[Y|A,W=0]P(A) + E[Y|A^c,W=0]P(A^c) &amp;&amp;\text{randomized setting.} 
 \end{align}\]</div>
 <p>Substituting (5.5) and \eqref{ey0-expand} into \eqref{diff-0} and simplifying,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7686b921-1fa0-42c4-9669-4f4c42d8900d">
-<span class="eqno">(5.11)<a class="headerlink" href="#equation-7686b921-1fa0-42c4-9669-4f4c42d8900d" title="Permalink to this equation">¶</a></span>\[\begin{equation} \tag{5.8} \label{diff-0-result}
+<div class="amsmath math notranslate nohighlight" id="equation-5e9f8161-7911-4b72-8fcb-6a8ef509b018">
+<span class="eqno">(5.11)<a class="headerlink" href="#equation-5e9f8161-7911-4b72-8fcb-6a8ef509b018" title="Permalink to this equation">#</a></span>\[\begin{equation} \tag{5.8} \label{diff-0-result}
   \mathbf{E}[Y(\pi(X_i)) - Y(\pi''(X_i))]
     = \left( \mathbf{E}[Y_i|A, W_i=1] - \mathbf{E}[Y_i|A,W_i=0] \right) \cdot P(A) + 0 \cdot P(A^c) 
 \end{equation}\]</div>
@@ -561,16 +730,16 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <p>For another example, let’s consider the difference in value between <span class="math notranslate nohighlight">\(\pi\)</span> and a <em>random</em> policy <span class="math notranslate nohighlight">\(\pi'\)</span> that assigns observations to treatment and control with equal probability <span class="math notranslate nohighlight">\(p = 1/2\)</span>. We have already derived an expression for value of the random policy in (5.5). Subtracting it from the value of the policy <span class="math notranslate nohighlight">\(\pi\)</span> derived in (5.4) and simplifying,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6f30b47e-3bc9-4646-a06b-603e549ce0f0">
-<span class="eqno">(5.12)<a class="headerlink" href="#equation-6f30b47e-3bc9-4646-a06b-603e549ce0f0" title="Permalink to this equation">¶</a></span>\[\begin{align} \label{pi-pip-diff-results} \tag{5.9}
+<div class="amsmath math notranslate nohighlight" id="equation-238dcf35-d0bf-48b5-9666-aec098db6448">
+<span class="eqno">(5.12)<a class="headerlink" href="#equation-238dcf35-d0bf-48b5-9666-aec098db6448" title="Permalink to this equation">#</a></span>\[\begin{align} \label{pi-pip-diff-results} \tag{5.9}
   \mathbf{E}[Y(\pi) - Y(\pi'(X_i))] 
     &amp;= \frac{P(A)}{2} \left( \mathbf{E}[Y_i(1) - Y_i(0) | A] \right) +
       \frac{P(A^c)}{2} \left( \mathbf{E}[Y_i(0) - Y_i(1) | A^c] \right) 
 \end{align}\]</div>
 <p>Here’s how to interpret \eqref{pi-pip-diff-results}. In region <span class="math notranslate nohighlight">\(A\)</span>, policy <span class="math notranslate nohighlight">\(\pi\)</span> treats everyone, obtaining average value <span class="math notranslate nohighlight">\(\mathbf{E}[Y_i(1)|A]\)</span>; meanwhile, policy <span class="math notranslate nohighlight">\(\pi'\)</span> treats half the observations (i.e., it treats each individual with one-half probability), obtaining average value <span class="math notranslate nohighlight">\((\mathbf{E}[Y_i(1) + Y_i(0)|A])/2\)</span>. Subtracting the two gives the term multiplying <span class="math notranslate nohighlight">\(P(A)\)</span> in \eqref{pi-pip-diff-results}. In region <span class="math notranslate nohighlight">\(A^c\)</span>, policy <span class="math notranslate nohighlight">\(\pi\)</span> treats no one, obtaining average value <span class="math notranslate nohighlight">\(E[Y_i(0)|A]\)</span>; meanwhile, policy <span class="math notranslate nohighlight">\(\pi'\)</span> still obtains <span class="math notranslate nohighlight">\((\mathbf{E}[Y_i(1) + Y_i(0)|A^c])/2\)</span> for the same reasons as above. Subtracting the two gives the term multiplying <span class="math notranslate nohighlight">\(P(A^c)\)</span> \eqref{pi-pip-diff-results}. Expression \eqref{pi-pip-diff-results} is the average of these two terms weighted by the size of each region.</p>
 <p>Finally, in a randomized setting, \eqref{pi-pip-diff-results} is equivalent to</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8564ab37-ec1f-40ce-98b4-e2a0c762f8d3">
-<span class="eqno">(5.13)<a class="headerlink" href="#equation-8564ab37-ec1f-40ce-98b4-e2a0c762f8d3" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f9e43c41-8665-4af6-b5b6-7d98823d0dfa">
+<span class="eqno">(5.13)<a class="headerlink" href="#equation-f9e43c41-8665-4af6-b5b6-7d98823d0dfa" title="Permalink to this equation">#</a></span>\[\begin{align}
 \frac{P(A)}{2} \left( \mathbf{E}[Y|A,W=1] - \mathbf{E}[Y|A,W=0] \right) + 
         \frac{P(A^c)}{2} \left( \mathbf{E}[Y|A^c,W=0] - \mathbf{E}[Y|A,W=1] \right),
 \end{align}\]</div>
@@ -593,9 +762,9 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="via-aipw-scores">
-<h3><span class="section-number">5.1.2. </span>Via AIPW scores<a class="headerlink" href="#via-aipw-scores" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="via-aipw-scores">
+<h3><span class="section-number">5.1.2. </span>Via AIPW scores<a class="headerlink" href="#via-aipw-scores" title="Permalink to this headline">#</a></h3>
 <p>In this section, we will use the following simulated <em>observational</em> setting. Note how the probability of receiving treatment varies by individual, but it depends only on observable characteristics (ensuring unconfoundedness) and it is bounded away from zero and one (ensuring overlap). We assume that assignment probabilities are not known to the researcher.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -631,21 +800,21 @@ const thebe_selector_output = ".output, .cell_output"
 If we "naively" used the estimators based on sample averages above, the policy value estimate would be biased. Would the bias be upward or downward?
 </font>
 <p>In randomized setting and observational settings with unconfoundedness and overlap, there exists estimates of policy values and differences that are more efficient (i.e., they have smaller variance in large samples) than their counterparts based on sample averages. These are based on the <em>AIPW scores</em> that we studied in previous chapters. For example, to estimate the <span class="math notranslate nohighlight">\(\mathbf{E}[Y_i(1)]\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-b01be57e-06b3-4752-80ba-fbd3c395390f">
-<span class="eqno">(5.14)<a class="headerlink" href="#equation-b01be57e-06b3-4752-80ba-fbd3c395390f" title="Permalink to this equation">¶</a></span>\[\begin{align} \tag{5.10} \label{gamma-1}
+<div class="amsmath math notranslate nohighlight" id="equation-efe919fb-4276-46c9-b8ef-28679895c52d">
+<span class="eqno">(5.14)<a class="headerlink" href="#equation-efe919fb-4276-46c9-b8ef-28679895c52d" title="Permalink to this equation">#</a></span>\[\begin{align} \tag{5.10} \label{gamma-1}
   \hat {\Gamma}_{i,1}
     &amp;= \hat{\mu}^{-i}(X_i, 1) + \frac{W_i}{\hat{e}^{-i}(X_i)} \left(Y_i -\hat{\mu}^{-i}(X_i, 1)\right) 
 \end{align}\]</div>
 <p>As we discussed in the chapter on ATE, averaging over AIPW scores \eqref{gamma-1} across individuals yields an unbiased / consistent estimator of <span class="math notranslate nohighlight">\(\mathbf{E}[Y_i(1)]\)</span> provided that at least one of <span class="math notranslate nohighlight">\(\hat{\mu}^{-i}(x, 1)\)</span> or <span class="math notranslate nohighlight">\(\hat{e}^{-i}(x)\)</span> is an unbiased / consistent estimator of the outcome model <span class="math notranslate nohighlight">\(\mu(x,w) := \mathbf{E}[Y_i(w)|X_i=x]\)</span> or propensity model <span class="math notranslate nohighlight">\(e(x) := P[W_i=1|X_i=x]\)</span>. Provided that these are estimates using non-parametric methods like forests or neural networks, consistency should be guaranteed, and in addition the resulting estimates should have smaller asymptotic variance. Therefore, barring computational issues, AIPW-based estimates are usually superior to estimates based on sample means, even in randomized settings (though, for completeness, the latter should still be reported when valid).</p>
 <p>For the control, we have the following estimator based on AIPW scores,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fab1b04c-3b1a-4ae4-9bad-286f3167b110">
-<span class="eqno">(5.15)<a class="headerlink" href="#equation-fab1b04c-3b1a-4ae4-9bad-286f3167b110" title="Permalink to this equation">¶</a></span>\[\begin{align} \tag{5.11}  \label{gamma-0}
+<div class="amsmath math notranslate nohighlight" id="equation-0980e8e8-544b-4385-ab7c-8a8ac369df82">
+<span class="eqno">(5.15)<a class="headerlink" href="#equation-0980e8e8-544b-4385-ab7c-8a8ac369df82" title="Permalink to this equation">#</a></span>\[\begin{align} \tag{5.11}  \label{gamma-0}
   \hat {\Gamma}_{i,0} 
     &amp;= \hat{\mu}^{-i}(X_i, 0) + \frac{1-W_i}{1-\hat{e}^{-i}(X_i)} \left(Y_i -\hat{\mu}^{-i}(X_i, 0)\right).
 \end{align}\]</div>
 <p>To estimate the value of a binary policy <span class="math notranslate nohighlight">\(\pi\)</span>, we average over AIPW scores, selecting \eqref{gamma-1} or \eqref{gamma-0} for each individual depending on whether the policy dictates that the individual should be treated or not. That is, we estimate the value of a policy <span class="math notranslate nohighlight">\(\pi\)</span> via the following average,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-44e08a30-0882-4f06-a701-6ee275a3df62">
-<span class="eqno">(5.16)<a class="headerlink" href="#equation-44e08a30-0882-4f06-a701-6ee275a3df62" title="Permalink to this equation">¶</a></span>\[\begin{align} 
+<div class="amsmath math notranslate nohighlight" id="equation-8ad8ef9a-2ad8-4c4b-9e53-8195ea5b0d92">
+<span class="eqno">(5.16)<a class="headerlink" href="#equation-8ad8ef9a-2ad8-4c4b-9e53-8195ea5b0d92" title="Permalink to this equation">#</a></span>\[\begin{align} 
   \frac{1}{n} \sum_{i=1}^n \hat {\Gamma}_{i,\pi(X_i)} 
   \qquad  
   \hat {\Gamma}_{i,\pi(X_i)} := \pi(X_i) \hat {\Gamma}_{i,1} + (1 - \pi(X_i)) \hat {\Gamma}_{i,0}.
@@ -746,7 +915,7 @@ If we "naively" used the estimators based on sample averages above, the policy v
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Value estimate: 0.0555995269775051 Std. Error: 0.00881687676959408&quot;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Value estimate: 0.0552498078510787 Std. Error: 0.00880095034908733&quot;
 </pre></div>
 </div>
 </div>
@@ -764,7 +933,7 @@ If we "naively" used the estimators based on sample averages above, the policy v
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Value estimate: -0.00853517332158943 Std. Error: 0.00929529780824854&quot;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Value estimate: -0.00868867271864236 Std. Error: 0.00927262467850558&quot;
 </pre></div>
 </div>
 </div>
@@ -795,15 +964,15 @@ $<span class="math notranslate nohighlight">\(
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;diff estimate: 0.0590396941408999 Std. Error: 0.005700539252257&quot;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;diff estimate: 0.05958856251026 Std. Error: 0.00571843830305694&quot;
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="case-study">
-<h2><span class="section-number">5.2. </span>Case study<a class="headerlink" href="#case-study" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="case-study">
+<h2><span class="section-number">5.2. </span>Case study<a class="headerlink" href="#case-study" title="Permalink to this headline">#</a></h2>
 <p>For completeness we’ll close out this section by estimating policy values using real data. Again, we’ll use an abridged version of the General Social Survey (GSS) <a class="reference external" href="https://gss.norc.org/Documents/reports/project-reports/GSSProject%20report32.pdf">(Smith, 2016)</a> dataset that was introduced in the previous chapter. In this dataset, individuals were sent to treatment or control with equal probability, so we are in a randomized setting.</p>
 <font size=2>
 (Please note that we have inverted the definitions of treatment and control)
@@ -831,8 +1000,8 @@ $<span class="math notranslate nohighlight">\(
 </div>
 </div>
 <p>We’ll take the following policy as an example. It asks individuals who are older (age &gt; 50) or more conservative (<code class="docutils literal notranslate"><span class="pre">polviews</span></code> <span class="math notranslate nohighlight">\(\leq\)</span> 4) if they think the government spends to much on “welfare”, and it asks yonger and more liberal individuals if they think the government spends too much on “assistance to the poor”.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-12c69254-26e4-4cfe-bdb5-e0ed7d750213">
-<span class="eqno">(5.17)<a class="headerlink" href="#equation-12c69254-26e4-4cfe-bdb5-e0ed7d750213" title="Permalink to this equation">¶</a></span>\[\begin{equation} \tag{5.12} \label{polage}
+<div class="amsmath math notranslate nohighlight" id="equation-e4ceff34-a8e2-4b1d-9e1f-48bb3f33a328">
+<span class="eqno">(5.17)<a class="headerlink" href="#equation-e4ceff34-a8e2-4b1d-9e1f-48bb3f33a328" title="Permalink to this equation">#</a></span>\[\begin{equation} \tag{5.12} \label{polage}
   \pi(x) =
     \begin{cases}
       1 \qquad \text{if }\texttt{polviews} \leq 4 \text{ OR } \texttt{age } &gt; 50  \\
@@ -906,7 +1075,7 @@ $<span class="math notranslate nohighlight">\(
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Value estimate: 0.351707181174887 Std. Error: 0.00379102271045461&quot;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Value estimate: 0.351687444521171 Std. Error: 0.00379184258885651&quot;
 </pre></div>
 </div>
 </div>
@@ -926,19 +1095,19 @@ $<span class="math notranslate nohighlight">\(
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Difference estimate: 0.0853362167071333 Std. Error: 0.00249102565606594&quot;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Difference estimate: 0.0853374415255781 Std. Error: 0.00249162977301492&quot;
 </pre></div>
 </div>
 </div>
 </div>
 <p>The result suggests that assigning observations to treatment as in (5.12) produces 8% more positive responses than assigning individuals at uniformly at random.</p>
-</div>
-<div class="section" id="further-reading">
-<h2><span class="section-number">5.3. </span>Further reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="further-reading">
+<h2><span class="section-number">5.3. </span>Further reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">#</a></h2>
 <p><a class="reference external" href="https://arxiv.org/abs/1702.02896">Athey and Wager (2020, Econometrica)</a> has a good review of the literature on policy learning and evaluation. For a more accessible introduction to the theory, see
 <a class="reference external" href="https://web.stanford.edu/~swager/stats361.pdf">Stefan Wager’s lecture notes</a>, lecture 7. However, both references focus heavily on policy learning, which will be the topic of the next chapter.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -962,9 +1131,11 @@ $<span class="math notranslate nohighlight">\(
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="4_heterogeneous_treatment_effect_1.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -980,23 +1151,27 @@ $<span class="math notranslate nohighlight">\(
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Phd Susan Athey<br/>
+  
+</p>
+        </footer>
+    </div>
     
-      By Phd Susan Athey<br/>
-    
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>

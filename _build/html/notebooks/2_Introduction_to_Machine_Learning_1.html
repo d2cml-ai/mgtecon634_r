@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>2. Introduction to Machine Learning &#8212; MGTECON 634 at Stanford (R scripts)</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,20 +20,16 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -39,12 +37,13 @@
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -64,7 +63,21 @@ const thebe_selector_output = ".output, .cell_output"
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -73,9 +86,10 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -93,14 +107,15 @@ const thebe_selector_output = ".output, .cell_output"
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../md/intro.html">
-   Machine Learning-Based Causal Inference
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../md/intro.html">
+                    Machine Learning-Based Causal Inference
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Topics
  </span>
@@ -136,120 +151,270 @@ const thebe_selector_output = ".output, .cell_output"
    6. Policy Learning I - Binary Treatment
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="7_LM_forest_RDD_1.html">
+   7. LM Forest RDD
+  </a>
+ </li>
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notebooks/2_Introduction_to_Machine_Learning_1.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/d2cml-ai/mgtecon634_r"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/d2cml-ai/mgtecon634_r/issues/new?title=Issue%20on%20page%20%2Fnotebooks/2_Introduction_to_Machine_Learning_1.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/d2cml-ai/mgtecon634_r/edit/master/_build/jupyter_execute/notebooks/2_Introduction_to_Machine_Learning_1.ipynb"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/d2cml-ai/mgtecon634_r/master?urlpath=tree/_build/jupyter_execute/notebooks/2_Introduction_to_Machine_Learning_1.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/d2cml-ai/mgtecon634_r/blob/master/_build/jupyter_execute/notebooks/2_Introduction_to_Machine_Learning_1.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        <button type="button" class="btn btn-secondary topbarbtn"
-            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
-                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/d2cml-ai/mgtecon634_r/master?urlpath=tree/_build/jupyter_execute/notebooks/2_Introduction_to_Machine_Learning_1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/d2cml-ai/mgtecon634_r/blob/master/_build/jupyter_execute/notebooks/2_Introduction_to_Machine_Learning_1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/d2cml-ai/mgtecon634_r"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/d2cml-ai/mgtecon634_r/issues/new?title=Issue%20on%20page%20%2Fnotebooks/2_Introduction_to_Machine_Learning_1.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/d2cml-ai/mgtecon634_r/edit/master/_build/jupyter_execute/notebooks/2_Introduction_to_Machine_Learning_1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/notebooks/2_Introduction_to_Machine_Learning_1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#key-concepts">
    2.1. Key concepts
@@ -284,12 +449,11 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1>Introduction to Machine Learning</h1>
@@ -340,7 +504,8 @@ const thebe_selector_output = ".output, .cell_output"
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
   <div class="cell docutils container">
@@ -354,8 +519,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<div class="tex2jax_ignore mathjax_ignore section" id="introduction-to-machine-learning">
-<h1><span class="section-number">2. </span>Introduction to Machine Learning<a class="headerlink" href="#introduction-to-machine-learning" title="Permalink to this headline">¶</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="introduction-to-machine-learning">
+<h1><span class="section-number">2. </span>Introduction to Machine Learning<a class="headerlink" href="#introduction-to-machine-learning" title="Permalink to this headline">#</a></h1>
 <p>RMD source: <a class="reference external" href="https://docs.google.com/uc?export=download&amp;id=110N1b5MYNXcIFZqWPqLbpqmgIkoMFqaF">link</a></p>
 <p>In this chapter, we’ll briefly review machine learning concepts that will be relevant later. We’ll focus in particular on the problem of <strong>prediction</strong>, that is, to model some output variable as a function of observed input covariates.</p>
 <div class="cell docutils container">
@@ -376,6 +541,10 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
+&quot;package &#39;grf&#39; was built under R version 4.2.1&quot;
+</pre></div>
+</div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: Matrix
 </pre></div>
 </div>
@@ -440,11 +609,11 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <p>Note: If you’d like to run the code below on a different dataset, you can replace the dataset above with another <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> of your choice, and redefine the key variable identifiers (<code class="docutils literal notranslate"><span class="pre">outcome</span></code>, <code class="docutils literal notranslate"><span class="pre">covariates</span></code>) accordingly. Although we try to make the code as general as possible, you may also need to make a few minor changes to the code below; read the comments carefully.</p>
-<div class="section" id="key-concepts">
-<h2><span class="section-number">2.1. </span>Key concepts<a class="headerlink" href="#key-concepts" title="Permalink to this headline">¶</a></h2>
+<section id="key-concepts">
+<h2><span class="section-number">2.1. </span>Key concepts<a class="headerlink" href="#key-concepts" title="Permalink to this headline">#</a></h2>
 <p>The prediction problem is to accurately guess the value of some output variable <span class="math notranslate nohighlight">\(Y_i\)</span> from input variables <span class="math notranslate nohighlight">\(X_i\)</span>. For example, we might want to predict “house prices given house characteristics such as the number of rooms, age of the building, and so on. The relationship between input and output is modeled in very general terms by some function</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6204a155-7094-441a-8174-f7a10b803246">
-<span class="eqno">(2.1)<a class="headerlink" href="#equation-6204a155-7094-441a-8174-f7a10b803246" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{eq:true-model} \tag{2.1}
+<div class="amsmath math notranslate nohighlight" id="equation-dc113f6d-85d1-488e-bb48-2adbc55b53b9">
+<span class="eqno">(2.1)<a class="headerlink" href="#equation-dc113f6d-85d1-488e-bb48-2adbc55b53b9" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:true-model} \tag{2.1}
   Y_i = f(X_i) + \epsilon_i
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\epsilon_i\)</span> represents all that is not captured by information obtained from <span class="math notranslate nohighlight">\(X_i\)</span> via the mapping <span class="math notranslate nohighlight">\(f\)</span>. We say that error <span class="math notranslate nohighlight">\(\epsilon_i\)</span> is irreducible.</p>
@@ -456,8 +625,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p><strong>Evaluation:</strong> Evaluate our fitted model <span class="math notranslate nohighlight">\(\hat{f}\)</span>. That is, if we were given a new, yet unseen, input and output pair <span class="math notranslate nohighlight">\((X',Y')\)</span>, we’d like to know if <span class="math notranslate nohighlight">\(Y' \approx \hat{f}(X_i)\)</span> by some metric.</p></li>
 </ul>
 <p>For concreteness, let’s work through an example. Let’s say that, given the data simulated above, we’d like to predict <span class="math notranslate nohighlight">\(Y_i\)</span> from the first covariate  <span class="math notranslate nohighlight">\(X_{i1}\)</span> only. Also, let’s say that our model class will be polynomials of degree <span class="math notranslate nohighlight">\(q\)</span> in <span class="math notranslate nohighlight">\(X_{i1}\)</span>, and we’ll evaluate fit based on mean squared error. That is, <span class="math notranslate nohighlight">\(\hat{f}(X_{i1}) = \hat{b}_0 + X_{i1}\hat{b}_1 + \cdots + X_{i1}^q \hat{b}_q\)</span>, where the coefficients are obtained by solving the following problem:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1bfb90a6-5bea-4c39-9b78-60759ca0f811">
-<span class="eqno">(2.2)<a class="headerlink" href="#equation-1bfb90a6-5bea-4c39-9b78-60759ca0f811" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-805ee681-18c1-4a49-acbc-3b2a7ed73aae">
+<span class="eqno">(2.2)<a class="headerlink" href="#equation-805ee681-18c1-4a49-acbc-3b2a7ed73aae" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \hat{b} = \arg\min_b \sum_{i=1}^m
     \left(Y_i - b_0 - X_{i1}b_1 - \cdots - X_{iq}^q b_q \right)^2
 \end{equation}\]</div>
@@ -630,9 +799,9 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <p>This is one of the benefits of using machine learning-based models: more data implies more flexible modeling, and therefore potentially better predictive power – provided that we carefully avoid overfitting.</p>
 <p>The example above based on polynomial regression was used mostly for illustration. In practice, there are often better-performing algorithms. We’ll see some of them next.</p>
-</div>
-<div class="section" id="common-machine-learning-algorithms">
-<h2><span class="section-number">2.2. </span>Common machine learning algorithms<a class="headerlink" href="#common-machine-learning-algorithms" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="common-machine-learning-algorithms">
+<h2><span class="section-number">2.2. </span>Common machine learning algorithms<a class="headerlink" href="#common-machine-learning-algorithms" title="Permalink to this headline">#</a></h2>
 <p>A final remark is that, in machine learning applications, the complexity of the model often is allowed to increase with the available data. In the example above, even though we weren’t very successful when fitting a high-dimensional model on very little data, if we had much more data perhaps such a model would be appropriate. The next figure again fits a high order polynomial model, but this time on many data points. Note how, at least in data-rich regions, the model is much better behaved, and tracks the average outcome reasonably well without trying to interpolate wildly of the data points.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -728,18 +897,18 @@ const thebe_selector_output = ".output, .cell_output"
 </table>
 </div></div>
 </div>
-<div class="section" id="generalized-linear-models">
-<h3><span class="section-number">2.2.1. </span>Generalized linear models<a class="headerlink" href="#generalized-linear-models" title="Permalink to this headline">¶</a></h3>
+<section id="generalized-linear-models">
+<h3><span class="section-number">2.2.1. </span>Generalized linear models<a class="headerlink" href="#generalized-linear-models" title="Permalink to this headline">#</a></h3>
 <p>This class of models extends common methods such as linear and logistic regression by adding a penalty to the magnitude of the coefficients. <strong>Lasso</strong> penalizes the absolute value of slope coefficients. For regression problems, it becomes</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0a5e3310-b0f6-456e-8847-8693c6a948cd">
-<span class="eqno">(2.3)<a class="headerlink" href="#equation-0a5e3310-b0f6-456e-8847-8693c6a948cd" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{eq:lasso}\tag{2.2}
+<div class="amsmath math notranslate nohighlight" id="equation-9c85d6df-d0f6-421e-9416-373f1253391b">
+<span class="eqno">(2.3)<a class="headerlink" href="#equation-9c85d6df-d0f6-421e-9416-373f1253391b" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:lasso}\tag{2.2}
   \hat{b}_{Lasso} = \arg\min_b \sum_{i=1}^m
     \left( Y_i - b_0 - X_{i1}b_1 - \cdots - X_{ip}b_p \right)^2
     - \lambda \sum_{j=1}^p |b_j|
 \end{equation}\]</div>
 <p>Similarly, in a regression problem <strong>Ridge</strong> penalizes the sum of squares of the slope coefficients,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8aba6cfc-83c4-45a0-ae83-436d00290537">
-<span class="eqno">(2.4)<a class="headerlink" href="#equation-8aba6cfc-83c4-45a0-ae83-436d00290537" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{eq:ridge}\tag{2.3}
+<div class="amsmath math notranslate nohighlight" id="equation-8567142f-53f9-464e-804c-b8be4c50d738">
+<span class="eqno">(2.4)<a class="headerlink" href="#equation-8567142f-53f9-464e-804c-b8be4c50d738" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:ridge}\tag{2.3}
   \hat{b}_{Ridge} = \arg\min_b \sum_{i=1}^m
     \left( Y_i - b_0 - X_{i1}b_1 - \cdots - X_{ip}b_p \right)^2
     - \lambda \sum_{j=1}^p b_j^2
@@ -1103,9 +1272,9 @@ Coefficients:
 </div>
 <p>As we just saw above, houses that have, e.g., been built more recently (<code class="docutils literal notranslate"><span class="pre">BUILT</span></code>), have more baths (<code class="docutils literal notranslate"><span class="pre">BATHS</span></code>) are associated with larger price predictions.</p>
 <p>This sort of interpretation exercise did not rely on reading any coefficients, and in fact it could also be done using any other flexible method, including decisions trees and forests.</p>
-</div>
-<div class="section" id="decision-trees">
-<h3><span class="section-number">2.2.2. </span>Decision trees<a class="headerlink" href="#decision-trees" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="decision-trees">
+<h3><span class="section-number">2.2.2. </span>Decision trees<a class="headerlink" href="#decision-trees" title="Permalink to this headline">#</a></h3>
 <p>This next class of algorithms divides the covariate space into “regions” and estimates a constant prediction within each region.</p>
 <p>To estimate a decision tree, we following a recursive partition algorithm. At each stage, we select one variable <span class="math notranslate nohighlight">\(j\)</span> and one split point
 <span class="math notranslate nohighlight">\(s\)</span>, and divide the observations into “left” and “right” subsets, depending on whether <span class="math notranslate nohighlight">\(X_{ij} \leq s\)</span> or <span class="math notranslate nohighlight">\(X_{ij} &gt; s\)</span>. For regression problems, the variable and split points are often selected so that the sum of the variances of the outcome variable in each “child” subset is smallest. For classification problems, we split to separate the classes. Then, for each child, we separately repeat the process of finding variables and split points. This continues until a minimum subset size is reached, or improvement falls below some threshold.</p>
@@ -1132,8 +1301,8 @@ Coefficients:
 </div>
 </div>
 <p>To reduce the complexity of the tree, we <strong>prune</strong> the tree: we collapse its leaves, permitting bias to increase but forcing variance to decrease until the desired trade-off is achieved. In <code class="docutils literal notranslate"><span class="pre">rpart</span></code>, this is done by considering a modified loss function that takes into account the number of terminal nodes (i.e., the number of regions in which the original data was partitioned). Somewhat heuristically, if we denote tree predictions by <span class="math notranslate nohighlight">\(T(x)\)</span> and its number of terminal nodes by  <span class="math notranslate nohighlight">\(|T|\)</span>, the modified regression problem can be written as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-18adf1b2-9b26-4576-86b3-c64625d078eb">
-<span class="eqno">(2.5)<a class="headerlink" href="#equation-18adf1b2-9b26-4576-86b3-c64625d078eb" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{eq:pruned-tree}\tag{2.4}
+<div class="amsmath math notranslate nohighlight" id="equation-ff90a380-8e4a-4f76-8aa6-46d23f400cc5">
+<span class="eqno">(2.5)<a class="headerlink" href="#equation-ff90a380-8e4a-4f76-8aa6-46d23f400cc5" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:pruned-tree}\tag{2.4}
   \widehat{T} = \arg\min_{T} \sum_{i=1}^m \left( T(X_i) - Y_i \right)^2 + c_p |T|
 \end{equation}\]</div>
 <p>The complexity of the tree is controlled by the scalar parameter <span class="math notranslate nohighlight">\(c_p\)</span>, denoted as <code class="docutils literal notranslate"><span class="pre">ccp_alpha</span></code> in <code class="docutils literal notranslate"><span class="pre">sklearn.tree.DecisionTreeRegressor</span></code>. For each value of <span class="math notranslate nohighlight">\(c_p\)</span>, we find the subtree that solves \eqref{eq:pruned-tree}. Large values of <span class="math notranslate nohighlight">\(c_p\)</span> lead to aggressively pruned trees, which have more bias and less variance. Small values of <span class="math notranslate nohighlight">\(c_p\)</span> allow for deeper trees whose predictions can vary more wildly.</p>
@@ -1296,9 +1465,9 @@ Std. Error   57.25873
 <img alt="../_images/2_Introduction_to_Machine_Learning_1_64_0.png" src="../_images/2_Introduction_to_Machine_Learning_1_64_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="forests">
-<h3><span class="section-number">2.2.3. </span>Forests<a class="headerlink" href="#forests" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="forests">
+<h3><span class="section-number">2.2.3. </span>Forests<a class="headerlink" href="#forests" title="Permalink to this headline">#</a></h3>
 <p>Forests are a type of <strong>ensemble</strong> estimators: they aggregate information about many decision trees to compute a new estimate that typically has much smaller variance.</p>
 <p>At a high level, the process of fitting a (regression) forest consists of fitting many decision trees, each on a different subsample of the data. The forest prediction for a particular point <span class="math notranslate nohighlight">\(x\)</span> is the average of all tree predictions for that point.</p>
 <p>One interesting aspect of forests and many other ensemble methods is that cross-validation can be built into the algorithm itself. Since each tree only uses a subset of the data, the remaining subset is effectively a test set for that tree. We call these observations <strong>out-of-bag</strong> (there were not in the “bag” of training observations). They can be used to evaluate the performance of that tree, and the average of out-of-bag evaluations is evidence of the performance of the forest itself.</p>
@@ -1326,7 +1495,7 @@ Std. Error   57.25873
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Forest MSE (out-of-bag): 0.589442024432908&quot;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Forest MSE (out-of-bag): 0.588509755889922&quot;
 </pre></div>
 </div>
 </div>
@@ -1346,20 +1515,20 @@ Std. Error   57.25873
 .dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
 .dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
 .dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
-</style><dl class=dl-inline><dt>UNITSF</dt><dd>0.395208438200705</dd><dt>NUNIT2</dt><dd>0.174885553470919</dd><dt>BATHS</dt><dd>0.167101816684208</dd><dt>DISH</dt><dd>0.10471816226605</dd><dt>BEDRMS</dt><dd>0.0369369880565597</dd><dt>MOBILTYP</dt><dd>0.0217545417105203</dd><dt>HALFB</dt><dd>0.0198953004164188</dd><dt>DINING</dt><dd>0.0123540017388917</dd><dt>FAMRM</dt><dd>0.0119941426806388</dd><dt>OARSYS</dt><dd>0.00938214432800989</dd></dl>
+</style><dl class=dl-inline><dt>UNITSF</dt><dd>0.346603658536585</dd><dt>NUNIT2</dt><dd>0.224643292682927</dd><dt>BATHS</dt><dd>0.132621951219512</dd><dt>DISH</dt><dd>0.0851554878048781</dd><dt>BEDRMS</dt><dd>0.0620060975609756</dd><dt>HALFB</dt><dd>0.0287439024390244</dd><dt>MOBILTYP</dt><dd>0.021655487804878</dd><dt>FAMRM</dt><dd>0.0177896341463415</dd><dt>BUILT</dt><dd>0.0165579268292683</dd><dt>AIRSYS</dt><dd>0.0158810975609756</dd></dl>
 </div></div>
 </div>
 <p>All the caveats about interpretation that we mentioned above apply in a similar to forest output.</p>
-</div>
-</div>
-<div class="section" id="further-reading">
-<h2><span class="section-number">2.3. </span>Further reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="further-reading">
+<h2><span class="section-number">2.3. </span>Further reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">#</a></h2>
 <p>In this tutorial we briefly reviewed some key concepts that we recur later in this tutorial. For readers who are entirely new to this field or interested in learning about it more depth, the first few chapters of the following textbook are an acccessible introduction:</p>
 <p>James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2013). An introduction to statistical learning (Vol. 112, p. 18). New York: springer. Available for free at <a class="reference external" href="https://www.statlearning.com/">the authors’ website</a>.</p>
 <p>Some of the discussion in the Lasso section in particular was drawn from <a class="reference external" href="https://www.aeaweb.org/articles?id=10.1257/jep.31.2.87">Mullainathan and Spiess (JEP, 2017)</a>, which contains a good discussion of the interpretability issues discussed here.</p>
 <p>There has been a good deal of research on inference in high-dimensional models, Although we won’t be covering in depth it in this tutorial, we refer readers to <a class="reference external" href="http://www.mit.edu/~vchern/papers/JEP.pdf">Belloni, Chernozhukov and Hansen (JEP, 2014)</a>. Also check out the related <code class="docutils literal notranslate"><span class="pre">R</span></code> package <a class="reference external" href="https://cran.r-project.org/web/packages/hdm/hdm.pdf"><code class="docutils literal notranslate"><span class="pre">hdm</span></code></a>, developed by the same authors, along with Philipp Bach and Martin Spindler.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1383,9 +1552,11 @@ Std. Error   57.25873
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="../md/1_introduction_1.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -1401,23 +1572,27 @@ Std. Error   57.25873
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Phd Susan Athey<br/>
+  
+</p>
+        </footer>
+    </div>
     
-      By Phd Susan Athey<br/>
-    
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>

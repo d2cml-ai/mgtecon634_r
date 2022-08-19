@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3. ATE I: Binary treatment &#8212; MGTECON 634 at Stanford (R scripts)</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,20 +20,16 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -39,12 +37,13 @@
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -64,7 +63,21 @@ const thebe_selector_output = ".output, .cell_output"
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -73,9 +86,10 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -93,14 +107,15 @@ const thebe_selector_output = ".output, .cell_output"
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../md/intro.html">
-   Machine Learning-Based Causal Inference
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../md/intro.html">
+                    Machine Learning-Based Causal Inference
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Topics
  </span>
@@ -136,120 +151,270 @@ const thebe_selector_output = ".output, .cell_output"
    6. Policy Learning I - Binary Treatment
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="7_LM_forest_RDD_1.html">
+   7. LM Forest RDD
+  </a>
+ </li>
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/notebooks/3_average_treatment_effect_1.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/d2cml-ai/mgtecon634_r"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/d2cml-ai/mgtecon634_r/issues/new?title=Issue%20on%20page%20%2Fnotebooks/3_average_treatment_effect_1.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/d2cml-ai/mgtecon634_r/edit/master/_build/jupyter_execute/notebooks/3_average_treatment_effect_1.ipynb"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/d2cml-ai/mgtecon634_r/master?urlpath=tree/_build/jupyter_execute/notebooks/3_average_treatment_effect_1.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/d2cml-ai/mgtecon634_r/blob/master/_build/jupyter_execute/notebooks/3_average_treatment_effect_1.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        <button type="button" class="btn btn-secondary topbarbtn"
-            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
-                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/d2cml-ai/mgtecon634_r/master?urlpath=tree/_build/jupyter_execute/notebooks/3_average_treatment_effect_1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/d2cml-ai/mgtecon634_r/blob/master/_build/jupyter_execute/notebooks/3_average_treatment_effect_1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/d2cml-ai/mgtecon634_r"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/d2cml-ai/mgtecon634_r/issues/new?title=Issue%20on%20page%20%2Fnotebooks/3_average_treatment_effect_1.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/d2cml-ai/mgtecon634_r/edit/master/_build/jupyter_execute/notebooks/3_average_treatment_effect_1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/notebooks/3_average_treatment_effect_1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#notation-and-definitions">
    3.1. Notation and definitions
@@ -304,12 +469,11 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1>ATE I: Binary treatment</h1>
@@ -380,11 +544,12 @@ const thebe_selector_output = ".output, .cell_output"
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="ate-i-binary-treatment">
-<h1><span class="section-number">3. </span>ATE I: Binary treatment<a class="headerlink" href="#ate-i-binary-treatment" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="ate-i-binary-treatment">
+<h1><span class="section-number">3. </span>ATE I: Binary treatment<a class="headerlink" href="#ate-i-binary-treatment" title="Permalink to this headline">#</a></h1>
 <p>Source RMD file: <a class="reference external" href="https://docs.google.com/uc?export=download&amp;id=1WYFBGKPkG3y4lkTox_P7gG2Q6upEjbWd">link</a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -410,6 +575,10 @@ const thebe_selector_output = ".output, .cell_output"
     as.Date, as.Date.numeric
 </pre></div>
 </div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
+&quot;package &#39;grf&#39; was built under R version 4.2.1&quot;
+</pre></div>
+</div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: Matrix
 </pre></div>
 </div>
@@ -418,12 +587,12 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<div class="section" id="notation-and-definitions">
-<h2><span class="section-number">3.1. </span>Notation and definitions<a class="headerlink" href="#notation-and-definitions" title="Permalink to this headline">¶</a></h2>
+<section id="notation-and-definitions">
+<h2><span class="section-number">3.1. </span>Notation and definitions<a class="headerlink" href="#notation-and-definitions" title="Permalink to this headline">#</a></h2>
 <p>Let’s establish some notation. Each data point will be defined by the triple <span class="math notranslate nohighlight">\((X_i, W_i, Y_i)\)</span>. The vector <span class="math notranslate nohighlight">\(X_i\)</span> represents covariates that are observed for individual <span class="math notranslate nohighlight">\(i\)</span>. Treatment assignment is indicated by <span class="math notranslate nohighlight">\(W_i \in \{0, 1\}\)</span>, with 1 representing treatment, and 0 representing control. The scalar <span class="math notranslate nohighlight">\(Y_i\)</span> is the observed outcome, and it can be real or binary. Each observation is drawn independently and from the same distribution. We’ll be interested in assessing the causal effect of treatment on outcome.</p>
 <p>A difficulty in estimating causal quantities is that we observe each individual in only one treatment state: either they were treated, or they weren’t. However, it’s often useful to imagine that each individual is endowed with two random variables <span class="math notranslate nohighlight">\((Y_i(1), Y_i(0))\)</span>, where <span class="math notranslate nohighlight">\(Y_i(1)\)</span> represents the value of this individual’s outcome if they receive treatment, and <span class="math notranslate nohighlight">\(Y_i(0)\)</span> represents their outcome if they are not treated. These random variables are called  <strong>potential outcomes</strong>. The observed outcome <span class="math notranslate nohighlight">\(Y_i\)</span> corresponds to whichever potential outcome we got to see:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-955ba53b-a06c-487e-83b4-fac07a831642">
-<span class="eqno">(3.1)<a class="headerlink" href="#equation-955ba53b-a06c-487e-83b4-fac07a831642" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-66b58cc7-901b-44a2-97eb-d00e5d3960b7">
+<span class="eqno">(3.1)<a class="headerlink" href="#equation-66b58cc7-901b-44a2-97eb-d00e5d3960b7" title="Permalink to this equation">#</a></span>\[\begin{equation}
   Y_i \equiv Y_i(W_i) =
   \begin{cases}
     Y_i(1) \qquad \text{if }W_i = 1 \text{ (treated)} \\ 
@@ -431,26 +600,26 @@ const thebe_selector_output = ".output, .cell_output"
   \end{cases}
 \end{equation}\]</div>
 <p>Since we can’t observe both <span class="math notranslate nohighlight">\(Y_i(1)\)</span> and <span class="math notranslate nohighlight">\(Y_i(0)\)</span>, we won’t be able to make statistical claims about the individual treatment effect <span class="math notranslate nohighlight">\(Y_i(1) - Y_i(0)\)</span>. Instead, our goal will be to estimate the <strong>average treatment effect (ATE)</strong>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cfe26174-33fe-42aa-a9b4-8187de7abc7e">
-<span class="eqno">(3.2)<a class="headerlink" href="#equation-cfe26174-33fe-42aa-a9b4-8187de7abc7e" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{eq:ate} \tag{3.1}
+<div class="amsmath math notranslate nohighlight" id="equation-4d5a91db-d98d-44f6-94cd-63c7eb65ad98">
+<span class="eqno">(3.2)<a class="headerlink" href="#equation-4d5a91db-d98d-44f6-94cd-63c7eb65ad98" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:ate} \tag{3.1}
   \tau := \mathbf{E}[Y_i(1) - Y_i(0)].
 \end{equation}\]</div>
 <p>Here, when we refer to the <strong>randomized</strong> setting we mean that we have data generated by a randomized control trial. The key characteristic of this setting is that the probability that an individual is assigned to the treatment arm is fixed. In particular, it does not depend on the individual’s potential outcomes:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0db27ae0-eee3-4dc8-ac1c-49f3fadce2a8">
-<span class="eqno">(3.3)<a class="headerlink" href="#equation-0db27ae0-eee3-4dc8-ac1c-49f3fadce2a8" title="Permalink to this equation">¶</a></span>\[\begin{equation} 
+<div class="amsmath math notranslate nohighlight" id="equation-c091ed61-444b-4e7e-afa9-ed08fcfd280f">
+<span class="eqno">(3.3)<a class="headerlink" href="#equation-c091ed61-444b-4e7e-afa9-ed08fcfd280f" title="Permalink to this equation">#</a></span>\[\begin{equation} 
     \label{eq:unconf} \tag{3.2}
   Y_i(1), Y_i(0) \perp W_i.
 \end{equation}\]</div>
 <p>This precludes situations in which individuals may self-select into or out of treatment. The canonical failure example is a job training program in which workers enroll more often if they are more likely to benefit from treatment because in that case <span class="math notranslate nohighlight">\(W_i\)</span> and <span class="math notranslate nohighlight">\(Y_i(1) - Y_i(0)\)</span> would be positively correlated.</p>
 <p>When condition \eqref{eq:unconf}  is violated, we say that we are in an <strong>observational</strong> setting. This is a more complex setting encompassing several different scenarios: sometimes it’s still possible to estimate the ATE under additional assumptions, sometimes the researcher can exploit other sources of variation to obtain other interesting estimands. Here, we will focus on ATE estimation under the following assumption:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cdb19862-67f7-445a-a176-14969ae02bb1">
-<span class="eqno">(3.4)<a class="headerlink" href="#equation-cdb19862-67f7-445a-a176-14969ae02bb1" title="Permalink to this equation">¶</a></span>\[\begin{equation} \label{eq:cond-unconf} \tag{3.3}
+<div class="amsmath math notranslate nohighlight" id="equation-b5b335c4-cd00-432c-9ee2-3421dbefcb26">
+<span class="eqno">(3.4)<a class="headerlink" href="#equation-b5b335c4-cd00-432c-9ee2-3421dbefcb26" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:cond-unconf} \tag{3.3}
   Y_i(1), Y_i(0) \perp W_i \ | \ X_i.
 \end{equation}\]</div>
 <p>In this document we will call this assumption <strong>unconfoundeness</strong>, though it is also known as <strong>no unmeasured confounders</strong>, <strong>ignorability</strong> or <strong>selection on observables</strong>. It says that all possible sources of self-selection, etc., can be explained by the observable covariates <span class="math notranslate nohighlight">\(X_i\)</span>. Continuing the example above, it may be that older or more educated are more likely to self-select into treatment; but when we compare two workers that have the same age and level of education, etc., there’s nothing else that we could infer about their relative potential outcomes if we knew that one went into job training and the other did not.</p>
 <p>As we’ll see below, a key quantity of interest will be the treatment assignment probability, or <strong>propensity score</strong> <span class="math notranslate nohighlight">\(e(X_i) := \mathbb{P}[W_i = 1 | X_i]\)</span>. In an experimental setting this quantity is usually known and fixed, and in observational settings it must be estimated from the data. We will often need to assume that the propensity score is bounded away from zero and one. That is, there exists some <span class="math notranslate nohighlight">\(\eta &gt; 0\)</span> such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d5570e5d-e6bb-4c0b-a74d-9339fa54a7e2">
-<span class="eqno">(3.5)<a class="headerlink" href="#equation-d5570e5d-e6bb-4c0b-a74d-9339fa54a7e2" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{eq:overlap} \tag{3.4}
+<div class="amsmath math notranslate nohighlight" id="equation-ec75d5f9-048e-4c4f-b119-704d02604690">
+<span class="eqno">(3.5)<a class="headerlink" href="#equation-ec75d5f9-048e-4c4f-b119-704d02604690" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:overlap} \tag{3.4}
   \eta &lt; e(x) &lt; 1 - \eta  \qquad \text{for all }x.
 \end{equation}\]</div>
 <p>This assumption is known as <strong>overlap</strong>, and it means that for all types of people in our population (i.e., all values of observable characteristics) we can find some portion of individuals in treatment and some in control. Intuitively, this is necessary because we’d like to will be comparing treatment and control at each level of the covariates and then aggregate those results.</p>
@@ -474,12 +643,12 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="difference-in-means-estimator">
-<h2><span class="section-number">3.2. </span>Difference-in-means estimator<a class="headerlink" href="#difference-in-means-estimator" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="difference-in-means-estimator">
+<h2><span class="section-number">3.2. </span>Difference-in-means estimator<a class="headerlink" href="#difference-in-means-estimator" title="Permalink to this headline">#</a></h2>
 <p>Let’s begin by considering a simple estimator that is available in experimental settings. The <strong>difference-in-means</strong> estimator is the sample average of outcomes in treatment minus the sample average of outcomes in control.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-10dbefa2-6e7a-4355-86a8-7f685d4ff58d">
-<span class="eqno">(3.6)<a class="headerlink" href="#equation-10dbefa2-6e7a-4355-86a8-7f685d4ff58d" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{eq:ate-dm} \tag{3.5}
+<div class="amsmath math notranslate nohighlight" id="equation-97e7861d-1203-439b-8797-459cbeedda1c">
+<span class="eqno">(3.6)<a class="headerlink" href="#equation-97e7861d-1203-439b-8797-459cbeedda1c" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:ate-dm} \tag{3.5}
   \widehat{\tau}^{DIFF} =
     \frac{1}{n_1} \sum_{i:W_i = 1} Y_i -
     \frac{1}{n_0} \sum_{i:W_i = 0} Y_i
@@ -532,13 +701,13 @@ mean in group 0 mean in group 1
 </div>
 </div>
 <p>We can also compute the same quantity via linear regression, using the fact that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d7ba1281-6a7a-42cc-bb60-3ead84d1059c">
-<span class="eqno">(3.7)<a class="headerlink" href="#equation-d7ba1281-6a7a-42cc-bb60-3ead84d1059c" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f318d62c-c99d-4362-90d3-e5012ed406d8">
+<span class="eqno">(3.7)<a class="headerlink" href="#equation-f318d62c-c99d-4362-90d3-e5012ed406d8" title="Permalink to this equation">#</a></span>\[\begin{equation}
   Y_i = Y_i(0) + W_i \left( Y_i(1) - Y_i(0) \right),
 \end{equation}\]</div>
 <p>so that taking expectations conditional on treatment assignment,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b137da86-7c63-4994-86d6-3d837b706d4c">
-<span class="eqno">(3.8)<a class="headerlink" href="#equation-b137da86-7c63-4994-86d6-3d837b706d4c" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-36aad434-6815-41bf-a705-9093b0a7cf28">
+<span class="eqno">(3.8)<a class="headerlink" href="#equation-36aad434-6815-41bf-a705-9093b0a7cf28" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \mathbf{E}[Y_i | W_i] = \alpha + W_i \tau \qquad \text{where}
   \qquad \alpha := \mathbf{E}[Y_i(0)]
 \end{equation}\]</div>
@@ -585,9 +754,9 @@ Exercise: make sure you understand this decomposition. Where is the unconfounded
 </div></div>
 </div>
 <p>The difference-in-means estimator is a simple, easily computable, unbiased, “model-free” estimator of the treatment effect. It should always be reported when dealing with experimental data. However, as we’ll see later in this chapter, it may not necessarily be the one with smallest variance.</p>
-</div>
-<div class="section" id="turning-an-experimental-dataset-into-an-observational-one">
-<h2><span class="section-number">3.3. </span>Turning an experimental dataset into an observational one<a class="headerlink" href="#turning-an-experimental-dataset-into-an-observational-one" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="turning-an-experimental-dataset-into-an-observational-one">
+<h2><span class="section-number">3.3. </span>Turning an experimental dataset into an observational one<a class="headerlink" href="#turning-an-experimental-dataset-into-an-observational-one" title="Permalink to this headline">#</a></h2>
 <p>In what follows we’ll purposely create a biased sample to show how the difference in means estimator fails in observational settings. We’ll focus on two covariates: <code class="docutils literal notranslate"><span class="pre">age</span></code> and political views (<code class="docutils literal notranslate"><span class="pre">polviews</span></code>). Presumably, younger or more liberal individuals are less affected by the change in wording in the question. So let’s see what happens when we make these individuals more prominent in our sample of treated individuals, and less prominent in our sample of untreated individuals.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -673,16 +842,16 @@ Exercise: make sure you understand this decomposition. Where is the unconfounded
 .dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
 .dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
 .dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
-</style><dl class=dl-inline><dt>Estimate</dt><dd>-0.289894168090105</dd><dt>Std. Error</dt><dd>0.00860371829771131</dd><dt>t value</dt><dd>-33.6940562276685</dd><dt>Pr(&gt;|t|)</dt><dd>2.19508400268456e-234</dd></dl>
+</style><dl class=dl-inline><dt>Estimate</dt><dd>-0.292310713876813</dd><dt>Std. Error</dt><dd>0.00874625837700842</dd><dt>t value</dt><dd>-33.4212301165512</dd><dt>Pr(&gt;|t|)</dt><dd>9.21533847664895e-231</dd></dl>
 </div></div>
 </div>
 <p>Note that the dataset created above still satisfies unconfoundedness (3.3), since discrepancies in treatment assignment probability are described by observable covariates (<code class="docutils literal notranslate"><span class="pre">age</span></code> and <code class="docutils literal notranslate"><span class="pre">polviews</span></code>). Moreover, it also satisfies the overlap assumption (3.4), since never completely dropped all treated or all untreated observations in any region of the covariate space. This is important because, in what follows, we’ll consider different estimators of the ATE that are available in observational settings under unconfoundedness and overlap.</p>
-</div>
-<div class="section" id="direct-estimation">
-<h2><span class="section-number">3.4. </span>Direct estimation<a class="headerlink" href="#direct-estimation" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="direct-estimation">
+<h2><span class="section-number">3.4. </span>Direct estimation<a class="headerlink" href="#direct-estimation" title="Permalink to this headline">#</a></h2>
 <p>Our first estimator is suggested by the following decomposition of the ATE, which is possible due to unconfoundedness (3.3).</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2dea1c36-efe3-4266-8487-86794f4db408">
-<span class="eqno">(3.9)<a class="headerlink" href="#equation-2dea1c36-efe3-4266-8487-86794f4db408" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8272141c-2072-4b54-ad6e-4841dd53270b">
+<span class="eqno">(3.9)<a class="headerlink" href="#equation-8272141c-2072-4b54-ad6e-4841dd53270b" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \mathbf{E}[Y_i(1) - Y_i(0)]
   = \mathbf{E}[\mathbf{E}[Y_i | X_i, W_i=1]] - \mathbf{E}[\mathbf{E}[Y_i | X_i, W_i=0]]
 \end{equation}\]</div>
@@ -695,8 +864,8 @@ Exercise: make sure you understand this decomposition. Where is the unconfounded
 <li><p>Predict <span class="math notranslate nohighlight">\(\hat{\mu}(X_i, 1)\)</span> and <span class="math notranslate nohighlight">\(\hat{\mu}(X_i, 0)\)</span> for each observation in the data.</p></li>
 <li><p>Average out the predictions and subtract them.</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-0f287d2e-4daf-4054-83a8-3da8f9d0203e">
-<span class="eqno">(3.10)<a class="headerlink" href="#equation-0f287d2e-4daf-4054-83a8-3da8f9d0203e" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-19ccdd9c-cbaf-4262-911c-e839cbc119b7">
+<span class="eqno">(3.10)<a class="headerlink" href="#equation-19ccdd9c-cbaf-4262-911c-e839cbc119b7" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \hat{\tau}^{DM} := \frac{1}{n} \sum_{i=1}^{n} \hat{\mu}(X_i, 1) - \hat{\mu}(X_i, 0)
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -730,16 +899,16 @@ Exercise: make sure you understand this decomposition. Where is the unconfounded
 &quot;prediction from a rank-deficient fit may be misleading&quot;
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] -0.3378443
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] -0.3425308
 </pre></div>
 </div>
 </div>
 </div>
 <p>This estimator allows us to leverage regression techniques to estimate the ATE, so the resulting estimate should have smaller root-mean-squared error. However, it has several disadvantages that make it undesirable. First, its properties will rely heavily on the model  <span class="math notranslate nohighlight">\(\hat{\mu}(x, w)\)</span> being correctly specified: it will be an unbiased and/or consistent estimate of the ATE provided that <span class="math notranslate nohighlight">\(\hat{\mu}(x, w)\)</span>  is an unbiased and/or consistent estimator of  <span class="math notranslate nohighlight">\(\mathbf{E}[Y|X=x, W=w]\)</span>. In practice, having a well-specified model is not something we want to rely upon. In general, it will also not be asymptotically normal, which means that we can’t easily compute t-statistics and p-values for it.</p>
 <p>A technical note. Step 1 above can be done by regressing <span class="math notranslate nohighlight">\(Y_i\)</span> on <span class="math notranslate nohighlight">\(X_i\)</span> using only treated observations to get an estimate <span class="math notranslate nohighlight">\(\hat{\mu}(x, 1)\)</span> first, and then repeating the same to obtain <span class="math notranslate nohighlight">\(\hat{\mu}(x, 0)\)</span> from the control observations. Or it can be done by regression <span class="math notranslate nohighlight">\(Y_i\)</span> on both covariates <span class="math notranslate nohighlight">\((X_i, W_i)\)</span> together and obtaining a function <span class="math notranslate nohighlight">\(\hat{\mu}(x, w)\)</span>. Both have advantages and disadvantages, and we refer to <a class="reference external" href="https://www.pnas.org/content/116/10/4156.short">Künzel, Sekhon, Bickel, Yu  (2019)</a> for a discussion.</p>
-</div>
-<div class="section" id="inverse-propensity-weighted-estimator">
-<h2><span class="section-number">3.5. </span>Inverse propensity-weighted estimator<a class="headerlink" href="#inverse-propensity-weighted-estimator" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="inverse-propensity-weighted-estimator">
+<h2><span class="section-number">3.5. </span>Inverse propensity-weighted estimator<a class="headerlink" href="#inverse-propensity-weighted-estimator" title="Permalink to this headline">#</a></h2>
 <p>To understand this estimator, let’s first consider a toy problem. Suppose that we’d like to estimate the average effect of a certain learning intervention on students’ grades, measured on a scale of 0-100. We run two separate experiments in schools of type A and B. Suppose that, unknown to us, grades among treated students in schools of type A are approximately distributed as <span class="math notranslate nohighlight">\(Y_i(1) | A \sim N(60, 5^2)\)</span>, whereas in schools of type B they are distributed as <span class="math notranslate nohighlight">\(Y_i(1) | B \sim N(70, 5^2)\)</span>. Moreover, for simplicity both schools have the same number of students. If we could treat the same number of students in both types of schools, we’d get an unbiased estimate of the population mean grade among treated individuals: <span class="math notranslate nohighlight">\((1/2)60 + (1/2)70 = 75\)</span>.</p>
 <p>However, suppose that enrollment in the treatment is voluntary. In school A, only 5% enroll in the study, whereas in school B the number is 40%. Therefore, if we take an average of treated students’ grades without taking school membership into account, school B’s students would be over-represented, and therefore our estimate of treated student’s grades would be biased upward.</p>
 <div class="cell docutils container">
@@ -767,8 +936,8 @@ Exercise: make sure you understand this decomposition. Where is the unconfounded
 </div>
 </div>
 <p>To solve this problem, we can consider each school separately, and then aggregate the results. Denote by <span class="math notranslate nohighlight">\(n_A\)</span> the number of students from school <span class="math notranslate nohighlight">\(A\)</span>, and <span class="math notranslate nohighlight">\(n_{A,1}\)</span> denote the number of treated students in that school. Likewise, denote by <span class="math notranslate nohighlight">\(n_B\)</span> and <span class="math notranslate nohighlight">\(n_{B,1}\)</span> the same quantities for school <span class="math notranslate nohighlight">\(B\)</span>. Then our aggregated means estimator can be written as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ca0db82a-266c-4881-a5fa-75b5bf67f3ca">
-<span class="eqno">(3.11)<a class="headerlink" href="#equation-ca0db82a-266c-4881-a5fa-75b5bf67f3ca" title="Permalink to this equation">¶</a></span>\[\begin{equation} \label{eq:agg} \tag{3.6} 
+<div class="amsmath math notranslate nohighlight" id="equation-ee4d1912-e514-4f14-91c0-b4ba58f927f5">
+<span class="eqno">(3.11)<a class="headerlink" href="#equation-ee4d1912-e514-4f14-91c0-b4ba58f927f5" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:agg} \tag{3.6} 
   \overbrace{
   {\left (\frac{n_{A}}{n} \right)}
   }^{\text{Proportion of A}}
@@ -809,8 +978,8 @@ Exercise: make sure you understand this decomposition. Where is the unconfounded
 </div>
 </div>
 <p>Next, we’ll manipulate the expression (3.6). This next derivation can be a bit overwhelming, but please keep in mind that we’re simply doing algebraic manipulations, as well as establishing some common and useful notation. First, note that we can rewrite the average for school A in (3.6) as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eed31851-54fc-4dcd-9174-dd7e2102886c">
-<span class="eqno">(3.12)<a class="headerlink" href="#equation-eed31851-54fc-4dcd-9174-dd7e2102886c" title="Permalink to this equation">¶</a></span>\[\begin{equation}\label{eq:avg1} \tag{3.7}
+<div class="amsmath math notranslate nohighlight" id="equation-7f5954cf-ed99-445e-be76-c519c74a0932">
+<span class="eqno">(3.12)<a class="headerlink" href="#equation-7f5954cf-ed99-445e-be76-c519c74a0932" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:avg1} \tag{3.7}
     \left (\frac{1}{n_{A, 1}}\right) 
     \sum_{\substack{i \in A \\ i \text{ treated}}} Y_i
     =
@@ -819,8 +988,8 @@ Exercise: make sure you understand this decomposition. Where is the unconfounded
     \frac{1}{n_A} \sum_{i \in A} \frac{W_i}{(n_{A,1} / n_A)} Y_i,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(W_i\)</span> is the treatment indicator. Plugging \eqref{eq:avg1} back into (3.6),</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9d417f48-9346-41ed-90b6-3fda24f2076c">
-<span class="eqno">(3.13)<a class="headerlink" href="#equation-9d417f48-9346-41ed-90b6-3fda24f2076c" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-59d81b33-c1c9-4dc9-bc08-d71bfda46804">
+<span class="eqno">(3.13)<a class="headerlink" href="#equation-59d81b33-c1c9-4dc9-bc08-d71bfda46804" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \left ({\frac{n_{A}}{n}}\right) 
     \frac{1}{n_A} \sum_{i \in A} \frac{W_i}{(n_{A,1} / n_A)} Y_i
   +
@@ -828,16 +997,16 @@ Exercise: make sure you understand this decomposition. Where is the unconfounded
 \frac{1}{n_B} \sum_{i \in B} \frac{W_i}{(n_{B,1} / n_B)} Y_i.
 \end{equation}\]</div>
 <p>Note that the <span class="math notranslate nohighlight">\(n_A\)</span> and <span class="math notranslate nohighlight">\(n_B\)</span> will cancel out. Finally, if we denote the sample proportion of treated students in school <span class="math notranslate nohighlight">\(A\)</span> by <span class="math notranslate nohighlight">\(\hat{e}(A_i) \approx n_{A,1}/n_A\)</span> and similar for school <span class="math notranslate nohighlight">\(B\)</span>, (3.6) can be written compactly as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5a3a267e-2ce2-412a-8e69-618d4d958a6c">
-<span class="eqno">(3.14)<a class="headerlink" href="#equation-5a3a267e-2ce2-412a-8e69-618d4d958a6c" title="Permalink to this equation">¶</a></span>\[\begin{equation} \label{ipw-treated} \tag{3.8}
+<div class="amsmath math notranslate nohighlight" id="equation-bcc112a9-e6d1-4ffd-98b1-16edbdbc483a">
+<span class="eqno">(3.14)<a class="headerlink" href="#equation-bcc112a9-e6d1-4ffd-98b1-16edbdbc483a" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{ipw-treated} \tag{3.8}
   \frac{1}{n} \sum_{i=1}^{n}  \frac{W_i}{\hat{e}(X_i)} Y_i,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(X_i \in \{A, B\}\)</span> denotes the school membership. Quantity <span class="math notranslate nohighlight">\(\hat{e}(X_i)\)</span> is an estimate of the probability of treatment given the control variable <span class="math notranslate nohighlight">\(e(X_i) = \mathbb{P}[W_i=1 | X_i ]\)</span>, also called the <strong>propensity score</strong>. Because \eqref{ipw-treated} is a weighted average with weights <span class="math notranslate nohighlight">\(W_i/\hat{e}(X_i)\)</span>, when written in this form we say that it is an <strong>inverse propensity-weighted estimator</strong> (IPW).</p>
 <p>The IPW estimator is also defined for the case of continuous covariates. In that case, we must estimate the assignment probability given some model, for example using logistic regression, forests, etc. With respect to modeling, the behavior of the IPW estimator is similar to the direct estimator: if <span class="math notranslate nohighlight">\(\hat{e}(X_i)\)</span> is an unbiased estimate of <span class="math notranslate nohighlight">\(e(X_i)\)</span>, then \eqref{ipw-treated} is an unbiased estimate of <span class="math notranslate nohighlight">\(E[Y(1)]\)</span>; and we can show that if <span class="math notranslate nohighlight">\(\hat{e}(X_i)\)</span> is a consistent estimator of <span class="math notranslate nohighlight">\(e(X_i)\)</span>, then \eqref{ipw-treated} is consistent for <span class="math notranslate nohighlight">\(E[Y(1)]\)</span>.</p>
 <p>Another important point is that when the estimated treatment propensity <span class="math notranslate nohighlight">\(\hat{e}(X_i)\)</span> is small, the summands in \eqref{ipw-treated} can be very large. In particular, if <span class="math notranslate nohighlight">\(\hat{e}(x)\)</span> is exactly zero, then this estimator is undefined. That is why, in addition to requiring conditional unconfoundedness (3.3), it also requires the overlap condition (3.4). In any case, when overlap is small (i.e., <span class="math notranslate nohighlight">\(\hat{e}(x)\)</span> is very close to zero for many <span class="math notranslate nohighlight">\(x\)</span>), IPW becomes an unattractive estimator due to its high variance. We’ll see in the next section an improved estimator that builds upon IPW but is strictly superior and should be used instead.</p>
 <p>Finally, we just derived an estimator of the average treated outcome, but we could repeat the argument for control units instead. Subtracting the two estimators leads to the following inverse propensity-weighted estimate of the treatment effect:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1ce2c3d5-30b9-4522-9e4f-ac22ec6f6b71">
-<span class="eqno">(3.15)<a class="headerlink" href="#equation-1ce2c3d5-30b9-4522-9e4f-ac22ec6f6b71" title="Permalink to this equation">¶</a></span>\[\begin{equation} \tag{3.9}
+<div class="amsmath math notranslate nohighlight" id="equation-85987093-fadc-451c-81eb-3532c3c0af55">
+<span class="eqno">(3.15)<a class="headerlink" href="#equation-85987093-fadc-451c-81eb-3532c3c0af55" title="Permalink to this equation">#</a></span>\[\begin{equation} \tag{3.9}
   \widehat{\tau}^{IPW} := \frac{1}{n} \sum_{i=1}^{n} Y_i \frac{W_i}{\hat{e}(X_i)} - \frac{1}{n} \sum_{i=1}^{n} Y_i \frac{(1 - W_i) }{1-\hat{e}(X_i)}.
 \end{equation}\]</div>
 <p>The argument above suggests the following algorithm:</p>
@@ -872,17 +1041,17 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      estimate      std.error         t.stat         pvalue 
- -3.335277e-01   1.364318e-02  -2.444648e+01  1.435848e-121 
+ -3.302578e-01   1.359459e-02  -2.429333e+01  5.179847e-120 
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="augmented-inverse-propensity-weighted-aipw-estimator">
-<h2><span class="section-number">3.6. </span>Augmented inverse propensity-weighted (AIPW) estimator<a class="headerlink" href="#augmented-inverse-propensity-weighted-aipw-estimator" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="augmented-inverse-propensity-weighted-aipw-estimator">
+<h2><span class="section-number">3.6. </span>Augmented inverse propensity-weighted (AIPW) estimator<a class="headerlink" href="#augmented-inverse-propensity-weighted-aipw-estimator" title="Permalink to this headline">#</a></h2>
 <p>The next <strong>augmented inverse propensity-weighted estimator</strong> (AIPW) of the treatment effect is available under unconfoundedness (3.3) and overlap (3.4):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-916e8ddc-2648-487c-b0f8-b44480617ba0">
-<span class="eqno">(3.16)<a class="headerlink" href="#equation-916e8ddc-2648-487c-b0f8-b44480617ba0" title="Permalink to this equation">¶</a></span>\[\begin{equation} \label{eq:aipw} \tag{3.10}
+<div class="amsmath math notranslate nohighlight" id="equation-f429ac50-62b9-446d-a361-5442881af4a9">
+<span class="eqno">(3.16)<a class="headerlink" href="#equation-f429ac50-62b9-446d-a361-5442881af4a9" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:aipw} \tag{3.10}
   \begin{aligned}
   \hat{\tau}^{AIPW} &amp;:=
     \frac{1}{n} \sum_{i=1}^{n}
@@ -972,7 +1141,7 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      estimate      std.error         t.stat         pvalue 
- -3.340538e-01   9.483400e-03  -3.522511e+01  1.023225e-256 
+ -3.345880e-01   9.790250e-03  -3.417563e+01  2.418629e-241 
 </pre></div>
 </div>
 </div>
@@ -993,10 +1162,10 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 <tbody>
 	<tr><th scope=row>3</th><td> 3</td><td>1</td><td>0</td><td>44</td><td>2</td><td>12</td><td>16</td><td>5</td><td>2</td></tr>
 	<tr><th scope=row>4</th><td> 6</td><td>0</td><td>0</td><td>47</td><td>1</td><td> 5</td><td>10</td><td>4</td><td>1</td></tr>
-	<tr><th scope=row>13</th><td>16</td><td>1</td><td>0</td><td>63</td><td>3</td><td> 4</td><td>10</td><td>1</td><td>1</td></tr>
+	<tr><th scope=row>6</th><td> 8</td><td>0</td><td>0</td><td>36</td><td>2</td><td> 8</td><td>18</td><td>1</td><td>1</td></tr>
+	<tr><th scope=row>10</th><td>13</td><td>0</td><td>1</td><td>25</td><td>1</td><td> 9</td><td>11</td><td>5</td><td>1</td></tr>
+	<tr><th scope=row>17</th><td>26</td><td>1</td><td>0</td><td>67</td><td>4</td><td> 9</td><td>12</td><td>1</td><td>1</td></tr>
 	<tr><th scope=row>19</th><td>28</td><td>0</td><td>0</td><td>20</td><td>4</td><td>12</td><td>14</td><td>5</td><td>1</td></tr>
-	<tr><th scope=row>21</th><td>31</td><td>0</td><td>1</td><td>30</td><td>5</td><td>11</td><td>16</td><td>4</td><td>2</td></tr>
-	<tr><th scope=row>28</th><td>39</td><td>0</td><td>1</td><td>40</td><td>5</td><td>12</td><td>18</td><td>1</td><td>2</td></tr>
 </tbody>
 </table>
 </div></div>
@@ -1023,22 +1192,22 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message in average_treatment_effect(forest):
-&quot;Estimated treatment propensities go as high as 0.988 which means that treatment effects for some treated units may not be well identified. In this case, using `target.sample=control` may be helpful.&quot;
+&quot;Estimated treatment propensities take values between 0.042 and 1 and in particular get very close to 0 and 1. In this case, using `target.sample=overlap`, or filtering data as in Crump, Hotz, Imbens, and Mitnik (Biometrika, 2009) may be helpful.&quot;
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   estimate     std.err 
--0.33372819  0.01359292 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>estimate  std.err 
+     NaN      NaN 
 </pre></div>
 </div>
 </div>
 </div>
 <p>Finally, even when overlap holds, when the propensity score is small AIPW can have unstable performance. In that case, other estimators of the average treatment effect are available. For example, see the <em>approximate residual balancing</em> (ARB) method in <a class="reference external" href="https://arxiv.org/abs/1604.07125">Athey, Imbens and Wager (2016)</a> and its accompanying <code class="docutils literal notranslate"><span class="pre">R</span></code> package <a class="reference external" href="https://github.com/swager/balanceHD"><code class="docutils literal notranslate"><span class="pre">balanceHD</span></code></a>.</p>
-</div>
-<div class="section" id="diagnostics">
-<h2><span class="section-number">3.7. </span>Diagnostics<a class="headerlink" href="#diagnostics" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="diagnostics">
+<h2><span class="section-number">3.7. </span>Diagnostics<a class="headerlink" href="#diagnostics" title="Permalink to this headline">#</a></h2>
 <p>Here we show some basic diagnostics and best practices that should always be conducted. Although failing these tests should usually cause concern, passing them does not mean that the analysis is entirely free from issues. For example, even if our estimated propensity scores are bounded away from zero and one (and therefore seem to satisfy the overlap assumption), they may still be incorrect – for example, if we rely on modeling assumptions that are simply not true. Also, although we should expect to pass all the diagnostic tests below in randomized settings, it’s good practice to check them anyway, as one may find problems with the experimental design.</p>
-<div class="section" id="assessing-balance">
-<h3><span class="section-number">3.7.1. </span>Assessing balance<a class="headerlink" href="#assessing-balance" title="Permalink to this headline">¶</a></h3>
+<section id="assessing-balance">
+<h3><span class="section-number">3.7.1. </span>Assessing balance<a class="headerlink" href="#assessing-balance" title="Permalink to this headline">#</a></h3>
 <p>As we saw in Section (3.3), in observational settings the covariate distributions can be very different for treated and untreated individuals. Such discrepancies can lead to biased estimates of the ATE, but as hinted in Section (3.5), one would hope that by up- or down-weighting observations based on inverse propensity weights their averages should be similar. In fact, we should also expect that averages of basis functions of the covariates should be similar after reweighting. This property is called <strong>balance</strong>. One way to check it is as follows. Given some variable <span class="math notranslate nohighlight">\(Z_i\)</span> (e.g., a covariate <span class="math notranslate nohighlight">\(X_{i1}\)</span>, or an interaction between covariates <span class="math notranslate nohighlight">\(X_{i1}X_{i2}\)</span>, or a polynomial in covariates <span class="math notranslate nohighlight">\(X_{i1}^2\)</span>, etc), we can check the absolute standardized mean difference (ASMD) of <span class="math notranslate nohighlight">\(Z_i\)</span> between treated and untreated individuals in our data,</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1120,7 +1289,7 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 .dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
 .dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
 .dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
-</style><dl class=dl-inline><dt>age</dt><dd>0.643545972612061</dd><dt>polviews</dt><dd>0.58879245248871</dd><dt>income</dt><dd>0.068081178080946</dd><dt>educ</dt><dd>0.113961174500686</dd><dt>marital</dt><dd>0.127453234019971</dd><dt>sex</dt><dd>0.0479697066180955</dd><dt>age:polviews</dt><dd>0.0893702135808426</dd><dt>age:income</dt><dd>0.483464015889472</dd><dt>age:educ</dt><dd>0.47049944097443</dd><dt>age:marital</dt><dd>0.216569258781139</dd><dt>age:sex</dt><dd>0.468925446037488</dd><dt>polviews:income</dt><dd>0.492954486341619</dd><dt>polviews:educ</dt><dd>0.539560595824781</dd><dt>polviews:marital</dt><dd>0.33587005003226</dd><dt>polviews:sex</dt><dd>0.358737084009828</dd><dt>income:educ</dt><dd>0.10526793243106</dd><dt>income:marital</dt><dd>0.131619023439188</dd><dt>income:sex</dt><dd>0.00452435380348722</dd><dt>educ:marital</dt><dd>0.141270788327107</dd><dt>educ:sex</dt><dd>0.0265983659721176</dd><dt>marital:sex</dt><dd>0.0813547902363223</dd></dl>
+</style><dl class=dl-inline><dt>age</dt><dd>0.643999798283843</dd><dt>polviews</dt><dd>0.57156378988074</dd><dt>income</dt><dd>0.0688270503931759</dd><dt>educ</dt><dd>0.128802270084139</dd><dt>marital</dt><dd>0.109306492418916</dd><dt>sex</dt><dd>0.0291094309606468</dd><dt>age:polviews</dt><dd>0.0996133077342495</dd><dt>age:income</dt><dd>0.493491456203521</dd><dt>age:educ</dt><dd>0.465788876518641</dd><dt>age:marital</dt><dd>0.224491800731607</dd><dt>age:sex</dt><dd>0.455507262761341</dd><dt>polviews:income</dt><dd>0.482102559949553</dd><dt>polviews:educ</dt><dd>0.535491948516664</dd><dt>polviews:marital</dt><dd>0.315757468122034</dd><dt>polviews:sex</dt><dd>0.371743316420056</dd><dt>income:educ</dt><dd>0.114099026268471</dd><dt>income:marital</dt><dd>0.117241160610498</dd><dt>income:sex</dt><dd>0.0189555257279249</dd><dt>educ:marital</dt><dd>0.128907720510115</dd><dt>educ:sex</dt><dd>0.0507916664919972</dd><dt>marital:sex</dt><dd>0.0700769626945358</dd></dl>
 </div></div>
 </div>
 <p>Note above how in particular <code class="docutils literal notranslate"><span class="pre">age</span></code> and <code class="docutils literal notranslate"><span class="pre">polviews</span></code> – the variables we chose to introduce imbalance in Section (3.3) – are far from balanced before adjustment, as are other variables that correlate with them.</p>
@@ -1145,12 +1314,12 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 	<tr><th></th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
 </thead>
 <tbody>
-	<tr><th scope=row>3</th><td>44</td><td>2</td><td> 88</td><td>16</td><td>0</td><td>1.951515</td></tr>
-	<tr><th scope=row>4</th><td>47</td><td>1</td><td> 47</td><td>10</td><td>0</td><td>1.139868</td></tr>
-	<tr><th scope=row>13</th><td>63</td><td>3</td><td>189</td><td>10</td><td>0</td><td>1.107740</td></tr>
-	<tr><th scope=row>19</th><td>20</td><td>4</td><td> 80</td><td>14</td><td>0</td><td>2.717725</td></tr>
-	<tr><th scope=row>21</th><td>30</td><td>5</td><td>150</td><td>16</td><td>1</td><td>1.183657</td></tr>
-	<tr><th scope=row>28</th><td>40</td><td>5</td><td>200</td><td>18</td><td>1</td><td>1.149985</td></tr>
+	<tr><th scope=row>3</th><td>44</td><td>2</td><td> 88</td><td>16</td><td>0</td><td>2.063781</td></tr>
+	<tr><th scope=row>4</th><td>47</td><td>1</td><td> 47</td><td>10</td><td>0</td><td>1.262457</td></tr>
+	<tr><th scope=row>6</th><td>36</td><td>2</td><td> 72</td><td>18</td><td>0</td><td>2.397613</td></tr>
+	<tr><th scope=row>10</th><td>25</td><td>1</td><td> 25</td><td>11</td><td>1</td><td>1.721944</td></tr>
+	<tr><th scope=row>17</th><td>67</td><td>4</td><td>268</td><td>12</td><td>0</td><td>1.157034</td></tr>
+	<tr><th scope=row>19</th><td>20</td><td>4</td><td> 80</td><td>14</td><td>0</td><td>2.739389</td></tr>
 </tbody>
 </table>
 </div></div>
@@ -1183,9 +1352,9 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 </div>
 </div>
 <p>There exist other types of balance checks. We recommend checking out the <code class="docutils literal notranslate"><span class="pre">R</span></code> package <code class="docutils literal notranslate"><span class="pre">cobalt</span></code>. This <a class="reference external" href="https://cran.r-project.org/web/packages/cobalt/vignettes/cobalt.html">vignette</a> is a good place to start.</p>
-</div>
-<div class="section" id="assessing-overlap">
-<h3><span class="section-number">3.7.2. </span>Assessing overlap<a class="headerlink" href="#assessing-overlap" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="assessing-overlap">
+<h3><span class="section-number">3.7.2. </span>Assessing overlap<a class="headerlink" href="#assessing-overlap" title="Permalink to this headline">#</a></h3>
 <p>It’s also important to check the estimated propensity scores. If they seem to cluster at zero or one, we should expect IPW and AIPW estimators to behave very poorly. Here, the propensity score is trimodal because of our sample modification procedure in Section (3.3): some observations are untouched and therefore remain with assignment probability <span class="math notranslate nohighlight">\(0.5\)</span>, some are dropped (kept) with probability 15% (85%).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1200,13 +1369,13 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 </div>
 <p>When overlap fails, the methods described above will not produce good estimates. In that case, one may consider changing the estimand and targeting the average treatment effect <em>on the treated</em> (ATT) <span class="math notranslate nohighlight">\(\mathbf{E}[Y_i(1) - Y_i(0) | W_i=1]\)</span>, or trimming the sample and focusing on some subgroup <span class="math notranslate nohighlight">\(G_i\)</span> with bounded propensity scores <span class="math notranslate nohighlight">\(\mathbf{E}[Y_i(1) - Y_i(0) | G_i]\)</span>, as discussed in<br />
 <a class="reference external" href="https://academic.oup.com/biomet/article/96/1/187/235329?login=true">Crump, Hotz, Imbens and Mitnik (Biometrika, 2009)</a>.</p>
-</div>
-</div>
-<div class="section" id="further-reading">
-<h2><span class="section-number">3.8. </span>Further reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="further-reading">
+<h2><span class="section-number">3.8. </span>Further reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">#</a></h2>
 <p>Besides the references noted in the text, for more information on the theory behind the estimators studied in this tutorial we recommend Stefan Wager’s <a class="reference external" href="https://web.stanford.edu/~swager/stats361.pdf">lecture notes</a> (Lectures 1-4 and 7).</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1230,9 +1399,11 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="2_Introduction_to_Machine_Learning_1.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -1248,23 +1419,27 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Phd Susan Athey<br/>
+  
+</p>
+        </footer>
+    </div>
     
-      By Phd Susan Athey<br/>
-    
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>

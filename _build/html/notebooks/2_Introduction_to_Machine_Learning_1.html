@@ -96,7 +96,7 @@ const thebe_selector_output = ".output, .cell_output"
         
       
       
-      <img src="../_static/logo.jpg" class="logo" alt="logo">
+      <img src="../_static/logo.png" class="logo" alt="logo">
       
       
       <h1 class="site-logo" id="site-title">MGTECON 634 at Stanford (R scripts)</h1>
@@ -110,7 +110,7 @@ const thebe_selector_output = ".output, .cell_output"
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../md/intro.html">
+                <a class="reference internal" href="../intro.html">
                     Machine Learning-Based Causal Inference
                 </a>
             </li>
@@ -154,6 +154,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="7_LM_forest_RDD_1.html">
    7. LM Forest RDD
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="8_MCPanel.html">
+   8. Matrix completion Methods for Causal Panel Data Models
   </a>
  </li>
 </ul>
@@ -541,10 +546,6 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
-&quot;package &#39;grf&#39; was built under R version 4.2.1&quot;
-</pre></div>
-</div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: Matrix
 </pre></div>
 </div>
@@ -554,10 +555,10 @@ title="Print to PDF"
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: zoo
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Attaching package: &#39;zoo&#39;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Attaching package: ‘zoo’
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The following objects are masked from &#39;package:base&#39;:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The following objects are masked from ‘package:base’:
 
     as.Date, as.Date.numeric
 </pre></div>
@@ -612,8 +613,8 @@ title="Print to PDF"
 <section id="key-concepts">
 <h2><span class="section-number">2.1. </span>Key concepts<a class="headerlink" href="#key-concepts" title="Permalink to this headline">#</a></h2>
 <p>The prediction problem is to accurately guess the value of some output variable <span class="math notranslate nohighlight">\(Y_i\)</span> from input variables <span class="math notranslate nohighlight">\(X_i\)</span>. For example, we might want to predict “house prices given house characteristics such as the number of rooms, age of the building, and so on. The relationship between input and output is modeled in very general terms by some function</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dc113f6d-85d1-488e-bb48-2adbc55b53b9">
-<span class="eqno">(2.1)<a class="headerlink" href="#equation-dc113f6d-85d1-488e-bb48-2adbc55b53b9" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:true-model} \tag{2.1}
+<div class="amsmath math notranslate nohighlight" id="equation-d76f87b4-b183-475b-b902-a91608dea855">
+<span class="eqno">(2.1)<a class="headerlink" href="#equation-d76f87b4-b183-475b-b902-a91608dea855" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:true-model} \tag{2.1}
   Y_i = f(X_i) + \epsilon_i
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\epsilon_i\)</span> represents all that is not captured by information obtained from <span class="math notranslate nohighlight">\(X_i\)</span> via the mapping <span class="math notranslate nohighlight">\(f\)</span>. We say that error <span class="math notranslate nohighlight">\(\epsilon_i\)</span> is irreducible.</p>
@@ -625,8 +626,8 @@ title="Print to PDF"
 <li><p><strong>Evaluation:</strong> Evaluate our fitted model <span class="math notranslate nohighlight">\(\hat{f}\)</span>. That is, if we were given a new, yet unseen, input and output pair <span class="math notranslate nohighlight">\((X',Y')\)</span>, we’d like to know if <span class="math notranslate nohighlight">\(Y' \approx \hat{f}(X_i)\)</span> by some metric.</p></li>
 </ul>
 <p>For concreteness, let’s work through an example. Let’s say that, given the data simulated above, we’d like to predict <span class="math notranslate nohighlight">\(Y_i\)</span> from the first covariate  <span class="math notranslate nohighlight">\(X_{i1}\)</span> only. Also, let’s say that our model class will be polynomials of degree <span class="math notranslate nohighlight">\(q\)</span> in <span class="math notranslate nohighlight">\(X_{i1}\)</span>, and we’ll evaluate fit based on mean squared error. That is, <span class="math notranslate nohighlight">\(\hat{f}(X_{i1}) = \hat{b}_0 + X_{i1}\hat{b}_1 + \cdots + X_{i1}^q \hat{b}_q\)</span>, where the coefficients are obtained by solving the following problem:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-805ee681-18c1-4a49-acbc-3b2a7ed73aae">
-<span class="eqno">(2.2)<a class="headerlink" href="#equation-805ee681-18c1-4a49-acbc-3b2a7ed73aae" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-67826773-b775-49be-ad25-74716e04477a">
+<span class="eqno">(2.2)<a class="headerlink" href="#equation-67826773-b775-49be-ad25-74716e04477a" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \hat{b} = \arg\min_b \sum_{i=1}^m
     \left(Y_i - b_0 - X_{i1}b_1 - \cdots - X_{iq}^q b_q \right)^2
 \end{equation}\]</div>
@@ -900,15 +901,15 @@ title="Print to PDF"
 <section id="generalized-linear-models">
 <h3><span class="section-number">2.2.1. </span>Generalized linear models<a class="headerlink" href="#generalized-linear-models" title="Permalink to this headline">#</a></h3>
 <p>This class of models extends common methods such as linear and logistic regression by adding a penalty to the magnitude of the coefficients. <strong>Lasso</strong> penalizes the absolute value of slope coefficients. For regression problems, it becomes</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9c85d6df-d0f6-421e-9416-373f1253391b">
-<span class="eqno">(2.3)<a class="headerlink" href="#equation-9c85d6df-d0f6-421e-9416-373f1253391b" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:lasso}\tag{2.2}
+<div class="amsmath math notranslate nohighlight" id="equation-bcf7b47c-7773-4d07-b063-11d906def0ad">
+<span class="eqno">(2.3)<a class="headerlink" href="#equation-bcf7b47c-7773-4d07-b063-11d906def0ad" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:lasso}\tag{2.2}
   \hat{b}_{Lasso} = \arg\min_b \sum_{i=1}^m
     \left( Y_i - b_0 - X_{i1}b_1 - \cdots - X_{ip}b_p \right)^2
     - \lambda \sum_{j=1}^p |b_j|
 \end{equation}\]</div>
 <p>Similarly, in a regression problem <strong>Ridge</strong> penalizes the sum of squares of the slope coefficients,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8567142f-53f9-464e-804c-b8be4c50d738">
-<span class="eqno">(2.4)<a class="headerlink" href="#equation-8567142f-53f9-464e-804c-b8be4c50d738" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:ridge}\tag{2.3}
+<div class="amsmath math notranslate nohighlight" id="equation-492ea688-2fb9-4ed6-890d-6fcd5ccab4a2">
+<span class="eqno">(2.4)<a class="headerlink" href="#equation-492ea688-2fb9-4ed6-890d-6fcd5ccab4a2" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:ridge}\tag{2.3}
   \hat{b}_{Ridge} = \arg\min_b \sum_{i=1}^m
     \left( Y_i - b_0 - X_{i1}b_1 - \cdots - X_{ip}b_p \right)^2
     - \lambda \sum_{j=1}^p b_j^2
@@ -1301,8 +1302,8 @@ Coefficients:
 </div>
 </div>
 <p>To reduce the complexity of the tree, we <strong>prune</strong> the tree: we collapse its leaves, permitting bias to increase but forcing variance to decrease until the desired trade-off is achieved. In <code class="docutils literal notranslate"><span class="pre">rpart</span></code>, this is done by considering a modified loss function that takes into account the number of terminal nodes (i.e., the number of regions in which the original data was partitioned). Somewhat heuristically, if we denote tree predictions by <span class="math notranslate nohighlight">\(T(x)\)</span> and its number of terminal nodes by  <span class="math notranslate nohighlight">\(|T|\)</span>, the modified regression problem can be written as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ff90a380-8e4a-4f76-8aa6-46d23f400cc5">
-<span class="eqno">(2.5)<a class="headerlink" href="#equation-ff90a380-8e4a-4f76-8aa6-46d23f400cc5" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:pruned-tree}\tag{2.4}
+<div class="amsmath math notranslate nohighlight" id="equation-6d187cee-e167-4486-918a-75732e7d8e4e">
+<span class="eqno">(2.5)<a class="headerlink" href="#equation-6d187cee-e167-4486-918a-75732e7d8e4e" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:pruned-tree}\tag{2.4}
   \widehat{T} = \arg\min_{T} \sum_{i=1}^m \left( T(X_i) - Y_i \right)^2 + c_p |T|
 \end{equation}\]</div>
 <p>The complexity of the tree is controlled by the scalar parameter <span class="math notranslate nohighlight">\(c_p\)</span>, denoted as <code class="docutils literal notranslate"><span class="pre">ccp_alpha</span></code> in <code class="docutils literal notranslate"><span class="pre">sklearn.tree.DecisionTreeRegressor</span></code>. For each value of <span class="math notranslate nohighlight">\(c_p\)</span>, we find the subtree that solves \eqref{eq:pruned-tree}. Large values of <span class="math notranslate nohighlight">\(c_p\)</span> lead to aggressively pruned trees, which have more bias and less variance. Small values of <span class="math notranslate nohighlight">\(c_p\)</span> allow for deeper trees whose predictions can vary more wildly.</p>
@@ -1495,7 +1496,7 @@ Std. Error   57.25873
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Forest MSE (out-of-bag): 0.588509755889922&quot;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] &quot;Forest MSE (out-of-bag): 0.589147497724969&quot;
 </pre></div>
 </div>
 </div>
@@ -1515,7 +1516,7 @@ Std. Error   57.25873
 .dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
 .dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
 .dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
-</style><dl class=dl-inline><dt>UNITSF</dt><dd>0.346603658536585</dd><dt>NUNIT2</dt><dd>0.224643292682927</dd><dt>BATHS</dt><dd>0.132621951219512</dd><dt>DISH</dt><dd>0.0851554878048781</dd><dt>BEDRMS</dt><dd>0.0620060975609756</dd><dt>HALFB</dt><dd>0.0287439024390244</dd><dt>MOBILTYP</dt><dd>0.021655487804878</dd><dt>FAMRM</dt><dd>0.0177896341463415</dd><dt>BUILT</dt><dd>0.0165579268292683</dd><dt>AIRSYS</dt><dd>0.0158810975609756</dd></dl>
+</style><dl class=dl-inline><dt>UNITSF</dt><dd>0.314498604310621</dd><dt>NUNIT2</dt><dd>0.233772388230449</dd><dt>BATHS</dt><dd>0.141894568251499</dd><dt>DISH</dt><dd>0.0783828307326225</dd><dt>BEDRMS</dt><dd>0.0683241660183956</dd><dt>HALFB</dt><dd>0.0293555118290395</dd><dt>FAMRM</dt><dd>0.0267807623667231</dd><dt>MOBILTYP</dt><dd>0.0235471559968883</dd><dt>DINING</dt><dd>0.015713723516222</dd><dt>BUILT</dt><dd>0.014098933784835</dd></dl>
 </div></div>
 </div>
 <p>All the caveats about interpretation that we mentioned above apply in a similar to forest output.</p>

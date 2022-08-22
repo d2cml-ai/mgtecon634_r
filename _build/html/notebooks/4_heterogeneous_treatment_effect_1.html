@@ -96,7 +96,7 @@ const thebe_selector_output = ".output, .cell_output"
         
       
       
-      <img src="../_static/logo.jpg" class="logo" alt="logo">
+      <img src="../_static/logo.png" class="logo" alt="logo">
       
       
       <h1 class="site-logo" id="site-title">MGTECON 634 at Stanford (R scripts)</h1>
@@ -110,7 +110,7 @@ const thebe_selector_output = ".output, .cell_output"
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../md/intro.html">
+                <a class="reference internal" href="../intro.html">
                     Machine Learning-Based Causal Inference
                 </a>
             </li>
@@ -154,6 +154,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="7_LM_forest_RDD_1.html">
    7. LM Forest RDD
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="8_MCPanel.html">
+   8. Matrix completion Methods for Causal Panel Data Models
   </a>
  </li>
 </ul>
@@ -548,14 +553,14 @@ title="Print to PDF"
 <h1><span class="section-number">4. </span>HTE I: Binary treatment<a class="headerlink" href="#hte-i-binary-treatment" title="Permalink to this headline">#</a></h1>
 <p>Source RMD file: <a class="reference external" href="https://docs.google.com/uc?export=download&amp;id=1FSUi4WLfYYKnvWsNWypiQORhkqf5IlFP">link</a></p>
 <p>In the previous chapter, we learned how to estimate the effect of a binary treatment averaged over the entire population. However, the average may obscure important details about how different individuals react to the treatment. In this chapter, we will learn how to estimate the <strong>conditional average treatment effect (CATE)</strong>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f7db4ca4-a0ca-4810-a498-b9ecd318b586">
-<span class="eqno">(4.1)<a class="headerlink" href="#equation-f7db4ca4-a0ca-4810-a498-b9ecd318b586" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:cate} \tag{4.1}
+<div class="amsmath math notranslate nohighlight" id="equation-a4058b88-fe87-4bfa-9634-91d0cc1624f0">
+<span class="eqno">(4.1)<a class="headerlink" href="#equation-a4058b88-fe87-4bfa-9634-91d0cc1624f0" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:cate} \tag{4.1}
   \tau(x) := \mathbf{E}[Y_i(1) - Y_i(0) | X_i = x],
 \end{equation}\]</div>
 <p>which is a “localized” version of the average treatment effect conditional on a vector of observable characteristics.</p>
 <p>It’s often the case that \eqref{eq:cate} is too general to be immediately useful, especially when the observable covariates are high-dimensional. It can be hard to estimate reliably without making strong modeling assumptions, and hard to summarize in a useful manner after estimation. In such situations, we will instead try to estimate treatment effect averages for simpler groups</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2256017f-3190-4ea0-8c74-15376b929736">
-<span class="eqno">(4.2)<a class="headerlink" href="#equation-2256017f-3190-4ea0-8c74-15376b929736" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:cate-g} \tag{4.2}
+<div class="amsmath math notranslate nohighlight" id="equation-6ca785bb-8c6a-4a37-89f7-f4e43c5da0cd">
+<span class="eqno">(4.2)<a class="headerlink" href="#equation-6ca785bb-8c6a-4a37-89f7-f4e43c5da0cd" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:cate-g} \tag{4.2}
   \mathbf{E}[Y_i(1) - Y_i(0) | G_i = g],
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(G_i\)</span> indexes subgroups of interest. Below you’ll learn how to estimate and test hypotheses about pre-defined subgroups, and also how to discover subgroups of interest from the data. In this tutorial, you will learn how to use estimates of \eqref{eq:cate} to suggest relevant subgroups <span class="math notranslate nohighlight">\(G_i\)</span> (and in the next chapters you will find out other uses of \eqref{eq:cate} in policy learning and evaluation).</p>
@@ -578,21 +583,13 @@ title="Print to PDF"
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: rpart.plot
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
-&quot;package &#39;rpart.plot&#39; was built under R version 4.2.1&quot;
-</pre></div>
-</div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: data.table
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
-&quot;package &#39;data.table&#39; was built under R version 4.2.1&quot;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Attaching package: ‘data.table’
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Attaching package: &#39;data.table&#39;
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The following objects are masked from &#39;package:reshape2&#39;:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The following objects are masked from ‘package:reshape2’:
 
     dcast, melt
 </pre></div>
@@ -614,10 +611,6 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
-&quot;package &#39;grf&#39; was built under R version 4.2.1&quot;
-</pre></div>
-</div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: Matrix
 </pre></div>
 </div>
@@ -627,10 +620,10 @@ title="Print to PDF"
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: zoo
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Attaching package: &#39;zoo&#39;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Attaching package: ‘zoo’
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The following objects are masked from &#39;package:base&#39;:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The following objects are masked from ‘package:base’:
 
     as.Date, as.Date.numeric
 </pre></div>
@@ -659,23 +652,23 @@ title="Print to PDF"
 <section id="pre-specified-hypotheses">
 <h2><span class="section-number">4.1. </span>Pre-specified hypotheses<a class="headerlink" href="#pre-specified-hypotheses" title="Permalink to this headline">#</a></h2>
 <p>We will begin by learning how to test pre-specified null hypotheses of the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e2eacf90-e5aa-4878-b4a0-acc08ff19f65">
-<span class="eqno">(4.3)<a class="headerlink" href="#equation-e2eacf90-e5aa-4878-b4a0-acc08ff19f65" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:hte-hyp} \tag{4.3}
+<div class="amsmath math notranslate nohighlight" id="equation-5404b3b4-2edb-428d-8fcd-06fa3ef56c86">
+<span class="eqno">(4.3)<a class="headerlink" href="#equation-5404b3b4-2edb-428d-8fcd-06fa3ef56c86" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:hte-hyp} \tag{4.3}
   H_{0}: \mathbf{E}[Y(1) - Y(0) | G_i = 1] = \mathbf{E}[Y(1) - Y(0) | G_i = 0].
 \end{equation}\]</div>
 <p>That is, that the treatment effect is the same regardless of membership to some group
 <span class="math notranslate nohighlight">\(G_i\)</span>. Importantly, for now we’ll assume that the group <span class="math notranslate nohighlight">\(G_i\)</span> was <strong>pre-specified</strong> – it was decided <em>before</em> looking at the data.</p>
 <p>In a randomized setting, if the both the treatment  <span class="math notranslate nohighlight">\(W_i\)</span> and group membership <span class="math notranslate nohighlight">\(G_i\)</span> are binary, we can write</p>
-<div class="amsmath math notranslate nohighlight" id="equation-186a4c2e-7c16-4033-a51d-0c69ff1b6103">
-<span class="eqno">(4.4)<a class="headerlink" href="#equation-186a4c2e-7c16-4033-a51d-0c69ff1b6103" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:linear} \tag{4.4}
+<div class="amsmath math notranslate nohighlight" id="equation-a90cfcc1-d3ea-401b-93a9-24eede44c7ad">
+<span class="eqno">(4.4)<a class="headerlink" href="#equation-a90cfcc1-d3ea-401b-93a9-24eede44c7ad" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:linear} \tag{4.4}
   \mathbf{E}[Y_i(W_i)|G_i] = \mathbf{E}[Y_i|W_i, G_i] = \beta_0 + \beta_w W_i + \beta_g G_i + \beta_{wg} W_i G_i
 \end{equation}\]</div>
 <font size=1>
 When $W_i$ and $G_i$ are binary, this decomposition is true without loss of generality. Why?
 </font>
 <p>This allows us to write the average effects of <span class="math notranslate nohighlight">\(W_i\)</span> and <span class="math notranslate nohighlight">\(G_i\)</span> on <span class="math notranslate nohighlight">\(Y_i\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6d31e4fc-20b4-4fbe-a5cf-7cf6cbb9d952">
-<span class="eqno">(4.5)<a class="headerlink" href="#equation-6d31e4fc-20b4-4fbe-a5cf-7cf6cbb9d952" title="Permalink to this equation">#</a></span>\[\begin{equation}  \label{eq:decomp} \tag{4.5}
+<div class="amsmath math notranslate nohighlight" id="equation-fe9f49a8-283d-429c-919b-05a4427065e0">
+<span class="eqno">(4.5)<a class="headerlink" href="#equation-fe9f49a8-283d-429c-919b-05a4427065e0" title="Permalink to this equation">#</a></span>\[\begin{equation}  \label{eq:decomp} \tag{4.5}
   \begin{aligned} 
     \mathbf{E}[Y(1) | G_i=1] &amp;= \beta_0 + \beta_w W_i + \beta_g G_i + \beta_{wg} W_i G_i, \\
     \mathbf{E}[Y(1) | G_i=0] &amp;= \beta_0 + \beta_w W_i,  \\
@@ -708,7 +701,7 @@ w                  -0.3789182  0.0058604 -64.657 &lt; 2.2e-16 ***
 conservativeTRUE   -0.1590214  0.0092479 -17.195 &lt; 2.2e-16 ***
 w:conservativeTRUE  0.1160034  0.0103710  11.185 &lt; 2.2e-16 ***
 ---
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 </pre></div>
 </div>
 </div>
@@ -717,8 +710,8 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 Interpret the results above. The coefficient $\beta_{xw}$ is denoted by `w:conservativeTRUE`. Can we detect a difference in treatment effect for conservative vs liberal individuals? For whom is the effect larger?
 </font>
 <p>Sometimes there are many subgroups, leading to multiple hypotheses such as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d32de03b-f8ed-4e57-b353-5c97c4d1de55">
-<span class="eqno">(4.6)<a class="headerlink" href="#equation-d32de03b-f8ed-4e57-b353-5c97c4d1de55" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:mult-hyp} \tag{4.6}
+<div class="amsmath math notranslate nohighlight" id="equation-21b47fb3-15f6-42f0-8490-d2878102578d">
+<span class="eqno">(4.6)<a class="headerlink" href="#equation-21b47fb3-15f6-42f0-8490-d2878102578d" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:mult-hyp} \tag{4.6}
 H_0: \mathbf{E}[Y(1) - Y(0) \ | \  G_i = 1] = \mathbf{E}[Y(1) - Y(0) \ | \  G_i = g]
 \qquad
 \text{for many values of }g.
@@ -858,8 +851,8 @@ H_0: \mathbf{E}[Y(1) - Y(0) \ | \  G_i = 1] = \mathbf{E}[Y(1) - Y(0) \ | \  G_i 
 	<tr><th></th><th scope=col>Estimate</th><th scope=col>Std. Error</th><th scope=col>Orig. p-value</th><th scope=col>Adj. p-value</th></tr>
 </thead>
 <tbody>
-	<tr><th scope=row>w:factor(polviews)2</th><td>-0.02424199</td><td>0.03034779</td><td>4.244098e-01</td><td>0.4271</td></tr>
-	<tr><th scope=row>w:factor(polviews)3</th><td>-0.05962335</td><td>0.03015010</td><td>4.798896e-02</td><td>0.0768</td></tr>
+	<tr><th scope=row>w:factor(polviews)2</th><td>-0.02424199</td><td>0.03034779</td><td>4.244098e-01</td><td>0.4181</td></tr>
+	<tr><th scope=row>w:factor(polviews)3</th><td>-0.05962335</td><td>0.03015010</td><td>4.798896e-02</td><td>0.0764</td></tr>
 	<tr><th scope=row>w:factor(polviews)4</th><td>-0.13461439</td><td>0.02822807</td><td>1.862258e-06</td><td>0.0000</td></tr>
 	<tr><th scope=row>w:factor(polviews)5</th><td>-0.16491540</td><td>0.02957511</td><td>2.481093e-08</td><td>0.0000</td></tr>
 	<tr><th scope=row>w:factor(polviews)6</th><td>-0.18007875</td><td>0.02966030</td><td>1.284150e-09</td><td>0.0000</td></tr>
@@ -920,12 +913,12 @@ Compare the adjusted p-values under Romano-Wolf with those obtained via Bonferro
 	<tr><th></th><th scope=col>Estimate</th><th scope=col>Std. Error</th><th scope=col>Orig. p-value</th><th scope=col>Adj. p-value</th></tr>
 </thead>
 <tbody>
-	<tr><th scope=row>factor(polviews)2</th><td>-0.02761031</td><td>0.03212677</td><td>3.901174e-01</td><td>0.3927</td></tr>
-	<tr><th scope=row>factor(polviews)3</th><td>-0.07255320</td><td>0.03192271</td><td>2.304700e-02</td><td>0.0352</td></tr>
-	<tr><th scope=row>factor(polviews)4</th><td>-0.14045255</td><td>0.02990102</td><td>2.649104e-06</td><td>0.0000</td></tr>
-	<tr><th scope=row>factor(polviews)5</th><td>-0.17737233</td><td>0.03132357</td><td>1.505363e-08</td><td>0.0000</td></tr>
-	<tr><th scope=row>factor(polviews)6</th><td>-0.18170284</td><td>0.03141367</td><td>7.361667e-09</td><td>0.0000</td></tr>
-	<tr><th scope=row>factor(polviews)7</th><td>-0.20143316</td><td>0.04011025</td><td>5.144634e-07</td><td>0.0000</td></tr>
+	<tr><th scope=row>factor(polviews)2</th><td>-0.02795025</td><td>0.03214142</td><td>3.845250e-01</td><td>0.3807</td></tr>
+	<tr><th scope=row>factor(polviews)3</th><td>-0.07221667</td><td>0.03193727</td><td>2.375413e-02</td><td>0.0363</td></tr>
+	<tr><th scope=row>factor(polviews)4</th><td>-0.14091622</td><td>0.02991466</td><td>2.481364e-06</td><td>0.0000</td></tr>
+	<tr><th scope=row>factor(polviews)5</th><td>-0.17677722</td><td>0.03133785</td><td>1.706460e-08</td><td>0.0000</td></tr>
+	<tr><th scope=row>factor(polviews)6</th><td>-0.18182558</td><td>0.03142800</td><td>7.306397e-09</td><td>0.0000</td></tr>
+	<tr><th scope=row>factor(polviews)7</th><td>-0.20309523</td><td>0.04012854</td><td>4.193855e-07</td><td>0.0000</td></tr>
 </tbody>
 </table>
 </div></div>
@@ -1112,14 +1105,14 @@ Compare the adjusted p-values under Romano-Wolf with those obtained via Bonferro
 	<tr><th></th><th scope=col>Estimate</th><th scope=col>Std. Error</th><th scope=col>Orig. p-value</th><th scope=col>Adj. p-value</th></tr>
 </thead>
 <tbody>
-	<tr><th scope=row>w:leaf2</th><td>0.04261544</td><td>0.02675955</td><td>1.112984e-01</td><td>0.1137</td></tr>
-	<tr><th scope=row>w:leaf3</th><td>0.08304080</td><td>0.03903846</td><td>3.343291e-02</td><td>0.0629</td></tr>
-	<tr><th scope=row>w:leaf4</th><td>0.08649780</td><td>0.02999722</td><td>3.941285e-03</td><td>0.0113</td></tr>
-	<tr><th scope=row>w:leaf5</th><td>0.10688672</td><td>0.03346314</td><td>1.406931e-03</td><td>0.0047</td></tr>
+	<tr><th scope=row>w:leaf2</th><td>0.04261544</td><td>0.02675955</td><td>1.112984e-01</td><td>0.1120</td></tr>
+	<tr><th scope=row>w:leaf3</th><td>0.08304080</td><td>0.03903846</td><td>3.343291e-02</td><td>0.0638</td></tr>
+	<tr><th scope=row>w:leaf4</th><td>0.08649780</td><td>0.02999722</td><td>3.941285e-03</td><td>0.0125</td></tr>
+	<tr><th scope=row>w:leaf5</th><td>0.10688672</td><td>0.03346314</td><td>1.406931e-03</td><td>0.0063</td></tr>
 	<tr><th scope=row>w:leaf6</th><td>0.14399896</td><td>0.03708540</td><td>1.039142e-04</td><td>0.0005</td></tr>
 	<tr><th scope=row>w:leaf7</th><td>0.17514244</td><td>0.03797784</td><td>4.045881e-06</td><td>0.0000</td></tr>
 	<tr><th scope=row>w:leaf8</th><td>0.21914803</td><td>0.04269808</td><td>2.915505e-07</td><td>0.0000</td></tr>
-	<tr><th scope=row>w:leaf9</th><td>0.23088896</td><td>0.06627687</td><td>4.967474e-04</td><td>0.0024</td></tr>
+	<tr><th scope=row>w:leaf9</th><td>0.23088896</td><td>0.06627687</td><td>4.967474e-04</td><td>0.0028</td></tr>
 </tbody>
 </table>
 </div></div>
@@ -1215,7 +1208,7 @@ Interpret the heatmap above. What describes the subgroups with strongest and wea
 .dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
 .dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
 .dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
-</style><dl class=dl-inline><dt>polviews</dt><dd>0.438935064162103</dd><dt>income</dt><dd>0.341506698507115</dd><dt>age</dt><dd>0.0926576796572023</dd><dt>educ</dt><dd>0.0738855089602683</dd><dt>marital</dt><dd>0.0460403350365832</dd></dl>
+</style><dl class=dl-inline><dt>polviews</dt><dd>0.433258607483693</dd><dt>income</dt><dd>0.344211697930238</dd><dt>age</dt><dd>0.0960133851852657</dd><dt>educ</dt><dd>0.076559323995593</dd><dt>marital</dt><dd>0.0433236777217158</dd></dl>
 </div></div>
 </div>
 <section id="data-driven-subgroups">
@@ -1293,11 +1286,11 @@ Interpret the heatmap above. What describes the subgroups with strongest and wea
 	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
 </thead>
 <tbody>
-	<tr><td>ols</td><td>Q1</td><td>-0.4358604</td><td>0.011337194</td></tr>
-	<tr><td>ols</td><td>Q2</td><td>-0.3985154</td><td>0.011188155</td></tr>
-	<tr><td>ols</td><td>Q3</td><td>-0.3585742</td><td>0.011027056</td></tr>
-	<tr><td>ols</td><td>Q4</td><td>-0.3322251</td><td>0.010495648</td></tr>
-	<tr><td>ols</td><td>Q5</td><td>-0.2135253</td><td>0.009784412</td></tr>
+	<tr><td>ols</td><td>Q1</td><td>-0.4378371</td><td>0.011335456</td></tr>
+	<tr><td>ols</td><td>Q2</td><td>-0.3927502</td><td>0.011154697</td></tr>
+	<tr><td>ols</td><td>Q3</td><td>-0.3626420</td><td>0.011070478</td></tr>
+	<tr><td>ols</td><td>Q4</td><td>-0.3350308</td><td>0.010466097</td></tr>
+	<tr><td>ols</td><td>Q5</td><td>-0.2093947</td><td>0.009779184</td></tr>
 </tbody>
 </table>
 </div></div>
@@ -1334,11 +1327,11 @@ Interpret the heatmap above. What describes the subgroups with strongest and wea
 	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
 </thead>
 <tbody>
-	<tr><td>aipw</td><td>Q1</td><td>-0.4358885</td><td>0.011029140</td></tr>
-	<tr><td>aipw</td><td>Q2</td><td>-0.3966333</td><td>0.010747644</td></tr>
-	<tr><td>aipw</td><td>Q3</td><td>-0.3597643</td><td>0.010641112</td></tr>
-	<tr><td>aipw</td><td>Q4</td><td>-0.3326391</td><td>0.010204956</td></tr>
-	<tr><td>aipw</td><td>Q5</td><td>-0.2095279</td><td>0.009340652</td></tr>
+	<tr><td>aipw</td><td>Q1</td><td>-0.4390673</td><td>0.011020933</td></tr>
+	<tr><td>aipw</td><td>Q2</td><td>-0.3922020</td><td>0.010799775</td></tr>
+	<tr><td>aipw</td><td>Q3</td><td>-0.3618846</td><td>0.010620071</td></tr>
+	<tr><td>aipw</td><td>Q4</td><td>-0.3352387</td><td>0.010190596</td></tr>
+	<tr><td>aipw</td><td>Q5</td><td>-0.2061308</td><td>0.009324303</td></tr>
 </tbody>
 </table>
 </div></div>
@@ -1392,10 +1385,10 @@ As an exercise, try running the previous two snippets on few data points (e.g., 
 	<tr><th></th><th scope=col>Estimate</th><th scope=col>Std. Error</th><th scope=col>Orig. p-value</th><th scope=col>Adj. p-value</th></tr>
 </thead>
 <tbody>
-	<tr><th scope=row>Rank 2 - Rank 1</th><td>0.03734495</td><td>0.01476554</td><td>1.143771e-02</td><td>0.0116</td></tr>
-	<tr><th scope=row>Rank 3 - Rank 1</th><td>0.07728615</td><td>0.01475409</td><td>1.632205e-07</td><td>0.0000</td></tr>
-	<tr><th scope=row>Rank 4 - Rank 1</th><td>0.10363528</td><td>0.01474453</td><td>2.130900e-12</td><td>0.0000</td></tr>
-	<tr><th scope=row>Rank 5 - Rank 1</th><td>0.22233512</td><td>0.01475572</td><td>4.147490e-51</td><td>0.0000</td></tr>
+	<tr><th scope=row>Rank 2 - Rank 1</th><td>0.04508695</td><td>0.01475419</td><td>2.246112e-03</td><td>0.0026</td></tr>
+	<tr><th scope=row>Rank 3 - Rank 1</th><td>0.07519511</td><td>0.01475453</td><td>3.483542e-07</td><td>0.0000</td></tr>
+	<tr><th scope=row>Rank 4 - Rank 1</th><td>0.10280633</td><td>0.01473954</td><td>3.128080e-12</td><td>0.0000</td></tr>
+	<tr><th scope=row>Rank 5 - Rank 1</th><td>0.22844237</td><td>0.01475404</td><td>7.429110e-54</td><td>0.0000</td></tr>
 </tbody>
 </table>
 </div></div>
@@ -1420,10 +1413,10 @@ As an exercise, try running the previous two snippets on few data points (e.g., 
 	<tr><th></th><th scope=col>Estimate</th><th scope=col>Std. Error</th><th scope=col>Orig. p-value</th><th scope=col>Adj. p-value</th></tr>
 </thead>
 <tbody>
-	<tr><th scope=row>Rank 2 - Rank 1</th><td>0.03925525</td><td>0.01471959</td><td>7.660420e-03</td><td>0.0089</td></tr>
-	<tr><th scope=row>Rank 3 - Rank 1</th><td>0.07612420</td><td>0.01471895</td><td>2.333456e-07</td><td>0.0000</td></tr>
-	<tr><th scope=row>Rank 4 - Rank 1</th><td>0.10324944</td><td>0.01471959</td><td>2.360258e-12</td><td>0.0000</td></tr>
-	<tr><th scope=row>Rank 5 - Rank 1</th><td>0.22636068</td><td>0.01471895</td><td>3.702238e-53</td><td>0.0000</td></tr>
+	<tr><th scope=row>Rank 2 - Rank 1</th><td>0.04686534</td><td>0.01471836</td><td>1.453393e-03</td><td>0.0017</td></tr>
+	<tr><th scope=row>Rank 3 - Rank 1</th><td>0.07718279</td><td>0.01471579</td><td>1.574795e-07</td><td>0.0000</td></tr>
+	<tr><th scope=row>Rank 4 - Rank 1</th><td>0.10382860</td><td>0.01471707</td><td>1.765498e-12</td><td>0.0000</td></tr>
+	<tr><th scope=row>Rank 5 - Rank 1</th><td>0.23293656</td><td>0.01471707</td><td>3.472807e-56</td><td>0.0000</td></tr>
 </tbody>
 </table>
 </div></div>
@@ -1493,15 +1486,15 @@ Interpret the heatmap above. What describes the subgroups with strongest and wea
 Confidence intervals are cluster- and heteroskedasticity-robust (HC3):
 
                Estimate  Std. Error  t value  Pr(&gt;|t|)    
-(Intercept) -0.17899540  0.04242640  -4.2190 2.462e-05 ***
-age          0.00148384  0.00031082   4.7739 1.816e-06 ***
-polviews    -0.03573189  0.00356500 -10.0230 &lt; 2.2e-16 ***
-income      -0.02098048  0.00202023 -10.3852 &lt; 2.2e-16 ***
-educ         0.00891252  0.00172206   5.1755 2.288e-07 ***
-marital      0.01035422  0.00331513   3.1233   0.00179 ** 
-sex         -0.00578077  0.01000335  -0.5779   0.56335    
+(Intercept) -0.18082010  0.04240123  -4.2645 2.010e-05 ***
+age          0.00150263  0.00031089   4.8334 1.349e-06 ***
+polviews    -0.03575570  0.00356697 -10.0241 &lt; 2.2e-16 ***
+income      -0.02087075  0.00201707 -10.3471 &lt; 2.2e-16 ***
+educ         0.00897050  0.00172512   5.1999 2.007e-07 ***
+marital      0.01055778  0.00331723   3.1827  0.001461 ** 
+sex         -0.00650588  0.01000440  -0.6503  0.515503    
 ---
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 </pre></div>
 </div>
 </div>
@@ -1510,8 +1503,8 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <section id="assessing-heterogeneity">
 <h4><span class="section-number">4.2.2.3. </span>Assessing heterogeneity<a class="headerlink" href="#assessing-heterogeneity" title="Permalink to this headline">#</a></h4>
 <p>The function <code class="docutils literal notranslate"><span class="pre">test_calibration</span></code> computes an estimate of the best linear predictor of true CATE based on out-of-bag predictions <span class="math notranslate nohighlight">\(\hat{\tau}^{-i}(\cdot)\)</span>. The exact implementation seeks to fit the following linear model:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6d678137-ae8a-48bf-8f7d-66cf68ee2551">
-<span class="eqno">(4.7)<a class="headerlink" href="#equation-6d678137-ae8a-48bf-8f7d-66cf68ee2551" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c13255cb-ee84-425b-9094-84ae9ceb84de">
+<span class="eqno">(4.7)<a class="headerlink" href="#equation-c13255cb-ee84-425b-9094-84ae9ceb84de" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Y_{i} - \hat{m}^{-i}(X_{i}) = \alpha\bar{\tau}\left(W_{i} - \hat{e}^{-i}(X_{i})\right) + \beta \left(\hat{\tau}^{-i}(X_{i}) - \bar{\tau} \right) \left(W_{i} - \hat{e}^{-i}(X_{i}) \right) + \epsilon,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\bar{\tau} := n^{-1}\sum_{i=1}^{n} \hat{\tau}^{-i}(X_{i})\)</span>. The coefficients <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> allow us to evaluate the performance of our estimates. If <span class="math notranslate nohighlight">\(\alpha = 1\)</span>, then the average prediction produced by the forest is correct. Meanwhile, if <span class="math notranslate nohighlight">\(\beta = 1\)</span>, then the forest predictions adequately capture the underlying heterogeneity.</p>
@@ -1528,10 +1521,10 @@ as well as the mean forest prediction as regressors, along
 with one-sided heteroskedasticity-robust (HC3) SEs:
 
                                Estimate Std. Error t value    Pr(&gt;t)    
-mean.forest.prediction         1.000658   0.013708  72.999 &lt; 2.2e-16 ***
-differential.forest.prediction 0.911907   0.048124  18.949 &lt; 2.2e-16 ***
+mean.forest.prediction         1.000353   0.013716  72.932 &lt; 2.2e-16 ***
+differential.forest.prediction 0.904588   0.048086  18.812 &lt; 2.2e-16 ***
 ---
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 </pre></div>
 </div>
 </div>

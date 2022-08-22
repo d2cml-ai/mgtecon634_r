@@ -11,6 +11,9 @@ install.packages("remotes")
 
 remotes::install_github("susanathey/causalTree")
 
-remotes::install_github("susanathey/mcpanel", dependencies = T)
+install.packages("devtools")
+library(devtools) 
+install_github("susanathey/MCPanel")
+# remotes::install_github("susanathey/mcpanel", dependencies = T)
 
 install.packages("DiagrammeR")

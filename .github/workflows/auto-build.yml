@@ -19,7 +19,7 @@ on:
 
 jobs:
   R-CMD-check:
-    runs-on: windows-2019
+    runs-on: ubuntu-22.04
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes

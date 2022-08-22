@@ -14,6 +14,11 @@ remotes::install_github("susanathey/causalTree")
 install.packages("devtools")
 library(devtools)
 install_github("susanathey/MCPanel")
+
+devtools::install_github("IRkernel/IRkernel")
+
+IRkernel::installspec()
+
 # remotes::install_github("susanathey/mcpanel", dependencies = T)
 
 install.packages("DiagrammeR")

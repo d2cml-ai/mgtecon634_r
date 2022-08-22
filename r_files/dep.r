@@ -8,5 +8,9 @@ install.packages("sandwich")
 install.packages("ggplot2")
 install.packages("reshape2")
 install.packages("remotes")
+
 remotes::install_github("susanathey/causalTree")
+
+remotes::install_github("susanathey/mcpanel", dependencies = T)
+
 install.packages("DiagrammeR")

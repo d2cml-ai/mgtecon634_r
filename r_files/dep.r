@@ -12,7 +12,7 @@ install.packages("remotes")
 remotes::install_github("susanathey/causalTree")
 
 install.packages("devtools")
-library(devtools) 
+library(devtools)
 install_github("susanathey/MCPanel")
 # remotes::install_github("susanathey/mcpanel", dependencies = T)
 

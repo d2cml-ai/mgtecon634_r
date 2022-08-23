@@ -2,7 +2,7 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: md/intro
+root: intro
 parts:
 - caption: Topics
   numbered: true
@@ -14,3 +14,4 @@ parts:
   - file: notebooks/5_policy_evaluation_1
   - file: notebooks/6_Policy_Learning_1
   - file: notebooks/7_LM_forest_RDD_1
+  - file: notebooks/8_MCPanel

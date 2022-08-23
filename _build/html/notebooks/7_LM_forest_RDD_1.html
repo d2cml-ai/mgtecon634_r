@@ -54,6 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="8. Matrix completion Methods for Causal Panel Data Models" href="8_MCPanel.html" />
     <link rel="prev" title="6. Policy Learning I - Binary Treatment" href="6_Policy_Learning_1.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -109,7 +110,7 @@ const thebe_selector_output = ".output, .cell_output"
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../md/intro.html">
+                <a class="reference internal" href="../intro.html">
                     Machine Learning-Based Causal Inference
                 </a>
             </li>
@@ -153,6 +154,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    7. LM Forest RDD
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="8_MCPanel.html">
+   8. Matrix completion Methods for Causal Panel Data Models
   </a>
  </li>
 </ul>
@@ -506,56 +512,10 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
-&quot;package &#39;rdd&#39; was built under R version 4.2.1&quot;
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: sandwich
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: lmtest
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: zoo
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Attaching package: &#39;zoo&#39;
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The following objects are masked from &#39;package:base&#39;:
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>Error in library(rdd): there is no package called ‘rdd’
+Traceback:
 
-    as.Date, as.Date.numeric
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: AER
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
-&quot;package &#39;AER&#39; was built under R version 4.2.1&quot;
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: car
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
-&quot;package &#39;car&#39; was built under R version 4.2.1&quot;
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: carData
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
-&quot;package &#39;carData&#39; was built under R version 4.2.1&quot;
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: survival
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: Formula
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
-&quot;package &#39;grf&#39; was built under R version 4.2.1&quot;
+1. library(rdd)
 </pre></div>
 </div>
 </div>
@@ -643,13 +603,9 @@ title="Print to PDF"
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
 &quot;package &#39;haven&#39; was built under R version 4.2.1&quot;
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
+Warning message:
 &quot;package &#39;estimatr&#39; was built under R version 4.2.1&quot;
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
+Warning message:
 &quot;package &#39;rockchalk&#39; was built under R version 4.2.1&quot;
 </pre></div>
 </div>
@@ -721,7 +677,7 @@ title="Print to PDF"
 .dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
 .dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
 .dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
-</style><dl class=dl-inline><dt>age</dt><dd>0.597115322918843</dd><dt>realincome</dt><dd>0.303068848149307</dd><dt>militaryservice</dt><dd>0.0479652390312094</dd><dt>secondaryeduc</dt><dd>0.0434901938066297</dd><dt>sex</dt><dd>0.00836039609401146</dd></dl>
+</style><dl class=dl-inline><dt>age</dt><dd>0.596388822158648</dd><dt>realincome</dt><dd>0.302295211407216</dd><dt>militaryservice</dt><dd>0.0476509229311444</dd><dt>secondaryeduc</dt><dd>0.0448042135234921</dd><dt>sex</dt><dd>0.00886082997949948</dd></dl>
 </div></div>
 </div>
 </section>
@@ -803,11 +759,11 @@ title="Print to PDF"
 	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
 </thead>
 <tbody>
-	<tr><td>ols</td><td>Q1</td><td>17.69124</td><td>1.743991</td></tr>
-	<tr><td>ols</td><td>Q2</td><td>24.03557</td><td>1.645747</td></tr>
-	<tr><td>ols</td><td>Q3</td><td>34.56060</td><td>1.546086</td></tr>
-	<tr><td>ols</td><td>Q4</td><td>37.09806</td><td>1.555601</td></tr>
-	<tr><td>ols</td><td>Q5</td><td>44.04825</td><td>1.354317</td></tr>
+	<tr><td>ols</td><td>Q1</td><td>16.86639</td><td>1.741709</td></tr>
+	<tr><td>ols</td><td>Q2</td><td>25.38157</td><td>1.649339</td></tr>
+	<tr><td>ols</td><td>Q3</td><td>34.00134</td><td>1.530182</td></tr>
+	<tr><td>ols</td><td>Q4</td><td>36.68675</td><td>1.556861</td></tr>
+	<tr><td>ols</td><td>Q5</td><td>44.62000</td><td>1.363089</td></tr>
 </tbody>
 </table>
 </div></div>
@@ -832,7 +788,10 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/7_LM_forest_RDD_1_18_0.png" src="../_images/7_LM_forest_RDD_1_18_0.png" />
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="n">ggplot</span><span class="p">(</span><span class="n">res</span><span class="p">):</span> <span class="n">no</span> <span class="n">se</span> <span class="n">pudo</span> <span class="n">encontrar</span> <span class="n">la</span> <span class="n">función</span> <span class="s2">&quot;ggplot&quot;</span>
+<span class="ne">Traceback</span>:
+</pre></div>
+</div>
 </div>
 </div>
 <p>Next, we can test e.g., if the prediction for groups 2, 3, etc. are larger than the one in the first group. Here’s how to do it based on a difference-in-means estimator. Note the Romano-Wolf multiple-hypothesis testing correction.</p>
@@ -923,10 +882,10 @@ title="Print to PDF"
 	<tr><th></th><th scope=col>Estimate</th><th scope=col>Std. Error</th><th scope=col>Orig. p-value</th><th scope=col>Adj. p-value</th></tr>
 </thead>
 <tbody>
-	<tr><th scope=row>Rank 2 - Rank 1</th><td> 6.344337</td><td>2.226206</td><td>4.388834e-03</td><td>0.005</td></tr>
-	<tr><th scope=row>Rank 3 - Rank 1</th><td>16.869365</td><td>2.225109</td><td>3.933516e-14</td><td>0.000</td></tr>
-	<tr><th scope=row>Rank 4 - Rank 1</th><td>19.406827</td><td>2.225714</td><td>3.565512e-18</td><td>0.000</td></tr>
-	<tr><th scope=row>Rank 5 - Rank 1</th><td>26.357017</td><td>2.220673</td><td>3.886938e-32</td><td>0.000</td></tr>
+	<tr><th scope=row>Rank 2 - Rank 1</th><td> 6.075643</td><td>1.569542</td><td>1.089134e-04</td><td>3e-04</td></tr>
+	<tr><th scope=row>Rank 3 - Rank 1</th><td>11.959623</td><td>1.565654</td><td>2.340203e-14</td><td>0e+00</td></tr>
+	<tr><th scope=row>Rank 4 - Rank 1</th><td>12.196804</td><td>1.568579</td><td>8.041885e-15</td><td>0e+00</td></tr>
+	<tr><th scope=row>Rank 5 - Rank 1</th><td>15.265177</td><td>1.567347</td><td>2.421065e-22</td><td>0e+00</td></tr>
 </tbody>
 </table>
 </div></div>
@@ -1085,6 +1044,13 @@ title="Print to PDF"
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title"><span class="section-number">6. </span>Policy Learning I - Binary Treatment</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="8_MCPanel.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">8. </span>Matrix completion Methods for Causal Panel Data Models</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>

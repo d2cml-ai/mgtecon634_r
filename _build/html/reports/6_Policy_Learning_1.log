@@ -1,37 +1,36 @@
 Traceback (most recent call last):
-  File "C:\Users\User\anaconda3\lib\site-packages\jupyter_cache\executors\utils.py", line 51, in single_nb_execution
+  File "/opt/hostedtoolcache/Python/3.8.13/x64/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
     executenb(
-  File "C:\Users\User\anaconda3\lib\site-packages\nbclient\client.py", line 1204, in execute
+  File "/opt/hostedtoolcache/Python/3.8.13/x64/lib/python3.8/site-packages/nbclient/client.py", line 1204, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
-  File "C:\Users\User\anaconda3\lib\site-packages\nbclient\util.py", line 84, in wrapped
+  File "/opt/hostedtoolcache/Python/3.8.13/x64/lib/python3.8/site-packages/nbclient/util.py", line 84, in wrapped
     return just_run(coro(*args, **kwargs))
-  File "C:\Users\User\anaconda3\lib\site-packages\nbclient\util.py", line 62, in just_run
+  File "/opt/hostedtoolcache/Python/3.8.13/x64/lib/python3.8/site-packages/nbclient/util.py", line 62, in just_run
     return loop.run_until_complete(coro)
-  File "C:\Users\User\anaconda3\lib\asyncio\base_events.py", line 647, in run_until_complete
+  File "/opt/hostedtoolcache/Python/3.8.13/x64/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
     return future.result()
-  File "C:\Users\User\anaconda3\lib\site-packages\nbclient\client.py", line 663, in async_execute
+  File "/opt/hostedtoolcache/Python/3.8.13/x64/lib/python3.8/site-packages/nbclient/client.py", line 663, in async_execute
     await self.async_execute_cell(
-  File "C:\Users\User\anaconda3\lib\site-packages\nbclient\client.py", line 965, in async_execute_cell
+  File "/opt/hostedtoolcache/Python/3.8.13/x64/lib/python3.8/site-packages/nbclient/client.py", line 965, in async_execute_cell
     await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "C:\Users\User\anaconda3\lib\site-packages\nbclient\client.py", line 862, in _check_raise_for_error
+  File "/opt/hostedtoolcache/Python/3.8.13/x64/lib/python3.8/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# Deleting all current variables
-rm(list=ls())
-
-# Ensuring consistent random values in the bookdown version (this can be ignored).
-set.seed(1, kind = "Mersenne-Twister", normal.kind = "Inversion", sample.kind = "Rejection")
-
-# Note: bookdown seems to require explicitly calling these packages.
-library(reshape2)
-library(DiagrammeR)
+# use e.g., install.packages("grf") to install any of the following packages.
+library(grf)
+library(glmnet)
+library(splines)
+library(policytree)
+library(ggplot2)
+library(lmtest)
+library(sandwich)
 ------------------
 
-Error in library(DiagrammeR): there is no package called 'DiagrammeR'
+Error in library(policytree): there is no package called ‘policytree’
 Traceback:
 
-1. library(DiagrammeR)
-ERROR: Error in library(DiagrammeR): there is no package called 'DiagrammeR'
+1. library(policytree)
+ERROR: Error in library(policytree): there is no package called ‘policytree’
 
 

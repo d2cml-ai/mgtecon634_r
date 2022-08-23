@@ -110,7 +110,7 @@ const thebe_selector_output = ".output, .cell_output"
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../md/intro.html">
+                <a class="reference internal" href="../intro.html">
                     Machine Learning-Based Causal Inference
                 </a>
             </li>
@@ -154,6 +154,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="7_LM_forest_RDD_1.html">
    7. LM Forest RDD
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="8_MCPanel.html">
+   8. Matrix completion Methods for Causal Panel Data Models
   </a>
  </li>
 </ul>
@@ -567,16 +572,12 @@ title="Print to PDF"
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: zoo
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Attaching package: &#39;zoo&#39;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Attaching package: ‘zoo’
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The following objects are masked from &#39;package:base&#39;:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The following objects are masked from ‘package:base’:
 
     as.Date, as.Date.numeric
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
-&quot;package &#39;grf&#39; was built under R version 4.2.1&quot;
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading required package: Matrix
@@ -591,8 +592,8 @@ title="Print to PDF"
 <h2><span class="section-number">3.1. </span>Notation and definitions<a class="headerlink" href="#notation-and-definitions" title="Permalink to this headline">#</a></h2>
 <p>Let’s establish some notation. Each data point will be defined by the triple <span class="math notranslate nohighlight">\((X_i, W_i, Y_i)\)</span>. The vector <span class="math notranslate nohighlight">\(X_i\)</span> represents covariates that are observed for individual <span class="math notranslate nohighlight">\(i\)</span>. Treatment assignment is indicated by <span class="math notranslate nohighlight">\(W_i \in \{0, 1\}\)</span>, with 1 representing treatment, and 0 representing control. The scalar <span class="math notranslate nohighlight">\(Y_i\)</span> is the observed outcome, and it can be real or binary. Each observation is drawn independently and from the same distribution. We’ll be interested in assessing the causal effect of treatment on outcome.</p>
 <p>A difficulty in estimating causal quantities is that we observe each individual in only one treatment state: either they were treated, or they weren’t. However, it’s often useful to imagine that each individual is endowed with two random variables <span class="math notranslate nohighlight">\((Y_i(1), Y_i(0))\)</span>, where <span class="math notranslate nohighlight">\(Y_i(1)\)</span> represents the value of this individual’s outcome if they receive treatment, and <span class="math notranslate nohighlight">\(Y_i(0)\)</span> represents their outcome if they are not treated. These random variables are called  <strong>potential outcomes</strong>. The observed outcome <span class="math notranslate nohighlight">\(Y_i\)</span> corresponds to whichever potential outcome we got to see:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-66b58cc7-901b-44a2-97eb-d00e5d3960b7">
-<span class="eqno">(3.1)<a class="headerlink" href="#equation-66b58cc7-901b-44a2-97eb-d00e5d3960b7" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ccd0ed2b-2728-4bc0-8138-588f3af6b9c4">
+<span class="eqno">(3.1)<a class="headerlink" href="#equation-ccd0ed2b-2728-4bc0-8138-588f3af6b9c4" title="Permalink to this equation">#</a></span>\[\begin{equation}
   Y_i \equiv Y_i(W_i) =
   \begin{cases}
     Y_i(1) \qquad \text{if }W_i = 1 \text{ (treated)} \\ 
@@ -600,26 +601,26 @@ title="Print to PDF"
   \end{cases}
 \end{equation}\]</div>
 <p>Since we can’t observe both <span class="math notranslate nohighlight">\(Y_i(1)\)</span> and <span class="math notranslate nohighlight">\(Y_i(0)\)</span>, we won’t be able to make statistical claims about the individual treatment effect <span class="math notranslate nohighlight">\(Y_i(1) - Y_i(0)\)</span>. Instead, our goal will be to estimate the <strong>average treatment effect (ATE)</strong>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4d5a91db-d98d-44f6-94cd-63c7eb65ad98">
-<span class="eqno">(3.2)<a class="headerlink" href="#equation-4d5a91db-d98d-44f6-94cd-63c7eb65ad98" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:ate} \tag{3.1}
+<div class="amsmath math notranslate nohighlight" id="equation-1449186f-17e9-4d3b-b753-b26bba303dbb">
+<span class="eqno">(3.2)<a class="headerlink" href="#equation-1449186f-17e9-4d3b-b753-b26bba303dbb" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:ate} \tag{3.1}
   \tau := \mathbf{E}[Y_i(1) - Y_i(0)].
 \end{equation}\]</div>
 <p>Here, when we refer to the <strong>randomized</strong> setting we mean that we have data generated by a randomized control trial. The key characteristic of this setting is that the probability that an individual is assigned to the treatment arm is fixed. In particular, it does not depend on the individual’s potential outcomes:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c091ed61-444b-4e7e-afa9-ed08fcfd280f">
-<span class="eqno">(3.3)<a class="headerlink" href="#equation-c091ed61-444b-4e7e-afa9-ed08fcfd280f" title="Permalink to this equation">#</a></span>\[\begin{equation} 
+<div class="amsmath math notranslate nohighlight" id="equation-b6bb6aa3-b605-4d0a-aef7-e5264312e565">
+<span class="eqno">(3.3)<a class="headerlink" href="#equation-b6bb6aa3-b605-4d0a-aef7-e5264312e565" title="Permalink to this equation">#</a></span>\[\begin{equation} 
     \label{eq:unconf} \tag{3.2}
   Y_i(1), Y_i(0) \perp W_i.
 \end{equation}\]</div>
 <p>This precludes situations in which individuals may self-select into or out of treatment. The canonical failure example is a job training program in which workers enroll more often if they are more likely to benefit from treatment because in that case <span class="math notranslate nohighlight">\(W_i\)</span> and <span class="math notranslate nohighlight">\(Y_i(1) - Y_i(0)\)</span> would be positively correlated.</p>
 <p>When condition \eqref{eq:unconf}  is violated, we say that we are in an <strong>observational</strong> setting. This is a more complex setting encompassing several different scenarios: sometimes it’s still possible to estimate the ATE under additional assumptions, sometimes the researcher can exploit other sources of variation to obtain other interesting estimands. Here, we will focus on ATE estimation under the following assumption:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b5b335c4-cd00-432c-9ee2-3421dbefcb26">
-<span class="eqno">(3.4)<a class="headerlink" href="#equation-b5b335c4-cd00-432c-9ee2-3421dbefcb26" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:cond-unconf} \tag{3.3}
+<div class="amsmath math notranslate nohighlight" id="equation-22037eaf-0057-4df8-bafe-2c2626cecb65">
+<span class="eqno">(3.4)<a class="headerlink" href="#equation-22037eaf-0057-4df8-bafe-2c2626cecb65" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:cond-unconf} \tag{3.3}
   Y_i(1), Y_i(0) \perp W_i \ | \ X_i.
 \end{equation}\]</div>
 <p>In this document we will call this assumption <strong>unconfoundeness</strong>, though it is also known as <strong>no unmeasured confounders</strong>, <strong>ignorability</strong> or <strong>selection on observables</strong>. It says that all possible sources of self-selection, etc., can be explained by the observable covariates <span class="math notranslate nohighlight">\(X_i\)</span>. Continuing the example above, it may be that older or more educated are more likely to self-select into treatment; but when we compare two workers that have the same age and level of education, etc., there’s nothing else that we could infer about their relative potential outcomes if we knew that one went into job training and the other did not.</p>
 <p>As we’ll see below, a key quantity of interest will be the treatment assignment probability, or <strong>propensity score</strong> <span class="math notranslate nohighlight">\(e(X_i) := \mathbb{P}[W_i = 1 | X_i]\)</span>. In an experimental setting this quantity is usually known and fixed, and in observational settings it must be estimated from the data. We will often need to assume that the propensity score is bounded away from zero and one. That is, there exists some <span class="math notranslate nohighlight">\(\eta &gt; 0\)</span> such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ec75d5f9-048e-4c4f-b119-704d02604690">
-<span class="eqno">(3.5)<a class="headerlink" href="#equation-ec75d5f9-048e-4c4f-b119-704d02604690" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:overlap} \tag{3.4}
+<div class="amsmath math notranslate nohighlight" id="equation-84216e27-9ab1-4084-b522-4bccd4511030">
+<span class="eqno">(3.5)<a class="headerlink" href="#equation-84216e27-9ab1-4084-b522-4bccd4511030" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:overlap} \tag{3.4}
   \eta &lt; e(x) &lt; 1 - \eta  \qquad \text{for all }x.
 \end{equation}\]</div>
 <p>This assumption is known as <strong>overlap</strong>, and it means that for all types of people in our population (i.e., all values of observable characteristics) we can find some portion of individuals in treatment and some in control. Intuitively, this is necessary because we’d like to will be comparing treatment and control at each level of the covariates and then aggregate those results.</p>
@@ -647,8 +648,8 @@ title="Print to PDF"
 <section id="difference-in-means-estimator">
 <h2><span class="section-number">3.2. </span>Difference-in-means estimator<a class="headerlink" href="#difference-in-means-estimator" title="Permalink to this headline">#</a></h2>
 <p>Let’s begin by considering a simple estimator that is available in experimental settings. The <strong>difference-in-means</strong> estimator is the sample average of outcomes in treatment minus the sample average of outcomes in control.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-97e7861d-1203-439b-8797-459cbeedda1c">
-<span class="eqno">(3.6)<a class="headerlink" href="#equation-97e7861d-1203-439b-8797-459cbeedda1c" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:ate-dm} \tag{3.5}
+<div class="amsmath math notranslate nohighlight" id="equation-f04b0ac8-3398-4c1c-875e-b7d2eeae94f0">
+<span class="eqno">(3.6)<a class="headerlink" href="#equation-f04b0ac8-3398-4c1c-875e-b7d2eeae94f0" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:ate-dm} \tag{3.5}
   \widehat{\tau}^{DIFF} =
     \frac{1}{n_1} \sum_{i:W_i = 1} Y_i -
     \frac{1}{n_0} \sum_{i:W_i = 0} Y_i
@@ -701,13 +702,13 @@ mean in group 0 mean in group 1
 </div>
 </div>
 <p>We can also compute the same quantity via linear regression, using the fact that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f318d62c-c99d-4362-90d3-e5012ed406d8">
-<span class="eqno">(3.7)<a class="headerlink" href="#equation-f318d62c-c99d-4362-90d3-e5012ed406d8" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ec24848a-5b3b-45e8-80b5-552453575a0e">
+<span class="eqno">(3.7)<a class="headerlink" href="#equation-ec24848a-5b3b-45e8-80b5-552453575a0e" title="Permalink to this equation">#</a></span>\[\begin{equation}
   Y_i = Y_i(0) + W_i \left( Y_i(1) - Y_i(0) \right),
 \end{equation}\]</div>
 <p>so that taking expectations conditional on treatment assignment,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-36aad434-6815-41bf-a705-9093b0a7cf28">
-<span class="eqno">(3.8)<a class="headerlink" href="#equation-36aad434-6815-41bf-a705-9093b0a7cf28" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9e7a8f35-b322-4eae-8439-621ea93d182f">
+<span class="eqno">(3.8)<a class="headerlink" href="#equation-9e7a8f35-b322-4eae-8439-621ea93d182f" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \mathbf{E}[Y_i | W_i] = \alpha + W_i \tau \qquad \text{where}
   \qquad \alpha := \mathbf{E}[Y_i(0)]
 \end{equation}\]</div>
@@ -730,7 +731,7 @@ Exercise: make sure you understand this decomposition. Where is the unconfounded
 .dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
 .dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
 .dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
-</style><dl class=dl-inline><dt>Estimate</dt><dd>-0.347115544792086</dd><dt>Std. Error</dt><dd>0.00473234264940525</dd><dt>t value</dt><dd>-73.3496220599559</dd><dt>Pr(&gt;|t|)</dt><dd>0</dd></dl>
+</style><dl class=dl-inline><dt>Estimate</dt><dd>-0.347115544792172</dd><dt>Std. Error</dt><dd>0.00473234264940533</dd><dt>t value</dt><dd>-73.349622059973</dd><dt>Pr(&gt;|t|)</dt><dd>0</dd></dl>
 </div></div>
 </div>
 <p>The point estimate we get is the same as we got above by computing the ATE “directly” via <code class="docutils literal notranslate"><span class="pre">mean(Y[W==1])</span> <span class="pre">-</span> <span class="pre">mean(Y[W==0])</span></code>. However, the standard errors are different. This is because in <code class="docutils literal notranslate"><span class="pre">R</span></code> the command <code class="docutils literal notranslate"><span class="pre">lm</span></code> does not compute heteroskedasticity-robust standard errors. This is easily solvable.</p>
@@ -750,7 +751,7 @@ Exercise: make sure you understand this decomposition. Where is the unconfounded
 .dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
 .dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
 .dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
-</style><dl class=dl-inline><dt>Estimate</dt><dd>-0.347115544792086</dd><dt>Std. Error</dt><dd>0.00489563774488196</dd><dt>t value</dt><dd>-70.9030289577635</dd><dt>Pr(&gt;|t|)</dt><dd>0</dd></dl>
+</style><dl class=dl-inline><dt>Estimate</dt><dd>-0.347115544792172</dd><dt>Std. Error</dt><dd>0.00489563774488264</dd><dt>t value</dt><dd>-70.9030289577715</dd><dt>Pr(&gt;|t|)</dt><dd>0</dd></dl>
 </div></div>
 </div>
 <p>The difference-in-means estimator is a simple, easily computable, unbiased, “model-free” estimator of the treatment effect. It should always be reported when dealing with experimental data. However, as we’ll see later in this chapter, it may not necessarily be the one with smallest variance.</p>
@@ -842,7 +843,7 @@ Exercise: make sure you understand this decomposition. Where is the unconfounded
 .dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
 .dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
 .dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
-</style><dl class=dl-inline><dt>Estimate</dt><dd>-0.292310713876813</dd><dt>Std. Error</dt><dd>0.00874625837700842</dd><dt>t value</dt><dd>-33.4212301165512</dd><dt>Pr(&gt;|t|)</dt><dd>9.21533847664895e-231</dd></dl>
+</style><dl class=dl-inline><dt>Estimate</dt><dd>-0.290258635003919</dd><dt>Std. Error</dt><dd>0.0086662732890335</dd><dt>t value</dt><dd>-33.4929011956292</dd><dt>Pr(&gt;|t|)</dt><dd>1.1245023087551e-231</dd></dl>
 </div></div>
 </div>
 <p>Note that the dataset created above still satisfies unconfoundedness (3.3), since discrepancies in treatment assignment probability are described by observable covariates (<code class="docutils literal notranslate"><span class="pre">age</span></code> and <code class="docutils literal notranslate"><span class="pre">polviews</span></code>). Moreover, it also satisfies the overlap assumption (3.4), since never completely dropped all treated or all untreated observations in any region of the covariate space. This is important because, in what follows, we’ll consider different estimators of the ATE that are available in observational settings under unconfoundedness and overlap.</p>
@@ -850,8 +851,8 @@ Exercise: make sure you understand this decomposition. Where is the unconfounded
 <section id="direct-estimation">
 <h2><span class="section-number">3.4. </span>Direct estimation<a class="headerlink" href="#direct-estimation" title="Permalink to this headline">#</a></h2>
 <p>Our first estimator is suggested by the following decomposition of the ATE, which is possible due to unconfoundedness (3.3).</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8272141c-2072-4b54-ad6e-4841dd53270b">
-<span class="eqno">(3.9)<a class="headerlink" href="#equation-8272141c-2072-4b54-ad6e-4841dd53270b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b291f115-9bd4-473b-87fe-9b3a71c21f9d">
+<span class="eqno">(3.9)<a class="headerlink" href="#equation-b291f115-9bd4-473b-87fe-9b3a71c21f9d" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \mathbf{E}[Y_i(1) - Y_i(0)]
   = \mathbf{E}[\mathbf{E}[Y_i | X_i, W_i=1]] - \mathbf{E}[\mathbf{E}[Y_i | X_i, W_i=0]]
 \end{equation}\]</div>
@@ -864,8 +865,8 @@ Exercise: make sure you understand this decomposition. Where is the unconfounded
 <li><p>Predict <span class="math notranslate nohighlight">\(\hat{\mu}(X_i, 1)\)</span> and <span class="math notranslate nohighlight">\(\hat{\mu}(X_i, 0)\)</span> for each observation in the data.</p></li>
 <li><p>Average out the predictions and subtract them.</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-19ccdd9c-cbaf-4262-911c-e839cbc119b7">
-<span class="eqno">(3.10)<a class="headerlink" href="#equation-19ccdd9c-cbaf-4262-911c-e839cbc119b7" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5c953e32-b802-4ae2-862a-14395aa9275b">
+<span class="eqno">(3.10)<a class="headerlink" href="#equation-5c953e32-b802-4ae2-862a-14395aa9275b" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \hat{\tau}^{DM} := \frac{1}{n} \sum_{i=1}^{n} \hat{\mu}(X_i, 1) - \hat{\mu}(X_i, 0)
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -892,14 +893,14 @@ Exercise: make sure you understand this decomposition. Where is the unconfounded
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message in predict.lm(model, newdata = data.1):
-&quot;prediction from a rank-deficient fit may be misleading&quot;
+“prediction from a rank-deficient fit may be misleading”
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message in predict.lm(model, newdata = data.0):
-&quot;prediction from a rank-deficient fit may be misleading&quot;
+“prediction from a rank-deficient fit may be misleading”
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] -0.3425308
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] -0.3468183
 </pre></div>
 </div>
 </div>
@@ -936,8 +937,8 @@ Exercise: make sure you understand this decomposition. Where is the unconfounded
 </div>
 </div>
 <p>To solve this problem, we can consider each school separately, and then aggregate the results. Denote by <span class="math notranslate nohighlight">\(n_A\)</span> the number of students from school <span class="math notranslate nohighlight">\(A\)</span>, and <span class="math notranslate nohighlight">\(n_{A,1}\)</span> denote the number of treated students in that school. Likewise, denote by <span class="math notranslate nohighlight">\(n_B\)</span> and <span class="math notranslate nohighlight">\(n_{B,1}\)</span> the same quantities for school <span class="math notranslate nohighlight">\(B\)</span>. Then our aggregated means estimator can be written as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ee4d1912-e514-4f14-91c0-b4ba58f927f5">
-<span class="eqno">(3.11)<a class="headerlink" href="#equation-ee4d1912-e514-4f14-91c0-b4ba58f927f5" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:agg} \tag{3.6} 
+<div class="amsmath math notranslate nohighlight" id="equation-24352f2d-3b2e-4ea2-9e0c-7477b7ec0075">
+<span class="eqno">(3.11)<a class="headerlink" href="#equation-24352f2d-3b2e-4ea2-9e0c-7477b7ec0075" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:agg} \tag{3.6} 
   \overbrace{
   {\left (\frac{n_{A}}{n} \right)}
   }^{\text{Proportion of A}}
@@ -978,8 +979,8 @@ Exercise: make sure you understand this decomposition. Where is the unconfounded
 </div>
 </div>
 <p>Next, we’ll manipulate the expression (3.6). This next derivation can be a bit overwhelming, but please keep in mind that we’re simply doing algebraic manipulations, as well as establishing some common and useful notation. First, note that we can rewrite the average for school A in (3.6) as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7f5954cf-ed99-445e-be76-c519c74a0932">
-<span class="eqno">(3.12)<a class="headerlink" href="#equation-7f5954cf-ed99-445e-be76-c519c74a0932" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:avg1} \tag{3.7}
+<div class="amsmath math notranslate nohighlight" id="equation-43155d88-1f4c-4f0d-86cf-b54b0aeb93c7">
+<span class="eqno">(3.12)<a class="headerlink" href="#equation-43155d88-1f4c-4f0d-86cf-b54b0aeb93c7" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:avg1} \tag{3.7}
     \left (\frac{1}{n_{A, 1}}\right) 
     \sum_{\substack{i \in A \\ i \text{ treated}}} Y_i
     =
@@ -988,8 +989,8 @@ Exercise: make sure you understand this decomposition. Where is the unconfounded
     \frac{1}{n_A} \sum_{i \in A} \frac{W_i}{(n_{A,1} / n_A)} Y_i,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(W_i\)</span> is the treatment indicator. Plugging \eqref{eq:avg1} back into (3.6),</p>
-<div class="amsmath math notranslate nohighlight" id="equation-59d81b33-c1c9-4dc9-bc08-d71bfda46804">
-<span class="eqno">(3.13)<a class="headerlink" href="#equation-59d81b33-c1c9-4dc9-bc08-d71bfda46804" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ff1e6b2c-62b5-4d44-a271-96296a5fc353">
+<span class="eqno">(3.13)<a class="headerlink" href="#equation-ff1e6b2c-62b5-4d44-a271-96296a5fc353" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \left ({\frac{n_{A}}{n}}\right) 
     \frac{1}{n_A} \sum_{i \in A} \frac{W_i}{(n_{A,1} / n_A)} Y_i
   +
@@ -997,16 +998,16 @@ Exercise: make sure you understand this decomposition. Where is the unconfounded
 \frac{1}{n_B} \sum_{i \in B} \frac{W_i}{(n_{B,1} / n_B)} Y_i.
 \end{equation}\]</div>
 <p>Note that the <span class="math notranslate nohighlight">\(n_A\)</span> and <span class="math notranslate nohighlight">\(n_B\)</span> will cancel out. Finally, if we denote the sample proportion of treated students in school <span class="math notranslate nohighlight">\(A\)</span> by <span class="math notranslate nohighlight">\(\hat{e}(A_i) \approx n_{A,1}/n_A\)</span> and similar for school <span class="math notranslate nohighlight">\(B\)</span>, (3.6) can be written compactly as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bcc112a9-e6d1-4ffd-98b1-16edbdbc483a">
-<span class="eqno">(3.14)<a class="headerlink" href="#equation-bcc112a9-e6d1-4ffd-98b1-16edbdbc483a" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{ipw-treated} \tag{3.8}
+<div class="amsmath math notranslate nohighlight" id="equation-3e791e6e-500c-44c4-bde4-7852024cbf21">
+<span class="eqno">(3.14)<a class="headerlink" href="#equation-3e791e6e-500c-44c4-bde4-7852024cbf21" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{ipw-treated} \tag{3.8}
   \frac{1}{n} \sum_{i=1}^{n}  \frac{W_i}{\hat{e}(X_i)} Y_i,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(X_i \in \{A, B\}\)</span> denotes the school membership. Quantity <span class="math notranslate nohighlight">\(\hat{e}(X_i)\)</span> is an estimate of the probability of treatment given the control variable <span class="math notranslate nohighlight">\(e(X_i) = \mathbb{P}[W_i=1 | X_i ]\)</span>, also called the <strong>propensity score</strong>. Because \eqref{ipw-treated} is a weighted average with weights <span class="math notranslate nohighlight">\(W_i/\hat{e}(X_i)\)</span>, when written in this form we say that it is an <strong>inverse propensity-weighted estimator</strong> (IPW).</p>
 <p>The IPW estimator is also defined for the case of continuous covariates. In that case, we must estimate the assignment probability given some model, for example using logistic regression, forests, etc. With respect to modeling, the behavior of the IPW estimator is similar to the direct estimator: if <span class="math notranslate nohighlight">\(\hat{e}(X_i)\)</span> is an unbiased estimate of <span class="math notranslate nohighlight">\(e(X_i)\)</span>, then \eqref{ipw-treated} is an unbiased estimate of <span class="math notranslate nohighlight">\(E[Y(1)]\)</span>; and we can show that if <span class="math notranslate nohighlight">\(\hat{e}(X_i)\)</span> is a consistent estimator of <span class="math notranslate nohighlight">\(e(X_i)\)</span>, then \eqref{ipw-treated} is consistent for <span class="math notranslate nohighlight">\(E[Y(1)]\)</span>.</p>
 <p>Another important point is that when the estimated treatment propensity <span class="math notranslate nohighlight">\(\hat{e}(X_i)\)</span> is small, the summands in \eqref{ipw-treated} can be very large. In particular, if <span class="math notranslate nohighlight">\(\hat{e}(x)\)</span> is exactly zero, then this estimator is undefined. That is why, in addition to requiring conditional unconfoundedness (3.3), it also requires the overlap condition (3.4). In any case, when overlap is small (i.e., <span class="math notranslate nohighlight">\(\hat{e}(x)\)</span> is very close to zero for many <span class="math notranslate nohighlight">\(x\)</span>), IPW becomes an unattractive estimator due to its high variance. We’ll see in the next section an improved estimator that builds upon IPW but is strictly superior and should be used instead.</p>
 <p>Finally, we just derived an estimator of the average treated outcome, but we could repeat the argument for control units instead. Subtracting the two estimators leads to the following inverse propensity-weighted estimate of the treatment effect:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-85987093-fadc-451c-81eb-3532c3c0af55">
-<span class="eqno">(3.15)<a class="headerlink" href="#equation-85987093-fadc-451c-81eb-3532c3c0af55" title="Permalink to this equation">#</a></span>\[\begin{equation} \tag{3.9}
+<div class="amsmath math notranslate nohighlight" id="equation-6a958a49-95ba-4eca-b971-56191d1b1948">
+<span class="eqno">(3.15)<a class="headerlink" href="#equation-6a958a49-95ba-4eca-b971-56191d1b1948" title="Permalink to this equation">#</a></span>\[\begin{equation} \tag{3.9}
   \widehat{\tau}^{IPW} := \frac{1}{n} \sum_{i=1}^{n} Y_i \frac{W_i}{\hat{e}(X_i)} - \frac{1}{n} \sum_{i=1}^{n} Y_i \frac{(1 - W_i) }{1-\hat{e}(X_i)}.
 \end{equation}\]</div>
 <p>The argument above suggests the following algorithm:</p>
@@ -1041,7 +1042,7 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      estimate      std.error         t.stat         pvalue 
- -3.302578e-01   1.359459e-02  -2.429333e+01  5.179847e-120 
+ -3.433868e-01   1.416770e-02  -2.423731e+01  1.911611e-119 
 </pre></div>
 </div>
 </div>
@@ -1050,8 +1051,8 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 <section id="augmented-inverse-propensity-weighted-aipw-estimator">
 <h2><span class="section-number">3.6. </span>Augmented inverse propensity-weighted (AIPW) estimator<a class="headerlink" href="#augmented-inverse-propensity-weighted-aipw-estimator" title="Permalink to this headline">#</a></h2>
 <p>The next <strong>augmented inverse propensity-weighted estimator</strong> (AIPW) of the treatment effect is available under unconfoundedness (3.3) and overlap (3.4):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f429ac50-62b9-446d-a361-5442881af4a9">
-<span class="eqno">(3.16)<a class="headerlink" href="#equation-f429ac50-62b9-446d-a361-5442881af4a9" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:aipw} \tag{3.10}
+<div class="amsmath math notranslate nohighlight" id="equation-cf35cf43-4e47-45d9-b030-66345dbeda9b">
+<span class="eqno">(3.16)<a class="headerlink" href="#equation-cf35cf43-4e47-45d9-b030-66345dbeda9b" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:aipw} \tag{3.10}
   \begin{aligned}
   \hat{\tau}^{AIPW} &amp;:=
     \frac{1}{n} \sum_{i=1}^{n}
@@ -1141,7 +1142,7 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      estimate      std.error         t.stat         pvalue 
- -3.345880e-01   9.790250e-03  -3.417563e+01  2.418629e-241 
+ -3.408233e-01   9.623537e-03  -3.541560e+01  1.473590e-259 
 </pre></div>
 </div>
 </div>
@@ -1160,12 +1161,12 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 	<tr><th></th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>
 </thead>
 <tbody>
-	<tr><th scope=row>3</th><td> 3</td><td>1</td><td>0</td><td>44</td><td>2</td><td>12</td><td>16</td><td>5</td><td>2</td></tr>
 	<tr><th scope=row>4</th><td> 6</td><td>0</td><td>0</td><td>47</td><td>1</td><td> 5</td><td>10</td><td>4</td><td>1</td></tr>
-	<tr><th scope=row>6</th><td> 8</td><td>0</td><td>0</td><td>36</td><td>2</td><td> 8</td><td>18</td><td>1</td><td>1</td></tr>
-	<tr><th scope=row>10</th><td>13</td><td>0</td><td>1</td><td>25</td><td>1</td><td> 9</td><td>11</td><td>5</td><td>1</td></tr>
+	<tr><th scope=row>11</th><td>14</td><td>0</td><td>0</td><td>36</td><td>1</td><td> 8</td><td> 6</td><td>3</td><td>2</td></tr>
+	<tr><th scope=row>13</th><td>16</td><td>1</td><td>0</td><td>63</td><td>3</td><td> 4</td><td>10</td><td>1</td><td>1</td></tr>
 	<tr><th scope=row>17</th><td>26</td><td>1</td><td>0</td><td>67</td><td>4</td><td> 9</td><td>12</td><td>1</td><td>1</td></tr>
 	<tr><th scope=row>19</th><td>28</td><td>0</td><td>0</td><td>20</td><td>4</td><td>12</td><td>14</td><td>5</td><td>1</td></tr>
+	<tr><th scope=row>24</th><td>34</td><td>0</td><td>0</td><td>36</td><td>4</td><td> 5</td><td>13</td><td>5</td><td>2</td></tr>
 </tbody>
 </table>
 </div></div>
@@ -1192,11 +1193,11 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message in average_treatment_effect(forest):
-&quot;Estimated treatment propensities take values between 0.042 and 1 and in particular get very close to 0 and 1. In this case, using `target.sample=overlap`, or filtering data as in Crump, Hotz, Imbens, and Mitnik (Biometrika, 2009) may be helpful.&quot;
+“Estimated treatment propensities go as high as 0.983 which means that treatment effects for some treated units may not be well identified. In this case, using `target.sample=control` may be helpful.”
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>estimate  std.err 
-     NaN      NaN 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   estimate     std.err 
+-0.34137732  0.01399775 
 </pre></div>
 </div>
 </div>
@@ -1289,7 +1290,7 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 .dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
 .dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
 .dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
-</style><dl class=dl-inline><dt>age</dt><dd>0.643999798283843</dd><dt>polviews</dt><dd>0.57156378988074</dd><dt>income</dt><dd>0.0688270503931759</dd><dt>educ</dt><dd>0.128802270084139</dd><dt>marital</dt><dd>0.109306492418916</dd><dt>sex</dt><dd>0.0291094309606468</dd><dt>age:polviews</dt><dd>0.0996133077342495</dd><dt>age:income</dt><dd>0.493491456203521</dd><dt>age:educ</dt><dd>0.465788876518641</dd><dt>age:marital</dt><dd>0.224491800731607</dd><dt>age:sex</dt><dd>0.455507262761341</dd><dt>polviews:income</dt><dd>0.482102559949553</dd><dt>polviews:educ</dt><dd>0.535491948516664</dd><dt>polviews:marital</dt><dd>0.315757468122034</dd><dt>polviews:sex</dt><dd>0.371743316420056</dd><dt>income:educ</dt><dd>0.114099026268471</dd><dt>income:marital</dt><dd>0.117241160610498</dd><dt>income:sex</dt><dd>0.0189555257279249</dd><dt>educ:marital</dt><dd>0.128907720510115</dd><dt>educ:sex</dt><dd>0.0507916664919972</dd><dt>marital:sex</dt><dd>0.0700769626945358</dd></dl>
+</style><dl class=dl-inline><dt>age</dt><dd>0.649257720399187</dd><dt>polviews</dt><dd>0.612783507216665</dd><dt>income</dt><dd>0.0628591724678705</dd><dt>educ</dt><dd>0.101708482798896</dd><dt>marital</dt><dd>0.0960403151124182</dd><dt>sex</dt><dd>0.0500126579475776</dd><dt>age:polviews</dt><dd>0.0726724235909302</dd><dt>age:income</dt><dd>0.496026116859975</dd><dt>age:educ</dt><dd>0.486492801804554</dd><dt>age:marital</dt><dd>0.252286585041356</dd><dt>age:sex</dt><dd>0.475165726789072</dd><dt>polviews:income</dt><dd>0.511544560127146</dd><dt>polviews:educ</dt><dd>0.5582983688508</dd><dt>polviews:marital</dt><dd>0.318508253387398</dd><dt>polviews:sex</dt><dd>0.372871776451013</dd><dt>income:educ</dt><dd>0.0935574324883623</dd><dt>income:marital</dt><dd>0.101274306634852</dd><dt>income:sex</dt><dd>0.00164368148624432</dd><dt>educ:marital</dt><dd>0.105317287915551</dd><dt>educ:sex</dt><dd>0.019434454601525</dd><dt>marital:sex</dt><dd>0.0560291272386695</dd></dl>
 </div></div>
 </div>
 <p>Note above how in particular <code class="docutils literal notranslate"><span class="pre">age</span></code> and <code class="docutils literal notranslate"><span class="pre">polviews</span></code> – the variables we chose to introduce imbalance in Section (3.3) – are far from balanced before adjustment, as are other variables that correlate with them.</p>
@@ -1314,12 +1315,12 @@ $<span class="math notranslate nohighlight">\(Z_i = Y_i \times \left(\frac{W_i}{
 	<tr><th></th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;fct&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
 </thead>
 <tbody>
-	<tr><th scope=row>3</th><td>44</td><td>2</td><td> 88</td><td>16</td><td>0</td><td>2.063781</td></tr>
-	<tr><th scope=row>4</th><td>47</td><td>1</td><td> 47</td><td>10</td><td>0</td><td>1.262457</td></tr>
-	<tr><th scope=row>6</th><td>36</td><td>2</td><td> 72</td><td>18</td><td>0</td><td>2.397613</td></tr>
-	<tr><th scope=row>10</th><td>25</td><td>1</td><td> 25</td><td>11</td><td>1</td><td>1.721944</td></tr>
-	<tr><th scope=row>17</th><td>67</td><td>4</td><td>268</td><td>12</td><td>0</td><td>1.157034</td></tr>
-	<tr><th scope=row>19</th><td>20</td><td>4</td><td> 80</td><td>14</td><td>0</td><td>2.739389</td></tr>
+	<tr><th scope=row>4</th><td>47</td><td>1</td><td> 47</td><td>10</td><td>0</td><td>1.134327</td></tr>
+	<tr><th scope=row>11</th><td>36</td><td>1</td><td> 36</td><td> 6</td><td>0</td><td>2.006079</td></tr>
+	<tr><th scope=row>13</th><td>63</td><td>3</td><td>189</td><td>10</td><td>0</td><td>1.162245</td></tr>
+	<tr><th scope=row>17</th><td>67</td><td>4</td><td>268</td><td>12</td><td>0</td><td>1.117319</td></tr>
+	<tr><th scope=row>19</th><td>20</td><td>4</td><td> 80</td><td>14</td><td>0</td><td>2.451847</td></tr>
+	<tr><th scope=row>24</th><td>36</td><td>4</td><td>144</td><td>13</td><td>0</td><td>2.035458</td></tr>
 </tbody>
 </table>
 </div></div>

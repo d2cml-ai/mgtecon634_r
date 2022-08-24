@@ -591,22 +591,15 @@ Traceback:
 <span class="p">}</span>
 
 <span class="n">data</span> <span class="o">&lt;-</span> <span class="nf">read_data</span><span class="p">(</span><span class="s">&quot;lmb-data.dta&quot;</span><span class="p">)</span>
+<span class="c1">#Replace values of 1 and 2 with 0 and 1 of the sex variable</span>
+<span class="n">data</span><span class="o">$</span><span class="n">sex</span><span class="p">[</span><span class="n">data</span><span class="o">$</span><span class="n">sex</span> <span class="o">==</span> <span class="m">1</span><span class="p">]</span> <span class="o">=</span> <span class="m">0</span>
+<span class="n">data</span><span class="o">$</span><span class="n">sex</span><span class="p">[</span><span class="n">data</span><span class="o">$</span><span class="n">sex</span> <span class="o">==</span> <span class="m">2</span><span class="p">]</span> <span class="o">=</span> <span class="m">1</span>
 
 <span class="c1"># Define variables</span>
 <span class="n">outcome</span> <span class="o">=</span> <span class="s">&quot;score&quot;</span>
 <span class="n">covariates</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;age&quot;</span><span class="p">,</span> <span class="s">&quot;realincome&quot;</span><span class="p">,</span> <span class="s">&quot;sex&quot;</span><span class="p">,</span> <span class="s">&quot;militaryservice&quot;</span><span class="p">,</span> <span class="s">&quot;secondaryeduc&quot;</span><span class="p">)</span>
 <span class="n">running</span> <span class="o">=</span> <span class="s">&quot;lagdemvoteshare&quot;</span>
 <span class="n">treatment</span> <span class="o">=</span> <span class="s">&quot;W&quot;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
-&quot;package &#39;haven&#39; was built under R version 4.2.1&quot;
-Warning message:
-&quot;package &#39;estimatr&#39; was built under R version 4.2.1&quot;
-Warning message:
-&quot;package &#39;rockchalk&#39; was built under R version 4.2.1&quot;
 </pre></div>
 </div>
 </div>
@@ -677,7 +670,7 @@ Warning message:
 .dl-inline>dt, .dl-inline>dd {float: none; width: auto; display: inline-block}
 .dl-inline>dt::after {content: ":\0020"; padding-right: .5ex}
 .dl-inline>dt:not(:first-of-type) {padding-left: .5ex}
-</style><dl class=dl-inline><dt>age</dt><dd>0.596388822158648</dd><dt>realincome</dt><dd>0.302295211407216</dd><dt>militaryservice</dt><dd>0.0476509229311444</dd><dt>secondaryeduc</dt><dd>0.0448042135234921</dd><dt>sex</dt><dd>0.00886082997949948</dd></dl>
+</style><dl class=dl-inline><dt>age</dt><dd>0.580021097348088</dd><dt>realincome</dt><dd>0.310895873164737</dd><dt>militaryservice</dt><dd>0.0502121029751481</dd><dt>secondaryeduc</dt><dd>0.0495027871243562</dd><dt>sex</dt><dd>0.00936813938767124</dd></dl>
 </div></div>
 </div>
 </section>
@@ -759,11 +752,11 @@ Warning message:
 	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
 </thead>
 <tbody>
-	<tr><td>ols</td><td>Q1</td><td>16.86639</td><td>1.741709</td></tr>
-	<tr><td>ols</td><td>Q2</td><td>25.38157</td><td>1.649339</td></tr>
-	<tr><td>ols</td><td>Q3</td><td>34.00134</td><td>1.530182</td></tr>
-	<tr><td>ols</td><td>Q4</td><td>36.68675</td><td>1.556861</td></tr>
-	<tr><td>ols</td><td>Q5</td><td>44.62000</td><td>1.363089</td></tr>
+	<tr><td>ols</td><td>Q1</td><td>17.91918</td><td>1.735440</td></tr>
+	<tr><td>ols</td><td>Q2</td><td>24.52769</td><td>1.652691</td></tr>
+	<tr><td>ols</td><td>Q3</td><td>33.42286</td><td>1.536738</td></tr>
+	<tr><td>ols</td><td>Q4</td><td>35.80756</td><td>1.549754</td></tr>
+	<tr><td>ols</td><td>Q5</td><td>45.92444</td><td>1.364267</td></tr>
 </tbody>
 </table>
 </div></div>
@@ -788,10 +781,7 @@ Warning message:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="ow">in</span> <span class="n">ggplot</span><span class="p">(</span><span class="n">res</span><span class="p">):</span> <span class="n">no</span> <span class="n">se</span> <span class="n">pudo</span> <span class="n">encontrar</span> <span class="n">la</span> <span class="n">función</span> <span class="s2">&quot;ggplot&quot;</span>
-<span class="ne">Traceback</span>:
-</pre></div>
-</div>
+<img alt="../_images/7_LM_forest_RDD_1_18_0.png" src="../_images/7_LM_forest_RDD_1_18_0.png" />
 </div>
 </div>
 <p>Next, we can test e.g., if the prediction for groups 2, 3, etc. are larger than the one in the first group. Here’s how to do it based on a difference-in-means estimator. Note the Romano-Wolf multiple-hypothesis testing correction.</p>

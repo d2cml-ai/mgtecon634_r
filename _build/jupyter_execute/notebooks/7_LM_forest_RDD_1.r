@@ -60,6 +60,9 @@ read_data <- function(df)
 }
 
 data <- read_data("lmb-data.dta")
+#Replace values of 1 and 2 with 0 and 1 of the sex variable
+data$sex[data$sex == 1] = 0
+data$sex[data$sex == 2] = 1
 
 # Define variables
 outcome = "score"

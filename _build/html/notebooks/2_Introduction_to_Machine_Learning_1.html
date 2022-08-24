@@ -613,8 +613,8 @@ title="Print to PDF"
 <section id="key-concepts">
 <h2><span class="section-number">2.1. </span>Key concepts<a class="headerlink" href="#key-concepts" title="Permalink to this headline">#</a></h2>
 <p>The prediction problem is to accurately guess the value of some output variable <span class="math notranslate nohighlight">\(Y_i\)</span> from input variables <span class="math notranslate nohighlight">\(X_i\)</span>. For example, we might want to predict “house prices given house characteristics such as the number of rooms, age of the building, and so on. The relationship between input and output is modeled in very general terms by some function</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b774f928-af07-41f6-b0ae-74dcd55be51a">
-<span class="eqno">(2.1)<a class="headerlink" href="#equation-b774f928-af07-41f6-b0ae-74dcd55be51a" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:true-model} \tag{2.1}
+<div class="amsmath math notranslate nohighlight" id="equation-11edda87-36f1-4bdd-8665-4b40e1a54253">
+<span class="eqno">(2.1)<a class="headerlink" href="#equation-11edda87-36f1-4bdd-8665-4b40e1a54253" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:true-model} \tag{2.1}
   Y_i = f(X_i) + \epsilon_i
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\epsilon_i\)</span> represents all that is not captured by information obtained from <span class="math notranslate nohighlight">\(X_i\)</span> via the mapping <span class="math notranslate nohighlight">\(f\)</span>. We say that error <span class="math notranslate nohighlight">\(\epsilon_i\)</span> is irreducible.</p>
@@ -626,8 +626,8 @@ title="Print to PDF"
 <li><p><strong>Evaluation:</strong> Evaluate our fitted model <span class="math notranslate nohighlight">\(\hat{f}\)</span>. That is, if we were given a new, yet unseen, input and output pair <span class="math notranslate nohighlight">\((X',Y')\)</span>, we’d like to know if <span class="math notranslate nohighlight">\(Y' \approx \hat{f}(X_i)\)</span> by some metric.</p></li>
 </ul>
 <p>For concreteness, let’s work through an example. Let’s say that, given the data simulated above, we’d like to predict <span class="math notranslate nohighlight">\(Y_i\)</span> from the first covariate  <span class="math notranslate nohighlight">\(X_{i1}\)</span> only. Also, let’s say that our model class will be polynomials of degree <span class="math notranslate nohighlight">\(q\)</span> in <span class="math notranslate nohighlight">\(X_{i1}\)</span>, and we’ll evaluate fit based on mean squared error. That is, <span class="math notranslate nohighlight">\(\hat{f}(X_{i1}) = \hat{b}_0 + X_{i1}\hat{b}_1 + \cdots + X_{i1}^q \hat{b}_q\)</span>, where the coefficients are obtained by solving the following problem:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f4820f81-24e1-40d2-9ef5-304aa8a94234">
-<span class="eqno">(2.2)<a class="headerlink" href="#equation-f4820f81-24e1-40d2-9ef5-304aa8a94234" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c2fd5e3f-ffc1-44d2-a878-0c6fb9fae278">
+<span class="eqno">(2.2)<a class="headerlink" href="#equation-c2fd5e3f-ffc1-44d2-a878-0c6fb9fae278" title="Permalink to this equation">#</a></span>\[\begin{equation}
   \hat{b} = \arg\min_b \sum_{i=1}^m
     \left(Y_i - b_0 - X_{i1}b_1 - \cdots - X_{iq}^q b_q \right)^2
 \end{equation}\]</div>
@@ -901,15 +901,15 @@ title="Print to PDF"
 <section id="generalized-linear-models">
 <h3><span class="section-number">2.2.1. </span>Generalized linear models<a class="headerlink" href="#generalized-linear-models" title="Permalink to this headline">#</a></h3>
 <p>This class of models extends common methods such as linear and logistic regression by adding a penalty to the magnitude of the coefficients. <strong>Lasso</strong> penalizes the absolute value of slope coefficients. For regression problems, it becomes</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f2841a2d-1563-4897-b78d-c1943e2612a7">
-<span class="eqno">(2.3)<a class="headerlink" href="#equation-f2841a2d-1563-4897-b78d-c1943e2612a7" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:lasso}\tag{2.2}
+<div class="amsmath math notranslate nohighlight" id="equation-2ff55683-2c96-4446-9b5b-3f8550a980b6">
+<span class="eqno">(2.3)<a class="headerlink" href="#equation-2ff55683-2c96-4446-9b5b-3f8550a980b6" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:lasso}\tag{2.2}
   \hat{b}_{Lasso} = \arg\min_b \sum_{i=1}^m
     \left( Y_i - b_0 - X_{i1}b_1 - \cdots - X_{ip}b_p \right)^2
     - \lambda \sum_{j=1}^p |b_j|
 \end{equation}\]</div>
 <p>Similarly, in a regression problem <strong>Ridge</strong> penalizes the sum of squares of the slope coefficients,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-747bd428-cf02-46f2-ab6a-3e9cf602f4f9">
-<span class="eqno">(2.4)<a class="headerlink" href="#equation-747bd428-cf02-46f2-ab6a-3e9cf602f4f9" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:ridge}\tag{2.3}
+<div class="amsmath math notranslate nohighlight" id="equation-8dec0530-c3f7-44e7-b0a2-5e5bcf0a7e6b">
+<span class="eqno">(2.4)<a class="headerlink" href="#equation-8dec0530-c3f7-44e7-b0a2-5e5bcf0a7e6b" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:ridge}\tag{2.3}
   \hat{b}_{Ridge} = \arg\min_b \sum_{i=1}^m
     \left( Y_i - b_0 - X_{i1}b_1 - \cdots - X_{ip}b_p \right)^2
     - \lambda \sum_{j=1}^p b_j^2
@@ -1302,8 +1302,8 @@ Coefficients:
 </div>
 </div>
 <p>To reduce the complexity of the tree, we <strong>prune</strong> the tree: we collapse its leaves, permitting bias to increase but forcing variance to decrease until the desired trade-off is achieved. In <code class="docutils literal notranslate"><span class="pre">rpart</span></code>, this is done by considering a modified loss function that takes into account the number of terminal nodes (i.e., the number of regions in which the original data was partitioned). Somewhat heuristically, if we denote tree predictions by <span class="math notranslate nohighlight">\(T(x)\)</span> and its number of terminal nodes by  <span class="math notranslate nohighlight">\(|T|\)</span>, the modified regression problem can be written as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e9e1db6e-16bd-49d2-82ab-4e085b41315d">
-<span class="eqno">(2.5)<a class="headerlink" href="#equation-e9e1db6e-16bd-49d2-82ab-4e085b41315d" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:pruned-tree}\tag{2.4}
+<div class="amsmath math notranslate nohighlight" id="equation-222c74d9-2c55-45c5-8e2e-fe402cf6240d">
+<span class="eqno">(2.5)<a class="headerlink" href="#equation-222c74d9-2c55-45c5-8e2e-fe402cf6240d" title="Permalink to this equation">#</a></span>\[\begin{equation}\label{eq:pruned-tree}\tag{2.4}
   \widehat{T} = \arg\min_{T} \sum_{i=1}^m \left( T(X_i) - Y_i \right)^2 + c_p |T|
 \end{equation}\]</div>
 <p>The complexity of the tree is controlled by the scalar parameter <span class="math notranslate nohighlight">\(c_p\)</span>, denoted as <code class="docutils literal notranslate"><span class="pre">ccp_alpha</span></code> in <code class="docutils literal notranslate"><span class="pre">sklearn.tree.DecisionTreeRegressor</span></code>. For each value of <span class="math notranslate nohighlight">\(c_p\)</span>, we find the subtree that solves \eqref{eq:pruned-tree}. Large values of <span class="math notranslate nohighlight">\(c_p\)</span> lead to aggressively pruned trees, which have more bias and less variance. Small values of <span class="math notranslate nohighlight">\(c_p\)</span> allow for deeper trees whose predictions can vary more wildly.</p>

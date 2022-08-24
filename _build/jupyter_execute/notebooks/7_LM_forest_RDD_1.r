@@ -66,7 +66,7 @@ data$sex[data$sex == 2] = 1
 
 # Define variables
 outcome = "score"
-covariates <- c("age", "realincome", "sex", "militaryservice", "secondaryeduc")
+covariates <- c("age", "realincome", "pcturban", "pctblack", "pcthighschl")
 running = "lagdemvoteshare"
 treatment = "W"
 

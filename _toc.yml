@@ -15,3 +15,4 @@ parts:
   - file: notebooks/6_Policy_Learning_1
   - file: notebooks/7_LM_forest_RDD_1
   - file: notebooks/8_MCPanel
+  - file: notebooks/9_surrogate_r

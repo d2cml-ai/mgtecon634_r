@@ -9,6 +9,15 @@ install.packages("ggplot2")
 install.packages("reshape2")
 install.packages("remotes")
 
+
+install.packages("haven")
+install.packages("data.table")
+install.packages("farver")
+install.packages("broom")
+install.packages("purrr")
+install.packages("usefun")
+
+
 remotes::install_github("susanathey/causalTree")
 
 install.packages("devtools")

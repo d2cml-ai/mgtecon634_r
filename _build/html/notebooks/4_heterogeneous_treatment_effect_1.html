@@ -161,6 +161,11 @@ const thebe_selector_output = ".output, .cell_output"
    8. Matrix completion Methods for Causal Panel Data Models
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="9_surrogate_r.html">
+   9. Athey, S., Chetty, R., Imbens, G. W., &amp; Kang, H. (2019). The surrogate index: Combining short-term proxies to estimate long-term treatment effects more rapidly and precisely (No. w26463). National Bureau of Economic Research.
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -553,14 +558,14 @@ title="Print to PDF"
 <h1><span class="section-number">4. </span>HTE I: Binary treatment<a class="headerlink" href="#hte-i-binary-treatment" title="Permalink to this headline">#</a></h1>
 <p>Source RMD file: <a class="reference external" href="https://docs.google.com/uc?export=download&amp;id=1FSUi4WLfYYKnvWsNWypiQORhkqf5IlFP">link</a></p>
 <p>In the previous chapter, we learned how to estimate the effect of a binary treatment averaged over the entire population. However, the average may obscure important details about how different individuals react to the treatment. In this chapter, we will learn how to estimate the <strong>conditional average treatment effect (CATE)</strong>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-92263484-b841-48e2-a637-e6ce6a12adee">
-<span class="eqno">(4.1)<a class="headerlink" href="#equation-92263484-b841-48e2-a637-e6ce6a12adee" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:cate} \tag{4.1}
+<div class="amsmath math notranslate nohighlight" id="equation-7a9eb12c-4ac2-443a-bc3e-99aff6b802f3">
+<span class="eqno">(4.1)<a class="headerlink" href="#equation-7a9eb12c-4ac2-443a-bc3e-99aff6b802f3" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:cate} \tag{4.1}
   \tau(x) := \mathbf{E}[Y_i(1) - Y_i(0) | X_i = x],
 \end{equation}\]</div>
 <p>which is a “localized” version of the average treatment effect conditional on a vector of observable characteristics.</p>
 <p>It’s often the case that \eqref{eq:cate} is too general to be immediately useful, especially when the observable covariates are high-dimensional. It can be hard to estimate reliably without making strong modeling assumptions, and hard to summarize in a useful manner after estimation. In such situations, we will instead try to estimate treatment effect averages for simpler groups</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2c0679d5-f26a-49cf-8af0-63ab79c2602e">
-<span class="eqno">(4.2)<a class="headerlink" href="#equation-2c0679d5-f26a-49cf-8af0-63ab79c2602e" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:cate-g} \tag{4.2}
+<div class="amsmath math notranslate nohighlight" id="equation-7c562d29-3b46-425f-aeee-ced6fb61aab0">
+<span class="eqno">(4.2)<a class="headerlink" href="#equation-7c562d29-3b46-425f-aeee-ced6fb61aab0" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:cate-g} \tag{4.2}
   \mathbf{E}[Y_i(1) - Y_i(0) | G_i = g],
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(G_i\)</span> indexes subgroups of interest. Below you’ll learn how to estimate and test hypotheses about pre-defined subgroups, and also how to discover subgroups of interest from the data. In this tutorial, you will learn how to use estimates of \eqref{eq:cate} to suggest relevant subgroups <span class="math notranslate nohighlight">\(G_i\)</span> (and in the next chapters you will find out other uses of \eqref{eq:cate} in policy learning and evaluation).</p>
@@ -652,23 +657,23 @@ title="Print to PDF"
 <section id="pre-specified-hypotheses">
 <h2><span class="section-number">4.1. </span>Pre-specified hypotheses<a class="headerlink" href="#pre-specified-hypotheses" title="Permalink to this headline">#</a></h2>
 <p>We will begin by learning how to test pre-specified null hypotheses of the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d97d3652-c6e6-4429-90eb-2dea4e985534">
-<span class="eqno">(4.3)<a class="headerlink" href="#equation-d97d3652-c6e6-4429-90eb-2dea4e985534" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:hte-hyp} \tag{4.3}
+<div class="amsmath math notranslate nohighlight" id="equation-9d264318-ce06-4b9d-88b5-32c7f60743dd">
+<span class="eqno">(4.3)<a class="headerlink" href="#equation-9d264318-ce06-4b9d-88b5-32c7f60743dd" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:hte-hyp} \tag{4.3}
   H_{0}: \mathbf{E}[Y(1) - Y(0) | G_i = 1] = \mathbf{E}[Y(1) - Y(0) | G_i = 0].
 \end{equation}\]</div>
 <p>That is, that the treatment effect is the same regardless of membership to some group
 <span class="math notranslate nohighlight">\(G_i\)</span>. Importantly, for now we’ll assume that the group <span class="math notranslate nohighlight">\(G_i\)</span> was <strong>pre-specified</strong> – it was decided <em>before</em> looking at the data.</p>
 <p>In a randomized setting, if the both the treatment  <span class="math notranslate nohighlight">\(W_i\)</span> and group membership <span class="math notranslate nohighlight">\(G_i\)</span> are binary, we can write</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5f6f4a5a-0edf-4ac3-b5ab-d7b4b63ed66b">
-<span class="eqno">(4.4)<a class="headerlink" href="#equation-5f6f4a5a-0edf-4ac3-b5ab-d7b4b63ed66b" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:linear} \tag{4.4}
+<div class="amsmath math notranslate nohighlight" id="equation-f3d4ffde-38ae-44d3-81b0-a4dd9a47f0d7">
+<span class="eqno">(4.4)<a class="headerlink" href="#equation-f3d4ffde-38ae-44d3-81b0-a4dd9a47f0d7" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:linear} \tag{4.4}
   \mathbf{E}[Y_i(W_i)|G_i] = \mathbf{E}[Y_i|W_i, G_i] = \beta_0 + \beta_w W_i + \beta_g G_i + \beta_{wg} W_i G_i
 \end{equation}\]</div>
 <font size=1>
 When $W_i$ and $G_i$ are binary, this decomposition is true without loss of generality. Why?
 </font>
 <p>This allows us to write the average effects of <span class="math notranslate nohighlight">\(W_i\)</span> and <span class="math notranslate nohighlight">\(G_i\)</span> on <span class="math notranslate nohighlight">\(Y_i\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d0cba46e-70b7-4abd-a079-944693129d9d">
-<span class="eqno">(4.5)<a class="headerlink" href="#equation-d0cba46e-70b7-4abd-a079-944693129d9d" title="Permalink to this equation">#</a></span>\[\begin{equation}  \label{eq:decomp} \tag{4.5}
+<div class="amsmath math notranslate nohighlight" id="equation-10579fda-5681-4912-9b9e-58a756ae4422">
+<span class="eqno">(4.5)<a class="headerlink" href="#equation-10579fda-5681-4912-9b9e-58a756ae4422" title="Permalink to this equation">#</a></span>\[\begin{equation}  \label{eq:decomp} \tag{4.5}
   \begin{aligned} 
     \mathbf{E}[Y(1) | G_i=1] &amp;= \beta_0 + \beta_w W_i + \beta_g G_i + \beta_{wg} W_i G_i, \\
     \mathbf{E}[Y(1) | G_i=0] &amp;= \beta_0 + \beta_w W_i,  \\
@@ -710,8 +715,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Interpret the results above. The coefficient $\beta_{xw}$ is denoted by `w:conservativeTRUE`. Can we detect a difference in treatment effect for conservative vs liberal individuals? For whom is the effect larger?
 </font>
 <p>Sometimes there are many subgroups, leading to multiple hypotheses such as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ae8c7fc2-c109-4e9c-bb3b-941b548c08bf">
-<span class="eqno">(4.6)<a class="headerlink" href="#equation-ae8c7fc2-c109-4e9c-bb3b-941b548c08bf" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:mult-hyp} \tag{4.6}
+<div class="amsmath math notranslate nohighlight" id="equation-0f1d060e-c864-420d-8d3b-2e0afdc8abfa">
+<span class="eqno">(4.6)<a class="headerlink" href="#equation-0f1d060e-c864-420d-8d3b-2e0afdc8abfa" title="Permalink to this equation">#</a></span>\[\begin{equation} \label{eq:mult-hyp} \tag{4.6}
 H_0: \mathbf{E}[Y(1) - Y(0) \ | \  G_i = 1] = \mathbf{E}[Y(1) - Y(0) \ | \  G_i = g]
 \qquad
 \text{for many values of }g.
@@ -1503,8 +1508,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <section id="assessing-heterogeneity">
 <h4><span class="section-number">4.2.2.3. </span>Assessing heterogeneity<a class="headerlink" href="#assessing-heterogeneity" title="Permalink to this headline">#</a></h4>
 <p>The function <code class="docutils literal notranslate"><span class="pre">test_calibration</span></code> computes an estimate of the best linear predictor of true CATE based on out-of-bag predictions <span class="math notranslate nohighlight">\(\hat{\tau}^{-i}(\cdot)\)</span>. The exact implementation seeks to fit the following linear model:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4a26cb4b-a84a-4dfa-84fb-707203e2296d">
-<span class="eqno">(4.7)<a class="headerlink" href="#equation-4a26cb4b-a84a-4dfa-84fb-707203e2296d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-92c18928-62f7-4f4f-88f8-9d56a04636de">
+<span class="eqno">(4.7)<a class="headerlink" href="#equation-92c18928-62f7-4f4f-88f8-9d56a04636de" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Y_{i} - \hat{m}^{-i}(X_{i}) = \alpha\bar{\tau}\left(W_{i} - \hat{e}^{-i}(X_{i})\right) + \beta \left(\hat{\tau}^{-i}(X_{i}) - \bar{\tau} \right) \left(W_{i} - \hat{e}^{-i}(X_{i}) \right) + \epsilon,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\bar{\tau} := n^{-1}\sum_{i=1}^{n} \hat{\tau}^{-i}(X_{i})\)</span>. The coefficients <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> allow us to evaluate the performance of our estimates. If <span class="math notranslate nohighlight">\(\alpha = 1\)</span>, then the average prediction produced by the forest is correct. Meanwhile, if <span class="math notranslate nohighlight">\(\beta = 1\)</span>, then the forest predictions adequately capture the underlying heterogeneity.</p>
